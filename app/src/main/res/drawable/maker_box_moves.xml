@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/maker_box_shadow"/>
+            <corners android:radius="@dimen/makerbox_corner_radius"/>
+        </shape>
+    </item>
+    <item android:bottom="@dimen/makerbox_inner_shadow_offset">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/green_dark"/>
+            <corners android:radius="@dimen/makerbox_corner_radius"/>
+        </shape>
+    </item>
+    <item android:bottom="@dimen/makerbox_shadow_offset">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/green"/>
+            <corners
+                android:topLeftRadius="@dimen/makerbox_corner_radius"
+                android:topRightRadius="@dimen/makerbox_corner_radius"
+                android:bottomLeftRadius="@dimen/makerbox_corner_radius"
+                android:bottomRightRadius="@dimen/makerbox_corner_radius"/>
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,45 @@
+{
+  "id" : "reprogram",
+  "title" : "project_reprogram_title",
+  "learning_description" : "project_reprogram_learning_description",
+  "image" : "project_alarm_image",
+  "project_url" : "project_reprogram_url",
+  "project_hex" : "ZOWI_Alarm_v2.hex",
+  "test": [
+    {
+      "question" : "project_reprogram_question_1",
+      "answers" : [
+        {
+          "answer" : "project_reprogram_question_1_answer_1",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_reprogram_question_1_answer_2",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_reprogram_question_1_answer_3",
+          "is_correct" : "true"
+        }
+      ]
+    },
+    {
+      "question" : "project_reprogram_question_2",
+      "answers" : [
+        {
+          "answer" : "project_reprogram_question_2_answer_1",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_reprogram_question_2_answer_2",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_reprogram_question_2_answer_3",
+          "is_correct" : "true"
+        }
+      ]
+    }
+  ],
+  "achievement": "angry"
+}

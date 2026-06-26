@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_home_view_pager"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/component_home_games"/>
+        <include layout="@layout/component_home_projects"/>
+    </android.support.v4.view.ViewPager>
+    <Button
+        android:id="@+id/activity_home_settings_button"
+        android:background="@drawable/settings_button_selector"
+        android:layout_width="@dimen/corner_button_size"
+        android:layout_height="@dimen/corner_button_size"
+        android:layout_marginLeft="@dimen/corner_button_margin"
+        android:layout_marginTop="@dimen/corner_button_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+    <Button
+        android:id="@+id/activity_home_achievements_button"
+        android:background="@drawable/achievements_button_selector"
+        android:layout_width="@dimen/corner_button_size"
+        android:layout_height="@dimen/corner_button_size"
+        android:layout_marginTop="@dimen/corner_button_margin"
+        android:layout_marginRight="@dimen/corner_button_margin"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+    <include layout="@layout/component_notification"/>
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamepad_how_to_play_text">Dirige %1$s avec les flèches situées sur la gauche. Teste des mouvements en appuyant sur les vignettes à droite.\nAmuse-toi avec les différentes animations et expressions faciales disponibles.\n Plus tu joueras avec lui, plus ton robot saura faire de choses !</string>
+    <string name="projects_dialog_failure_wrong_answer_penalty">Tu dois attendre %1$s minutes avant de réessayer.\nCela te laisse le temps de relire le projet...</string>
+    <string name="projects_reprogram_description">Après la reprogrammation, les fonctions de %1$s ne seront plus les mêmes.\nPour retenir de nouvelles choses, %1$s doit oublier le reste.\nMais ne t’inquiète pas, tu pourras restaurer les fonctions d’origine après le projet.</string>
+    <string name="ranking_dialog_empty_list_description">Tu n’as pas encore intégré le palmarès. Dès que ton score le permettra tu rentreras au classement.\nIl faut tenter ta chance !</string>
+    <string name="zowi_says_how_to_play_text">%1$s va faire une série de mouvements. Regarde bien ! Quand c’est à ton tour tu dois appuyer sur les dessins correspondants.\n\nSi tu n’as oublié aucun mouvement, %1$s rajoute un pas à son enchaînement. Plus tu vas loin, plus tu gagnes de points.</string>
+</resources>

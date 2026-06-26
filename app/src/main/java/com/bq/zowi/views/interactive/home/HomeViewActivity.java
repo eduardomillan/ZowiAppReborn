@@ -1,0 +1,222 @@
+package com.bq.zowi.views.interactive.home;
+
+import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import com.bq.zowi.R;
+import com.bq.zowi.analytics.AnalyticsUtils;
+import com.bq.zowi.analytics.ZowiScreen;
+import com.bq.zowi.components.home.ZowiAppView;
+import com.bq.zowi.injector.AndroidDependencyInjector;
+import com.bq.zowi.presenters.interactive.home.HomePresenter;
+import com.bq.zowi.views.interactive.InteractiveBaseActivity;
+import com.bq.zowi.wireframes.home.HomeWireframe;
+
+/* JADX INFO: loaded from: classes.dex */
+public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> implements HomeView {
+    private ZowiAppView loadMouthsEditorButton;
+
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_view);
+        ViewPager viewpager = (ViewPager) findViewById(R.id.activity_home_view_pager);
+        viewpager.setAdapter(new HomePagerAdapter());
+        int margin = (int) (getResources().getDimension(R.dimen.sections_pager_horizontal_margin) * 2.0f);
+        viewpager.setPageMargin(-margin);
+        Button settingsButton = (Button) findViewById(R.id.activity_home_settings_button);
+        settingsButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.1
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadSettings();
+            }
+        });
+        Button achievementsButton = (Button) findViewById(R.id.activity_home_achievements_button);
+        achievementsButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.2
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadAchievements();
+            }
+        });
+        View loadGamepadButton = findViewById(R.id.zowiapps_load_gamepad_button);
+        loadGamepadButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.3
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadGamepad();
+            }
+        });
+        View loadTimelineButton = findViewById(R.id.zowiapps_load_timeline_button);
+        loadTimelineButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.4
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadTimeline();
+            }
+        });
+        View loadZowiSaysMinigameButton = findViewById(R.id.zowiapps_load_zowi_says_minigame_button);
+        loadZowiSaysMinigameButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.5
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadZowiSaysMinigame();
+            }
+        });
+        View loadMouthsMinigameButton = findViewById(R.id.zowiapps_load_mouths_minigame_button);
+        loadMouthsMinigameButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.6
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadMouthsMinigame();
+            }
+        });
+        this.loadMouthsEditorButton = (ZowiAppView) findViewById(R.id.zowiapps_load_mouths_editor_button);
+        this.loadMouthsEditorButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.7
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                if (HomeViewActivity.this.loadMouthsEditorButton.isClickable()) {
+                    ((HomePresenter) HomeViewActivity.this.getPresenter()).loadMouthsEditor();
+                }
+            }
+        });
+        View projectMueveButton = findViewById(R.id.zowiapps_load_project_mueve_button);
+        projectMueveButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.8
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("01_project_mueve");
+            }
+        });
+        View projectChoreographyButton = findViewById(R.id.zowiapps_load_project_choreography_button);
+        projectChoreographyButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.9
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("02_project_choreography");
+            }
+        });
+        View projectFormButton = findViewById(R.id.zowiapps_load_project_form_button);
+        projectFormButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.10
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("03_project_forma");
+            }
+        });
+        View projectBio1Button = findViewById(R.id.zowiapps_load_project_bio1_button);
+        projectBio1Button.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.11
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("04_project_bio1");
+            }
+        });
+        View projectPaintButton = findViewById(R.id.zowiapps_load_project_bio3_button);
+        projectPaintButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.12
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("05_project_bio3");
+            }
+        });
+        View projectRepgrogramButton = findViewById(R.id.zowiapps_load_project_reprogram_button);
+        projectRepgrogramButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.13
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("06_project_reprogram");
+            }
+        });
+        View projectHelloWorldButton = findViewById(R.id.zowiapps_load_project_helloworld_button);
+        projectHelloWorldButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.14
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("07_project_helloworld");
+            }
+        });
+        View projectBitbloq2Button = findViewById(R.id.zowiapps_load_project_bitbloq2_button);
+        projectBitbloq2Button.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.15
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("08_project_bitbloq2");
+            }
+        });
+        View projectAdivinawiButton = findViewById(R.id.zowiapps_load_project_adivinawi_button);
+        projectAdivinawiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.16
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("09_project_adivinawi");
+            }
+        });
+        View projectGravityButton = findViewById(R.id.zowiapps_load_project_gravity_button);
+        projectGravityButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.home.HomeViewActivity.17
+            @Override // android.view.View.OnClickListener
+            public void onClick(View view) {
+                ((HomePresenter) HomeViewActivity.this.getPresenter()).loadProject("10_project_gravity");
+            }
+        });
+    }
+
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        ((HomePresenter) getPresenter()).logAppStarted();
+    }
+
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    protected void onResume() {
+        super.onResume();
+        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_HOME));
+    }
+
+    /* JADX INFO: Access modifiers changed from: protected */
+    @Override // com.bq.zowi.views.BaseActivity
+    public HomePresenter resolvePresenter() {
+        HomePresenter presenter = AndroidDependencyInjector.getInstance().provideHomePresenter();
+        HomeWireframe wireframe = AndroidDependencyInjector.getInstance().provideHomeWireframe(this);
+        presenter.bindViewAndWireframe(this, wireframe);
+        return presenter;
+    }
+
+    @Override // com.bq.zowi.views.interactive.home.HomeView
+    public void setUnlockStatusMouthsEditor(boolean unlock) {
+        this.loadMouthsEditorButton.setClickable(unlock);
+        int drawable = unlock ? R.drawable.mouths_editor_button_selector : R.drawable.blocked_option_button;
+        this.loadMouthsEditorButton.setButtonBackground(drawable, this);
+    }
+
+    static class HomePagerAdapter extends PagerAdapter {
+        HomePagerAdapter() {
+        }
+
+        static class HomePages {
+            public static final int PROJECTS = 1;
+            public static final int ZOWI_APPS = 0;
+
+            HomePages() {
+            }
+        }
+
+        @Override // android.support.v4.view.PagerAdapter
+        public Object instantiateItem(ViewGroup collection, int position) {
+            int resId = 0;
+            switch (position) {
+                case 0:
+                    resId = R.id.activity_home_games_layout;
+                    break;
+                case 1:
+                    resId = R.id.activity_home_projects_layout;
+                    break;
+            }
+            return collection.findViewById(resId);
+        }
+
+        @Override // android.support.v4.view.PagerAdapter
+        public int getCount() {
+            return 2;
+        }
+
+        @Override // android.support.v4.view.PagerAdapter
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override // android.support.v4.view.PagerAdapter
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+    }
+}

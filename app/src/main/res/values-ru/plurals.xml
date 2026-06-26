@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="games_points_earned_text">
+        <item quantity="other">%1$s БАЛЛОВ</item>
+        <item quantity="one">%1$s БАЛЛ</item>
+        <item quantity="few">%1$s БАЛЛОВ</item>
+        <item quantity="many">%1$s БАЛЛОВ</item>
+    </plurals>
+    <plurals name="ranking_points_text">
+        <item quantity="other">%1$s баллов</item>
+        <item quantity="one">%1$s балл</item>
+        <item quantity="few">%1$s баллов</item>
+        <item quantity="many">%1$s баллов</item>
+    </plurals>
+</resources>

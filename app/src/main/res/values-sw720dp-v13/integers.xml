@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="home_pager_makerbox_columns">5</integer>
+    <integer name="maker_box_dialog_earned_points_clouds_bg_animation_duration">2500</integer>
+    <integer name="maker_box_dialog_earned_points_sun_bg_animation_duration">15000</integer>
+    <integer name="makerbox_content_mask_bottom_padding">21</integer>
+    <integer name="makerbox_dialog_scrollable_columns">5</integer>
+</resources>

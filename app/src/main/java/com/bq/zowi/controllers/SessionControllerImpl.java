@@ -1,0 +1,55 @@
+package com.bq.zowi.controllers;
+
+import android.content.SharedPreferences;
+import org.jetbrains.annotations.Nullable;
+
+/* JADX INFO: loaded from: classes.dex */
+public class SessionControllerImpl implements SessionController {
+    private final String ACTIVE_ZOWI_DEVICE_ADDRESS = "activeZowiDeviceAddress";
+    private final String ACTIVE_ZOWI_NAME = "activeZowiName";
+    private String defaultZowiName;
+    private SharedPreferences sharedPreferences;
+
+    public SessionControllerImpl(String defaultZowiName, SharedPreferences sharedPreferences) {
+        this.defaultZowiName = defaultZowiName;
+        this.sharedPreferences = sharedPreferences;
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    public void saveActiveZowiDeviceAddress(String address) {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putString("activeZowiDeviceAddress", address);
+        editor.commit();
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    @Nullable
+    public String loadActiveZowiDeviceAddress() {
+        return this.sharedPreferences.getString("activeZowiDeviceAddress", null);
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    public void saveActiveZowiName(String name) {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putString("activeZowiName", name);
+        editor.commit();
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    public String loadActiveZowiName() {
+        return this.sharedPreferences.getString("activeZowiName", this.defaultZowiName);
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    public String loadDefaultZowiName() {
+        return this.defaultZowiName;
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    public void resetActiveZowi() {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.remove("activeZowiName");
+        editor.remove("activeZowiDeviceAddress");
+        editor.commit();
+    }
+}

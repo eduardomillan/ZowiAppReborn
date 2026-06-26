@@ -1,0 +1,91 @@
+[
+  {
+    "id": "crusaito",
+    "type": "movement",
+    "unlocked": false
+  },
+  {
+    "id": "flapping",
+    "type": "movement",
+    "unlocked": false
+  },
+  {
+    "id": "shake_leg",
+    "type": "movement",
+    "unlocked": false
+  },
+  {
+    "id": "tip_toe",
+    "type": "movement",
+    "unlocked": false
+  },
+  {
+    "id": "jitter",
+    "type": "movement",
+    "unlocked": false
+  },
+  {
+    "id": "ascending_turn",
+    "type": "movement",
+    "unlocked": true
+  },
+  {
+    "id": "swing",
+    "type": "movement",
+    "unlocked": false
+  },
+
+
+  {
+    "id": "super_happy",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "sleepy",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "fart",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "confused",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "in_love",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "angry",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "anxious",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "magic",
+    "type": "animation",
+    "unlocked": false
+  },
+  {
+    "id": "wave",
+    "type": "animation",
+    "unlocked": false
+  },
+
+
+  {
+    "id": "mouths_editor",
+    "type": "game",
+    "unlocked": false
+  }
+]

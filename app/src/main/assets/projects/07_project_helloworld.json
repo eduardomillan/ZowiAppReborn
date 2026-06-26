@@ -1,0 +1,45 @@
+{
+  "id" : "helloworld",
+  "title" : "project_helloworld_title",
+  "learning_description" : "project_helloworld_learning_description",
+  "image" : "project_helloworld_image",
+  "project_url" : "project_helloworld_url",
+  "project_hex" : "",
+  "test": [
+    {
+      "question" : "project_helloworld_question_1",
+      "answers" : [
+        {
+          "answer" : "project_helloworld_question_1_answer_1",
+          "is_correct" : "true"
+        },
+        {
+          "answer" : "project_helloworld_question_1_answer_2",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_helloworld_question_1_answer_3",
+          "is_correct" : "false"
+        }
+      ]
+    },
+    {
+      "question" : "project_helloworld_question_2",
+      "answers" : [
+        {
+          "answer" : "project_helloworld_question_2_answer_1",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_helloworld_question_2_answer_2",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_helloworld_question_2_answer_3",
+          "is_correct" : "true"
+        }
+      ]
+    }
+  ],
+  "achievement": "super_happy"
+}

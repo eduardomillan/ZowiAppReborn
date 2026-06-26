@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="575"
+    android:versionName="1.4.1"
+    package="com.bq.zowi"
+    platformBuildVersionCode="22"
+    platformBuildVersionName="5.1.1-1819727">
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="22"/>
+    <uses-feature android:name="android.hardware.bluetooth"/>
+    <supports-screens android:requiresSmallestWidthDp="320"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <application
+        android:theme="@style/AppTheme"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:name="com.bq.zowi.ZowiApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="@bool/user_hardware_acceleration"
+        android:largeHeap="true">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <activity
+            android:name="com.bq.zowi.views.splash.SplashViewActivity"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.bq.zowi.views.welcome.WelcomeViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.wizard.WizardViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.home.HomeViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.settings.SettingsViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.settings.CalibrationViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.achievements.AchievementsViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.pad.PadViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.timeline.TimelineActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:label="@string/zowi_says_label"
+            android:name="com.bq.zowi.views.interactive.zowiapps.minigames.ZowiSaysMinigameActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:label="BOCAS"
+            android:name="com.bq.zowi.views.interactive.zowiapps.minigames.MouthsMinigameActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.bq.zowi.views.interactive.zowiapps.MouthsEditorActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:label="@string/zowi_runner_label"
+            android:name="com.bq.zowi.views.interactive.zowiapps.minigames.ZowiRunnerMinigameActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:label=""
+            android:name="com.bq.zowi.views.interactive.projects.ProjectViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:label=""
+            android:name="com.bq.zowi.views.interactive.projects.ProjectQuizViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:theme="@android:style/Theme.Translucent"
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="smallestScreenSize|screenSize|uiMode|screenLayout|orientation|keyboardHidden|keyboard"/>
+        <activity
+            android:theme="@style/Theme.IAPTheme"
+            android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"/>
+    </application>
+</manifest>

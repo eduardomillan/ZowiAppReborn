@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.bq.zowi.components.NonSwipeableViewPager
+        android:id="@+id/activity_calibration_view_pager"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/component_calibration_warning"/>
+        <include layout="@layout/component_calibration_legs"/>
+        <include layout="@layout/component_calibration_feet"/>
+        <include layout="@layout/component_calibration_check"/>
+    </com.bq.zowi.components.NonSwipeableViewPager>
+    <include layout="@layout/component_notification"/>
+</RelativeLayout>

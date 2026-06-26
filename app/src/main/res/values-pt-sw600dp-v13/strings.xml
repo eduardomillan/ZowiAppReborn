@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamepad_how_to_play_text">Move o %1$s com as setas da esquerda. Em alternativa, podes descobrir os seus movimentos combinados ao premir os botões da direita.\nExperimenta as divertidas animações e altera as expressões da sua boca.\nQuanto mais jogares, mais coisas poderás fazer!</string>
+    <string name="projects_dialog_failure_wrong_answer_penalty">Tens de esperar %1$s minutos antes de voltar a tentar.\nÉ um bom momento para voltares a ler...</string>
+    <string name="projects_reprogram_description">Ao reprogramar o %1$s, as funções dos seus botões serão alteradas.\nIsto acontece porque, para guardar algo novo na sua memória, o %1$s tem de esquecer o que sabia antes.\nMas não te preocupes! Ao sair do projeto, poderás restaurar as funções originais.</string>
+    <string name="ranking_dialog_empty_list_description">Ainda não conseguiste entrar no ranking. Quando conseguires uma pontuação muito boa, poderás ver o teu nome aqui. Porque não tentas agora?</string>
+    <string name="zowi_says_how_to_play_text">O %1$s vai fazer uma série de movimentos. Memoriza-os bem! Depois, terás de repeti-los premindo os botões com o desenho de cada movimento.\n\nSe acertares, o %1$s fará mais um movimento. Quantos mais acertares, mais pontos irás ganhar para entrar no ranking.</string>
+</resources>

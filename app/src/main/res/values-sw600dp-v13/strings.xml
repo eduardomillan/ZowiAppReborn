@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamepad_how_to_play_text">Move %1$s using the arrows on the left or discover the combined moves by pressing the buttons on the right.\nTry the fun animations and change the mouth gestures.\n The more you play, the more it can do!</string>
+    <string name="projects_dialog_failure_wrong_answer_penalty">You need to wait %1$s minutes before you try again.\nThis is a good moment to read it again...</string>
+    <string name="projects_reprogram_description">On reprogramming %1$s, the functions of the buttons will change.\nThis happens because, in order to save something new in the memory, %1$s has to forget what it knew before.\nBut don\'t worry, when you quit the project, you\'ll be able to restore the original functions.</string>
+    <string name="ranking_dialog_empty_list_description">Your score is too low to enter the ranking. As soon as you get a top score, you’ll be able to see your name here.\nWhy not try again now?</string>
+    <string name="zowi_says_how_to_play_text">%1$s will make a sequence of movements. Watch and remember them carefully! Then you have to repeat them by pressing the button with the picture that corresponds to each movement.\n\nIf you repeat the sequence correctly, %1$s will add another move. The more you get it right, the more points you will win to enter the ranking.</string>
+</resources>

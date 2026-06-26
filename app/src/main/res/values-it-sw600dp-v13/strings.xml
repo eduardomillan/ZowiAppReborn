@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamepad_how_to_play_text">Muovi %1$s con le frecce sulla sinistra. O scopri i suoi movimenti combinati selezionando i pulsanti sulla destra.\nProva le divertenti animazioni e cambia le sue espressioni facciali.\nQuanto più ci giochi, più cose potrà fare!</string>
+    <string name="projects_dialog_failure_wrong_answer_penalty">Devi aspettare %1$s minuti prima di riprovarci nuovamente. \nÈ un buon momento per riprovare a leggerlo...</string>
+    <string name="projects_reprogram_description">Riprogrammando %1$s le funzioni dei suoi pulsanti, esse cambieranno. \nQuesto succede perché per poter salvare qualcosa di nuovo nella sua memoria, %1$s deve dimenticare ciò che conosceva prima. \nMa non ti preoccupare! Uscendo dal progetto potrai ripristinare le funzioni originali.</string>
+    <string name="ranking_dialog_empty_list_description">Ancora non sei riuscito ad entrare nel ranking. Non appena riesci ad ottenere un discreto punteggio potrai visualizzare qui il tuo nome. \nPerché non ci provi adesso?</string>
+    <string name="zowi_says_how_to_play_text">%1$s eseguirà una serie di movimenti. Ricordalo bene! Dopo dovrai ripeterli selezionando i pulsanti con il disegno di ogni movimento. \n\nSe indovini, %1$s farà un movimento in più. Quanti più ne indovini, più punti vincerai in modo da entrare nel ranking.</string>
+</resources>

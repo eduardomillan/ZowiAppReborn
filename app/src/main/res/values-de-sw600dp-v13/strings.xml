@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamepad_how_to_play_text">Mit den Pfeiltasten auf der linken Seite kannst du %1$s bewegen. Oder entdecke seine Bewegungsabläufe, indem du auf die Tasten auf der rechten Seite drückst.\nDu kannst dir auch die lustigen Animationen ansehen und seine Mimik ändern.\n Je mehr du mit ihm spielst, desto mehr Funktionen kannst du entdecken!</string>
+    <string name="projects_dialog_failure_wrong_answer_penalty">Du musst %1$s Minuten warten bevor du es erneut versuchen kannst.\nDas ist ein guter Zeitpunkt, noch einmal nachzulesen ...</string>
+    <string name="projects_reprogram_description">Beim Umprogrammieren von %1$s ändern sich seine Funktionen.\nDas liegt daran, dass %1$s wieder vergessen muss, was er zuvor gelernt hatte, damit wir Platz haben, um etwas Neues zu speichern.\nAber keine Sorge, beim Verlassen des Projekts kannst du die Ausgangsfunktionen wiederherstellen.</string>
+    <string name="ranking_dialog_empty_list_description">Noch hast du es nicht ins Ranking geschafft. Sobald du eine besonders gute Punktzahl erreicht hast, kannst du deinen Namen hier lesen.\nWarum versuchst du es jetzt nicht einmal?</string>
+    <string name="zowi_says_how_to_play_text">%1$s wird eine Reihe von Bewegungen ausführen. Behalte sie gut in Erinnerung! Anschließend musst du sie wiederholen, indem du die Tasten mit den Abbildungen der Bewegungen drückst.\nWenn du richtig liegst, macht %1$s eine Bewegung mehr. Je mehr du richtig rätst, desto mehr Punkte gewinnst du, um ins Ranking zu kommen.</string>
+</resources>

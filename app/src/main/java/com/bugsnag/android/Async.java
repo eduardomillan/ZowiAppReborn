@@ -1,0 +1,16 @@
+package com.bugsnag.android;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+/* JADX INFO: loaded from: classes.dex */
+class Async {
+    private static final Executor executor = Executors.newCachedThreadPool();
+
+    Async() {
+    }
+
+    static void run(Runnable task) {
+        executor.execute(task);
+    }
+}

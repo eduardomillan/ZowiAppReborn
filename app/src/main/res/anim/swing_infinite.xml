@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/accelerate_decelerate"
+    android:duration="@integer/maker_box_dialog_earned_points_clouds_bg_animation_duration"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:fromXDelta="-2%p"
+    android:toXDelta="2%p"
+    android:fromYDelta="-2%p"
+    android:toYDelta="2%p"/>

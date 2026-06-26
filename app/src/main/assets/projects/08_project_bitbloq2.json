@@ -1,0 +1,45 @@
+{
+  "id" : "bitbloq2",
+  "title" : "project_bitbloq2_title",
+  "learning_description" : "project_bitbloq2_learning_description",
+  "image" : "project_bitbloq2_image",
+  "project_url" : "project_bitbloq2_url",
+  "project_hex" : "",
+  "test": [
+    {
+      "question" : "project_bitbloq2_question_1",
+      "answers" : [
+        {
+          "answer" : "project_bitbloq2_question_1_answer_1",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_bitbloq2_question_1_answer_2",
+          "is_correct" : "true"
+        },
+        {
+          "answer" : "project_bitbloq2_question_1_answer_3",
+          "is_correct" : "false"
+        }
+      ]
+    },
+    {
+      "question" : "project_bitbloq2_question_2",
+      "answers" : [
+        {
+          "answer" : "project_bitbloq2_question_2_answer_1",
+          "is_correct" : "true"
+        },
+        {
+          "answer" : "project_bitbloq2_question_2_answer_2",
+          "is_correct" : "false"
+        },
+        {
+          "answer" : "project_bitbloq2_question_2_answer_3",
+          "is_correct" : "false"
+        }
+      ]
+    }
+  ],
+  "achievement": "tip_toe"
+}

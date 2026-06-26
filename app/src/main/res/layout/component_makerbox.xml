@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/light_box_background"
+        android:clipChildren="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:paddingTop="@dimen/maker_box_dialog_container_padding_top"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <com.bq.zowi.components.makerboxdialogs.MakerBox
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/makerbox_dialog_container"
+                android:background="@drawable/maker_box"
+                android:layout_width="@dimen/maker_box_dialog_width"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/makerbox_dialog_close_button"
+                android:background="@drawable/close_button_selector"
+                android:layout_width="@dimen/close_button_size"
+                android:layout_height="@dimen/close_button_size"
+                android:layout_marginTop="@dimen/maker_box_dialog_close_button_negative_margin"
+                android:layout_marginRight="@dimen/maker_box_dialog_close_button_negative_margin"
+                android:layout_alignTop="@+id/makerbox_dialog_container"
+                android:layout_alignRight="@+id/makerbox_dialog_container"/>
+            <ImageView
+                android:id="@+id/makerbox_dialog_center_top_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/maker_box_dialog_center_top_imageview_negative_margin"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</merge>

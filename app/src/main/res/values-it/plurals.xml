@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="games_points_earned_text">
+        <item quantity="other" />
+        <item quantity="one" />
+    </plurals>
+    <plurals name="ranking_points_text">
+        <item quantity="other" />
+        <item quantity="one" />
+    </plurals>
+</resources>
