@@ -214,7 +214,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gamepad_actions_grid_commands_recycler_view"
             android:paddingLeft="@dimen/home_maker_box_horizontal_padding"
             android:paddingRight="@dimen/home_maker_box_horizontal_padding"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
     </style>
 
-    <style name="Theme.IAPTheme" parent="Theme.MaterialComponents.Light"/>
+    <style name="Theme.IAPTheme" parent="Theme.AppCompat.Light"/>
     <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar.Horizontal"/>
     <style name="timelineRecyclerViewStyle" parent="Widget.AppCompat.ListView"/>
     <style name="commonListItemStyle" parent=""/>

@@ -38,10 +38,10 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
     private Button setNameButton;
     private NonSwipeableViewPager viewPager;
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wizard_view);
+        setResolvedContentView("activity_wizard_view", R.layout.activity_wizard_view);
         this.viewPager = (NonSwipeableViewPager) findViewById(R.id.activity_wizard_view_pager);
         this.searchingWizardLayout = findViewById(R.id.searching_wizard_layout);
         this.noZowisFoundWizardLayout = findViewById(R.id.no_zowis_found_wizard_layout);

@@ -73,6 +73,7 @@ public class ConnectToZowiInteractorImpl implements ConnectToZowiInteractor {
 
     @Override // com.bq.zowi.interactors.ConnectToZowiInteractor
     public Single<Void> connectToZowi(final String deviceAddress, final boolean isDuplexConnection) {
+        final boolean[] alreadyTriedDisablingBluetooth = {false};
         return this.btAdapterController.enableBluetooth().flatMap(new Func1<Void, Single<Void>>() { // from class: com.bq.zowi.interactors.ConnectToZowiInteractorImpl.4
             @Override // rx.functions.Func1
             public Single<Void> call(Void aVoid) {
@@ -80,15 +81,13 @@ public class ConnectToZowiInteractorImpl implements ConnectToZowiInteractor {
                 return ConnectToZowiInteractorImpl.this.btConnectionController.connect(ConnectToZowiInteractorImpl.this.btAdapterController.getRemoteDevice(deviceAddress), isDuplexConnection);
             }
         }).toObservable().retryWhen(new RetryWithDelay(3, 1000)).retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() { // from class: com.bq.zowi.interactors.ConnectToZowiInteractorImpl.3
-            private boolean alreadyTriedDisablingBluetooth = false;
-
             @Override // rx.functions.Func1
             public Observable<?> call(Observable<? extends Throwable> observable) {
                 return observable.flatMap(new Func1<Throwable, Observable<?>>() { // from class: com.bq.zowi.interactors.ConnectToZowiInteractorImpl.3.1
                     @Override // rx.functions.Func1
                     public Observable<?> call(Throwable throwable) {
-                        if (!AnonymousClass3.this.alreadyTriedDisablingBluetooth) {
-                            AnonymousClass3.this.alreadyTriedDisablingBluetooth = true;
+                        if (!alreadyTriedDisablingBluetooth[0]) {
+                            alreadyTriedDisablingBluetooth[0] = true;
                             Grove.d(throwable, "ConnectToZowi error. Retried several times and still failing. Trying disabling and re-enabling bluetooth.", new Object[0]);
                             return ConnectToZowiInteractorImpl.this.btAdapterController.disableBluetooth().toObservable();
                         }

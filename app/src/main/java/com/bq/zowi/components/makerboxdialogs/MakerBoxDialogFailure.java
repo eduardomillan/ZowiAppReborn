@@ -36,30 +36,40 @@ public class MakerBoxDialogFailure extends MakerBoxDialog {
 
     private void init(Context context) {
         if (!isInEditMode()) {
-            LayoutInflater.from(context).inflate(R.layout.component_makerbox_failure, this);
-            this.bgImageView = (ImageView) findViewById(R.id.makerbox_dialog_points_earned_disable_ranking_bg_image);
-            Animation rotation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_infinite);
-            this.bgImageView.startAnimation(rotation);
-            this.failureDescriptionText = (TextView) findViewById(R.id.makerbox_dialog_failure_description_text);
-            this.failureMainText = (TextView) findViewById(R.id.makerbox_dialog_failure_main_text);
-            this.failureContentText = (TextView) findViewById(R.id.makerbox_dialog_failure_content_text);
-            this.continueButton = (Button) findViewById(R.id.makerbox_dialog_failure_continue_button);
+            LayoutInflater.from(context).inflate(resolveLayoutId("component_makerbox_failure", R.layout.component_makerbox_failure), this);
+            this.bgImageView = (ImageView) findResolvedView("makerbox_dialog_points_earned_disable_ranking_bg_image", R.id.makerbox_dialog_points_earned_disable_ranking_bg_image);
+            if (this.bgImageView != null) {
+                Animation rotation = AnimationUtils.loadAnimation(getContext(), resolveAnimId("swing_infinite", R.anim.swing_infinite));
+                this.bgImageView.startAnimation(rotation);
+            }
+            this.failureDescriptionText = (TextView) findResolvedView("makerbox_dialog_failure_description_text", R.id.makerbox_dialog_failure_description_text);
+            this.failureMainText = (TextView) findResolvedView("makerbox_dialog_failure_main_text", R.id.makerbox_dialog_failure_main_text);
+            this.failureContentText = (TextView) findResolvedView("makerbox_dialog_failure_content_text", R.id.makerbox_dialog_failure_content_text);
+            this.continueButton = (Button) findResolvedView("makerbox_dialog_failure_continue_button", R.id.makerbox_dialog_failure_continue_button);
         }
     }
 
     public void setFailureDescriptionText(String descriptionText) {
-        this.failureDescriptionText.setText(descriptionText);
+        if (this.failureDescriptionText != null) {
+            this.failureDescriptionText.setText(descriptionText);
+        }
     }
 
     public void setFailureMainText(String mainText) {
-        this.failureMainText.setText(mainText);
+        if (this.failureMainText != null) {
+            this.failureMainText.setText(mainText);
+        }
     }
 
     public void setFailureContentText(String contentText) {
-        this.failureContentText.setText(contentText);
+        if (this.failureContentText != null) {
+            this.failureContentText.setText(contentText);
+        }
     }
 
     public void setOnContinueButtonClickedListener(View.OnClickListener onClickListener) {
-        this.continueButton.setOnClickListener(onClickListener);
+        if (this.continueButton != null) {
+            this.continueButton.setOnClickListener(onClickListener);
+        }
     }
 }

@@ -47,10 +47,10 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
     private TextView titleTextView;
     private ViewPager viewPager;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_view);
+        setResolvedContentView("activity_project_view", R.layout.activity_project_view);
         this.projectId = getIntent().getStringExtra(PROJECT_ID_EXTRA);
         this.viewPager = (ViewPager) findViewById(R.id.activity_project_view_pager);
         int margin = (int) (getResources().getDimension(R.dimen.sections_pager_horizontal_margin) * 2.0f);
@@ -82,7 +82,7 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
         this.zowiDependantViews = new View[]{this.installHexButtonTextView};
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         ((ProjectPresenter) getPresenter()).loadProject(this.projectId);

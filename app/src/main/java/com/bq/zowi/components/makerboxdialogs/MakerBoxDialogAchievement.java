@@ -34,28 +34,36 @@ public class MakerBoxDialogAchievement extends MakerBoxDialog {
 
     private void init(Context context) {
         if (!isInEditMode()) {
-            LayoutInflater.from(context).inflate(R.layout.component_makerbox_achievement, this);
-            this.achievementContentImageView = (ImageView) findViewById(R.id.makerbox_dialog_achievement_content_imageview);
-            this.achievementTitle = (TextView) findViewById(R.id.makerbox_dialog_achievement_title_text);
-            this.achievementDescription = (TextView) findViewById(R.id.makerbox_dialog_achievement_description_text);
-            this.continueButton = (Button) findViewById(R.id.makerbox_dialog_achievement_continue_button);
+            LayoutInflater.from(context).inflate(resolveLayoutId("component_makerbox_achievement", R.layout.component_makerbox_achievement), this);
+            this.achievementContentImageView = (ImageView) findResolvedView("makerbox_dialog_achievement_content_imageview", R.id.makerbox_dialog_achievement_content_imageview);
+            this.achievementTitle = (TextView) findResolvedView("makerbox_dialog_achievement_title_text", R.id.makerbox_dialog_achievement_title_text);
+            this.achievementDescription = (TextView) findResolvedView("makerbox_dialog_achievement_description_text", R.id.makerbox_dialog_achievement_description_text);
+            this.continueButton = (Button) findResolvedView("makerbox_dialog_achievement_continue_button", R.id.makerbox_dialog_achievement_continue_button);
         }
     }
 
     public void setAchievementTitle(String title) {
-        this.achievementTitle.setText(title);
+        if (this.achievementTitle != null) {
+            this.achievementTitle.setText(title);
+        }
     }
 
     public void setAchievementDescription(String description) {
-        this.achievementDescription.setText(description);
+        if (this.achievementDescription != null) {
+            this.achievementDescription.setText(description);
+        }
     }
 
     public void setAchievementDrawable(Drawable achievementDrawable) {
-        this.achievementContentImageView.setImageDrawable(achievementDrawable);
+        if (this.achievementContentImageView != null) {
+            this.achievementContentImageView.setImageDrawable(achievementDrawable);
+        }
         setCenterTopImageViewDrawable(achievementDrawable);
     }
 
     public void setOnContinueButtonClickedListener(View.OnClickListener onClickListener) {
-        this.continueButton.setOnClickListener(onClickListener);
+        if (this.continueButton != null) {
+            this.continueButton.setOnClickListener(onClickListener);
+        }
     }
 }

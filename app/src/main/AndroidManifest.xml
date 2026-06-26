@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:versionCode="576"
     android:versionName="2.0.0">
 
@@ -31,8 +32,10 @@
         android:icon="@mipmap/ic_launcher"
         android:name="com.bq.zowi.ZowiApplication"
         android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:hardwareAccelerated="true"
-        android:largeHeap="true">
+        android:largeHeap="true"
+        tools:replace="android:appComponentFactory">
 
         <activity
             android:name="com.bq.zowi.views.splash.SplashViewActivity"

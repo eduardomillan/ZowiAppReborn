@@ -44,36 +44,44 @@ public class MakerBoxDialogPointsEarnedEnableRanking extends MakerBoxDialog {
 
     protected void init(Context context) {
         if (!isInEditMode()) {
-            LayoutInflater.from(context).inflate(R.layout.component_makerbox_points_earned_enable_ranking, this);
-            this.bgImageView = (ImageView) findViewById(R.id.makerbox_dialog_success_bg_image);
-            Animation rotation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_infinite);
-            this.bgImageView.startAnimation(rotation);
-            this.successMainText = (TextView) findViewById(R.id.makerbox_success_main_text);
-            this.continueButton = (Button) findViewById(R.id.makerbox_dialog_success_continue_button);
-            this.playerNameEditText = (EditText) findViewById(R.id.makerbox_dialog_points_earned_enable_ranking_player_name_edittext);
-            this.continueButton.setEnabled(false);
-            this.playerNameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.components.makerboxdialogs.MakerBoxDialogPointsEarnedEnableRanking.1
-                @Override // android.text.TextWatcher
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override // android.text.TextWatcher
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override // android.text.TextWatcher
-                public void afterTextChanged(Editable editable) {
-                    MakerBoxDialogPointsEarnedEnableRanking.this.continueButton.setEnabled(MakerBoxDialogPointsEarnedEnableRanking.this.playerNameEditText.getText().length() > 0);
-                }
-            });
-            this.continueButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.components.makerboxdialogs.MakerBoxDialogPointsEarnedEnableRanking.2
-                @Override // android.view.View.OnClickListener
-                public void onClick(View view) {
-                    if (MakerBoxDialogPointsEarnedEnableRanking.this.onPlayerNameEnteredListener != null) {
-                        MakerBoxDialogPointsEarnedEnableRanking.this.onPlayerNameEnteredListener.onPlayerNameEntered(MakerBoxDialogPointsEarnedEnableRanking.this.playerNameEditText.getText().toString());
+            LayoutInflater.from(context).inflate(resolveLayoutId("component_makerbox_points_earned_enable_ranking", R.layout.component_makerbox_points_earned_enable_ranking), this);
+            this.bgImageView = (ImageView) findResolvedView("makerbox_dialog_success_bg_image", R.id.makerbox_dialog_success_bg_image);
+            if (this.bgImageView != null) {
+                Animation rotation = AnimationUtils.loadAnimation(getContext(), resolveAnimId("rotate_infinite", R.anim.rotate_infinite));
+                this.bgImageView.startAnimation(rotation);
+            }
+            this.successMainText = (TextView) findResolvedView("makerbox_success_main_text", R.id.makerbox_success_main_text);
+            this.continueButton = (Button) findResolvedView("makerbox_dialog_success_continue_button", R.id.makerbox_dialog_success_continue_button);
+            this.playerNameEditText = (EditText) findResolvedView("makerbox_dialog_points_earned_enable_ranking_player_name_edittext", R.id.makerbox_dialog_points_earned_enable_ranking_player_name_edittext);
+            if (this.continueButton != null) {
+                this.continueButton.setEnabled(false);
+            }
+            if (this.playerNameEditText != null && this.continueButton != null) {
+                this.playerNameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.components.makerboxdialogs.MakerBoxDialogPointsEarnedEnableRanking.1
+                    @Override // android.text.TextWatcher
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     }
-                }
-            });
+
+                    @Override // android.text.TextWatcher
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    }
+
+                    @Override // android.text.TextWatcher
+                    public void afterTextChanged(Editable editable) {
+                        MakerBoxDialogPointsEarnedEnableRanking.this.continueButton.setEnabled(MakerBoxDialogPointsEarnedEnableRanking.this.playerNameEditText.getText().length() > 0);
+                    }
+                });
+            }
+            if (this.continueButton != null) {
+                this.continueButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.components.makerboxdialogs.MakerBoxDialogPointsEarnedEnableRanking.2
+                    @Override // android.view.View.OnClickListener
+                    public void onClick(View view) {
+                        if (MakerBoxDialogPointsEarnedEnableRanking.this.onPlayerNameEnteredListener != null && MakerBoxDialogPointsEarnedEnableRanking.this.playerNameEditText != null) {
+                            MakerBoxDialogPointsEarnedEnableRanking.this.onPlayerNameEnteredListener.onPlayerNameEntered(MakerBoxDialogPointsEarnedEnableRanking.this.playerNameEditText.getText().toString());
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -83,7 +91,9 @@ public class MakerBoxDialogPointsEarnedEnableRanking extends MakerBoxDialog {
     }
 
     public void setPointsEarned(int pointsEarned) {
-        this.successMainText.setText(getContext().getResources().getQuantityString(R.plurals.games_points_earned_text, pointsEarned, Integer.valueOf(pointsEarned)));
+        if (this.successMainText != null) {
+            this.successMainText.setText(getContext().getResources().getQuantityString(R.plurals.games_points_earned_text, pointsEarned, Integer.valueOf(pointsEarned)));
+        }
     }
 
     public void setOnPlayerNameEnteredListener(OnPlayerNameEnteredListener onPlayerNameEnteredListener) {

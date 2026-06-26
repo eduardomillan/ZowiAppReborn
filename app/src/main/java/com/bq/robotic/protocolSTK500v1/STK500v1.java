@@ -1,6 +1,5 @@
 package com.bq.robotic.protocolSTK500v1;
 
-import com.comscore.streaming.Constants;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,6 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 /* JADX INFO: loaded from: classes.dex */
 public class STK500v1 {
+    private static final long HEARTBEAT_STAGE_ONE_INTERVAL_MILLIS = 10000;
     private Hex hexParser;
     private InputStream input;
     private Logger logger;
@@ -293,14 +293,14 @@ public class STK500v1 {
         long time = System.currentTimeMillis();
         boolean stopScheduled = false;
         while (this.reader.getState() != EReaderState.STOPPED) {
-            if (System.currentTimeMillis() > time + Constants.HEARTBEAT_STAGE_ONE_INTERVAL) {
+            if (System.currentTimeMillis() > time + HEARTBEAT_STAGE_ONE_INTERVAL_MILLIS) {
                 this.readerThread.stop();
                 return;
             } else if (!stopScheduled) {
                 stopScheduled = this.reader.stop();
             }
         }
-        waitForReaderStateActivated(Constants.HEARTBEAT_STAGE_ONE_INTERVAL / 2);
+        waitForReaderStateActivated(HEARTBEAT_STAGE_ONE_INTERVAL_MILLIS / 2);
         ((Reader) this.reader).requestCompleteStop();
     }
 
@@ -338,7 +338,7 @@ public class STK500v1 {
     }
 
     private String checkIfStarterKitPresent() {
-        byte readByte;
+        byte readByte = 0;
         this.logger.logcat("checkIfStarterKitPresent: Detect programmer", "v");
         try {
             byte[] out = {ConstantsStk500v1.STK_GET_SIGN_ON, ConstantsStk500v1.CRC_EOP};
@@ -484,7 +484,6 @@ public class STK500v1 {
                                 this.logger.logcat("chipEraseUniversal: STK_INSYNC failed on first byte, " + Hex.oneByteToHex(in[i]), "w");
                                 return false;
                             }
-                            break;
                             break;
                         case 1:
                             break;

@@ -3,7 +3,7 @@ package com.bq.zowi.analytics;
 import android.content.Context;
 import android.os.Build;
 import androidx.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
+import androidx.collection.ArrayMap;
 import com.bq.analytics.hit.Screen;
 import org.jetbrains.annotations.NotNull;
 

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.bq.zowi.R;
 import com.bq.zowi.components.recyclerview.RecyclerViewHolder;
 import com.bq.zowi.models.viewmodels.RankingEntryViewModel;
+import com.bq.zowi.utils.ResourceResolver;
 
 /* JADX INFO: loaded from: classes.dex */
 public class RankingRowViewHolder extends RecyclerViewHolder<RankingEntryViewModel> {
@@ -28,11 +29,11 @@ public class RankingRowViewHolder extends RecyclerViewHolder<RankingEntryViewMod
         this.playerNameTextView.setText(item.playerName);
         this.pointsTextView.setText(this.context.getResources().getQuantityString(R.plurals.ranking_points_text, item.points, Integer.valueOf(item.points)));
         if (item.isLatestEntry) {
-            this.itemView.setBackgroundColor(this.context.getResources().getColor(R.color.maker_box_ranking_selected_row));
+            this.itemView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_ranking_selected_row", this.context));
         } else if (item.position % 2 == 0) {
-            this.itemView.setBackgroundColor(this.context.getResources().getColor(R.color.maker_box_even_row_background));
+            this.itemView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_even_row_background", this.context));
         } else {
-            this.itemView.setBackgroundColor(this.context.getResources().getColor(R.color.maker_box_odd_row_background));
+            this.itemView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_odd_row_background", this.context));
         }
     }
 }

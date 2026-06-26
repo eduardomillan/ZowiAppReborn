@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.support.v7.internal.widget.ActivityChooserView;
+
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
@@ -108,7 +108,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
         if (this.mExpandableItemAdapter == null) {
             return null;
         }
-        int maskedViewType = viewType & ActivityChooserView.ActivityChooserViewAdapter.MAX_ACTIVITY_COUNT_UNLIMITED;
+        int maskedViewType = viewType & Integer.MAX_VALUE;
         if ((Integer.MIN_VALUE & viewType) != 0) {
             holder = this.mExpandableItemAdapter.onCreateGroupViewHolder(parent, maskedViewType);
         } else {
@@ -128,7 +128,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
             long expandablePosition = this.mPositionTranslator.getExpandablePosition(position);
             int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
             int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
-            int viewType = holder.getItemViewType() & ActivityChooserView.ActivityChooserViewAdapter.MAX_ACTIVITY_COUNT_UNLIMITED;
+            int viewType = holder.getItemViewType() & Integer.MAX_VALUE;
             if (childPosition == -1) {
                 flags = 0 | 1;
             } else {
@@ -667,7 +667,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
             if (curFlags != -1 && ((curFlags ^ flags) & 4) != 0) {
                 flags |= 8;
             }
-            if (curFlags == -1 || ((curFlags ^ flags) & ActivityChooserView.ActivityChooserViewAdapter.MAX_ACTIVITY_COUNT_UNLIMITED) != 0) {
+            if (curFlags == -1 || ((curFlags ^ flags) & Integer.MAX_VALUE) != 0) {
                 flags |= Integer.MIN_VALUE;
             }
             holder2.setExpandStateFlags(flags);

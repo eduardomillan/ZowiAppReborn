@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start emulator, build, install, and launch debug APK",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "export ANDROID_SDK_ROOT=/home/eduardo/Android/Sdk && export ANDROID_AVD_HOME=${ANDROID_AVD_HOME:-$HOME/.android/avd} && if ! \"$ANDROID_SDK_ROOT/platform-tools/adb\" devices | grep -q '^emulator-[0-9][0-9][0-9][0-9][[:space:]]'; then nohup \"$ANDROID_SDK_ROOT/emulator/emulator\" @Pixel_API_34 -no-snapshot -no-boot-anim >/tmp/zowi-emulator.log 2>&1 & fi && ./gradlew assembleDebug && \"$ANDROID_SDK_ROOT/platform-tools/adb\" wait-for-device && until [[ \"$(\"$ANDROID_SDK_ROOT/platform-tools/adb\" shell getprop sys.boot_completed 2>/dev/null | tr -d '\\r')\" == \"1\" ]]; do echo 'Waiting for Android boot...'; sleep 2; done && until \"$ANDROID_SDK_ROOT/platform-tools/adb\" shell service list 2>/dev/null | grep -q 'package:'; do echo 'Waiting for package manager...'; sleep 2; done && \"$ANDROID_SDK_ROOT/platform-tools/adb\" install -r app/build/outputs/apk/debug/app-debug.apk && \"$ANDROID_SDK_ROOT/platform-tools/adb\" shell monkey -p com.bq.zowi -c android.intent.category.LAUNCHER 1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build, install, and launch debug APK (reuse running emulator)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "export ANDROID_SDK_ROOT=/home/eduardo/Android/Sdk && ./gradlew assembleDebug && \"$ANDROID_SDK_ROOT/platform-tools/adb\" wait-for-device && until [[ \"$(\"$ANDROID_SDK_ROOT/platform-tools/adb\" shell getprop sys.boot_completed 2>/dev/null | tr -d '\\r')\" == \"1\" ]]; do echo 'Waiting for Android boot...'; sleep 2; done && until \"$ANDROID_SDK_ROOT/platform-tools/adb\" shell service list 2>/dev/null | grep -q 'package:'; do echo 'Waiting for package manager...'; sleep 2; done && \"$ANDROID_SDK_ROOT/platform-tools/adb\" install -r app/build/outputs/apk/debug/app-debug.apk && \"$ANDROID_SDK_ROOT/platform-tools/adb\" shell monkey -p com.bq.zowi -c android.intent.category.LAUNCHER 1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "none",
+      "problemMatcher": []
+    }
+  ]
+}

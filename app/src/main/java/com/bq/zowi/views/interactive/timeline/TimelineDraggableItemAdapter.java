@@ -2,7 +2,7 @@ package com.bq.zowi.views.interactive.timeline;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemView
 import java.util.List;
 
 /* JADX INFO: loaded from: classes.dex */
-public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<ItemViewHolder> implements DraggableItemAdapter<ItemViewHolder> {
+public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<TimelineDraggableItemAdapter.ItemViewHolder> implements DraggableItemAdapter<TimelineDraggableItemAdapter.ItemViewHolder> {
     private static final int[] EMPTY_STATE = new int[0];
     private Context context;
     private ItemViewHolder.ItemChangeListener itemChangeListener;

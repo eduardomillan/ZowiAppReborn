@@ -96,18 +96,30 @@ public class MakerBoxDialogScrollable extends RelativeLayout {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MakerBoxDialog, 0, 0);
         try {
             this.showCloseButton = a.getBoolean(0, false);
-            a.recycle();
             if (!isInEditMode()) {
-                LayoutInflater.from(context).inflate(R.layout.component_makerbox_scrollable, this);
-                this.container = (MakerBox) findViewById(R.id.makerbox_dialog_container);
-                this.closeButton = (Button) findViewById(R.id.makerbox_dialog_close_button);
+                LayoutInflater.from(context).inflate(resolveLayoutId("component_makerbox_scrollable", R.layout.component_makerbox_scrollable), this);
+                this.container = (MakerBox) findViewById(resolveViewId("makerbox_dialog_container", R.id.makerbox_dialog_container));
+                this.closeButton = (Button) findViewById(resolveViewId("makerbox_dialog_close_button", R.id.makerbox_dialog_close_button));
                 addListeners();
             }
             invalidateView();
-        } catch (Throwable th) {
+        } finally {
             a.recycle();
-            throw th;
         }
+    }
+
+    protected final int resolveLayoutId(String layoutName, int fallbackLayoutId) {
+        int layoutId = getResources().getIdentifier(layoutName, "layout", getContext().getPackageName());
+        return layoutId != 0 ? layoutId : fallbackLayoutId;
+    }
+
+    protected final int resolveViewId(String viewIdName, int fallbackViewId) {
+        int viewId = getResources().getIdentifier(viewIdName, "id", getContext().getPackageName());
+        return viewId != 0 ? viewId : fallbackViewId;
+    }
+
+    protected final View findResolvedView(String viewIdName, int fallbackViewId) {
+        return findViewById(resolveViewId(viewIdName, fallbackViewId));
     }
 
     private void addListeners() {

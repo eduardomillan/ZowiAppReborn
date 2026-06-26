@@ -224,7 +224,6 @@ public class ZowiDataControllerImpl implements ZowiDataController {
                                     ZowiDataControllerImpl.this.onBatteryLevelReceivedListeners.clear();
                                     break;
                                 }
-                                return;
                             case 'D':
                                 synchronized (ZowiDataControllerImpl.this.onDistanceLevelReceivedListeners) {
                                     for (ZowiDataController.OnDistanceLevelReceivedListener listener2 : ZowiDataControllerImpl.this.onDistanceLevelReceivedListeners) {
@@ -233,7 +232,6 @@ public class ZowiDataControllerImpl implements ZowiDataController {
                                     ZowiDataControllerImpl.this.onDistanceLevelReceivedListeners.clear();
                                     break;
                                 }
-                                return;
                             case 'E':
                                 synchronized (ZowiDataControllerImpl.this.onZowiNameReceivedListeners) {
                                     for (ZowiDataController.OnZowiNameReceivedListener listener3 : ZowiDataControllerImpl.this.onZowiNameReceivedListeners) {
@@ -242,7 +240,6 @@ public class ZowiDataControllerImpl implements ZowiDataController {
                                     ZowiDataControllerImpl.this.onZowiNameReceivedListeners.clear();
                                     break;
                                 }
-                                return;
                             case 'I':
                                 synchronized (ZowiDataControllerImpl.this.onZowiAppIdReceivedListeners) {
                                     for (ZowiDataController.OnZowiAppIdReceivedListener listener4 : ZowiDataControllerImpl.this.onZowiAppIdReceivedListeners) {
@@ -251,7 +248,6 @@ public class ZowiDataControllerImpl implements ZowiDataController {
                                     ZowiDataControllerImpl.this.onZowiAppIdReceivedListeners.clear();
                                     break;
                                 }
-                                return;
                             case 'N':
                                 synchronized (ZowiDataControllerImpl.this.onNoiseLevelReceivedListeners) {
                                     for (ZowiDataController.OnNoiseLevelReceivedListener listener5 : ZowiDataControllerImpl.this.onNoiseLevelReceivedListeners) {
@@ -260,7 +256,6 @@ public class ZowiDataControllerImpl implements ZowiDataController {
                                     ZowiDataControllerImpl.this.onNoiseLevelReceivedListeners.clear();
                                     break;
                                 }
-                                return;
                             default:
                                 return;
                         }

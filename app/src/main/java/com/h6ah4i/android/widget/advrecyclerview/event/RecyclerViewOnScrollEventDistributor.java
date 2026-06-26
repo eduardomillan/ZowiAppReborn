@@ -28,7 +28,7 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
 
     void handleOnScrollStateChanged(RecyclerView recyclerView, int newState) {
         if (this.mListeners != null) {
-            for (T listener : this.mListeners) {
+            for (RecyclerView.OnScrollListener listener : this.mListeners) {
                 listener.onScrollStateChanged(recyclerView, newState);
             }
         }
@@ -36,7 +36,7 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
 
     void handleOnScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (this.mListeners != null) {
-            for (T listener : this.mListeners) {
+            for (RecyclerView.OnScrollListener listener : this.mListeners) {
                 listener.onScrolled(recyclerView, dx, dy);
             }
         }

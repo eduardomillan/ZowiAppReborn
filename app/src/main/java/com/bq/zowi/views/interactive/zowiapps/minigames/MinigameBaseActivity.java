@@ -30,7 +30,7 @@ public abstract class MinigameBaseActivity<T extends MinigameBasePresenter<? ext
     protected Button rankingButton;
     protected MakerBoxDialogRanking rankingLayout;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         this.howToPlayLayout = (MakerBoxDialog) findViewById(R.id.minigame_how_to_play_layout);
         this.howToPlayText = (TextView) findViewById(R.id.minigame_how_to_play_text);

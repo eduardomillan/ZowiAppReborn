@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/sections_pager_box_min_height">
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/makerbox_dialog_ranking_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

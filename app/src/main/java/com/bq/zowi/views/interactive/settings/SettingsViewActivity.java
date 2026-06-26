@@ -40,10 +40,10 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
     private RelativeLayout lookForUpdatesOption;
     private EditText zowiNameEditText;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_view);
+        setResolvedContentView("activity_settings_view", R.layout.activity_settings_view);
         Button homeButton = (Button) findViewById(R.id.activity_settings_home_button);
         homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.1
             @Override // android.view.View.OnClickListener

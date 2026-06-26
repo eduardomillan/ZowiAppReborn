@@ -25,10 +25,10 @@ public class ZowiSaysMinigameActivity extends MinigameBaseActivity<ZowiSaysMinig
     private ImageButton topLeftActionButton;
     private ImageButton topRightActionButton;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zowi_says_minigame_view);
+        setResolvedContentView("activity_zowi_says_minigame_view", R.layout.activity_zowi_says_minigame_view);
         this.lookAtZowiLayout = (MakerBoxDialog) findViewById(R.id.zowi_says_look_at_zowi_layout);
         this.topLeftActionButton = (ImageButton) findViewById(R.id.zowi_says_top_left_button);
         this.topLeftActionButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.zowiapps.minigames.ZowiSaysMinigameActivity.1
@@ -70,7 +70,7 @@ public class ZowiSaysMinigameActivity extends MinigameBaseActivity<ZowiSaysMinig
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_ZOWI_SAYS));
     }
 
-    @Override // com.bq.zowi.views.interactive.zowiapps.minigames.MinigameBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.zowiapps.minigames.MinigameBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }

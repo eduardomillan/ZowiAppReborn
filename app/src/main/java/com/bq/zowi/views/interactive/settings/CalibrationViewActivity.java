@@ -31,10 +31,10 @@ public class CalibrationViewActivity extends InteractiveBaseActivity<Calibration
     private View warningCancelButton;
     private View warningContinueButton;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calibration_view);
+        setResolvedContentView("activity_calibration_view", R.layout.activity_calibration_view);
         this.viewpager = (NonSwipeableViewPager) findViewById(R.id.activity_calibration_view_pager);
         this.viewpager.setAdapter(new CalibrationPagerAdapter());
         this.viewpager.setOffscreenPageLimit(this.viewpager.getChildCount());

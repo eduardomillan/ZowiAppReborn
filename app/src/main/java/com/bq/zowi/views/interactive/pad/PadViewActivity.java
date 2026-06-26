@@ -21,6 +21,7 @@ import com.bq.zowi.components.recyclerview.RecyclerAdapter;
 import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.models.commands.GridCommand;
 import com.bq.zowi.presenters.interactive.pad.PadPresenter;
+import com.bq.zowi.utils.ResourceResolver;
 import com.bq.zowi.views.interactive.InteractiveBaseActivity;
 import com.bq.zowi.views.interactive.timeline.CommandsGridViewHolderResolver;
 import com.bq.zowi.views.interactive.timeline.CommandsTileViewHolder;
@@ -126,10 +127,10 @@ public class PadViewActivity extends InteractiveBaseActivity<PadPresenter> imple
         return i;
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pad_view);
+        setResolvedContentView("activity_pad_view", R.layout.activity_pad_view);
         this.howToPlayLayout = (MakerBoxDialog) findViewById(R.id.gamepad_how_to_play_layout);
         this.howToPlayText = (TextView) findViewById(R.id.gamepad_how_to_play_text);
         Button homeButton = (Button) findViewById(R.id.gamepad_home);
@@ -197,7 +198,7 @@ public class PadViewActivity extends InteractiveBaseActivity<PadPresenter> imple
         this.crusaitoButton.setOnTouchListener(this.actionButtonOnTouchListener);
         this.actionsDialog = (MakerBoxDialogScrollable) findViewById(R.id.gamepad_actions_dialog);
         this.commandsRecyclerView = (RecyclerView) findViewById(R.id.gamepad_actions_grid_commands_recycler_view);
-        this.gridLayoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.makerbox_dialog_scrollable_columns));
+        this.gridLayoutManager = new GridLayoutManager(this, ResourceResolver.getIntegerByResourceId("makerbox_dialog_scrollable_columns", this));
         this.commandsRecyclerView.setLayoutManager(this.gridLayoutManager);
         this.commandsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         this.commmandsAdapter = new RecyclerAdapter<>(new CommandsGridViewHolderResolver(this));
@@ -219,7 +220,7 @@ public class PadViewActivity extends InteractiveBaseActivity<PadPresenter> imple
         this.zowiDependantViews = new View[]{this.upButton, this.downButton, this.leftButton, this.rightButton, this.upperLeftButton, this.upperRighButton, this.bendButton, this.shakelegButton, this.updownButton, this.jitterButton, this.swingButton, this.flappingButton, this.crusaitoButton};
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         ((PadPresenter) getPresenter()).gameReady();
@@ -493,7 +494,7 @@ public class PadViewActivity extends InteractiveBaseActivity<PadPresenter> imple
         this.actionsDialog.setVisibility(0);
         this.commmandsAdapter.setItems(commandList);
         float rowHeight = getResources().getDimension(R.dimen.achievement_row_item_height);
-        int columns = getResources().getInteger(R.integer.makerbox_dialog_scrollable_columns);
+        int columns = ResourceResolver.getIntegerByResourceId("makerbox_dialog_scrollable_columns", this);
         int numberOfRows = commandList.size() / columns;
         if (commandList.size() % columns != 0) {
             numberOfRows++;

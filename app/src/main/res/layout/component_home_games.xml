@@ -29,7 +29,7 @@
                     android:layout_marginBottom="@dimen/sections_pager_box_title_margin"
                     android:text="@string/games_box_title"
                     android:layout_centerHorizontal="true"/>
-                <android.support.v7.widget.GridLayout
+                <androidx.gridlayout.widget.GridLayout
                     android:paddingLeft="@dimen/home_maker_box_horizontal_padding"
                     android:paddingTop="@dimen/home_maker_box_vertical_padding"
                     android:paddingRight="@dimen/home_maker_box_horizontal_padding"
@@ -77,7 +77,7 @@
                         app:layout_gravity="fill"
                         app:buttonBackground="@drawable/blocked_option_button"
                         app:label="@string/mouths_editor_label"/>
-                </android.support.v7.widget.GridLayout>
+                </androidx.gridlayout.widget.GridLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

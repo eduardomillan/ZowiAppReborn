@@ -134,7 +134,7 @@ public class TimelinePresenterImpl extends InteractiveBasePresenterImpl<Timeline
 
     @Override // com.bq.zowi.presenters.interactive.timeline.TimelinePresenter
     public void loadAndResumeTimeline() {
-        this.subscriptions.add(this.gameController.loadProgress(GameController.GAME_ID.TIMELINE_GAME_ID, new TypeToken<List<TimelineCommand>>() { // from class: com.bq.zowi.presenters.interactive.timeline.TimelinePresenterImpl.6
+        this.subscriptions.add(this.gameController.<List<TimelineCommand>>loadProgress(GameController.GAME_ID.TIMELINE_GAME_ID, new TypeToken<List<TimelineCommand>>() { // from class: com.bq.zowi.presenters.interactive.timeline.TimelinePresenterImpl.6
         }.getType()).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<List<TimelineCommand>>() { // from class: com.bq.zowi.presenters.interactive.timeline.TimelinePresenterImpl.5
             @Override // rx.SingleSubscriber
             public void onSuccess(List<TimelineCommand> loadedTimelineCommandList) {

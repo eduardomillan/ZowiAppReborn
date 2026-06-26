@@ -2,7 +2,7 @@ package com.comscore.metrics;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.os.EnvironmentCompat;
+import androidx.core.os.EnvironmentCompat;
 import com.comscore.analytics.Core;
 import com.comscore.measurement.Measurement;
 import com.comscore.utils.CSLog;

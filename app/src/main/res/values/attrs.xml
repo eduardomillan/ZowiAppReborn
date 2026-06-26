@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ZowiAppView">
+        <attr name="buttonBackground" format="reference" />
+        <attr name="label" format="string" />
+        <attr name="enabled" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="EduBar">
+        <attr name="height" format="dimension" />
+        <attr name="indefinite" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="GifView">
+        <attr name="gif" format="reference" />
+        <attr name="paused" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="MakerBoxDialog">
+        <attr name="showCloseButton" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -1,8 +1,8 @@
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
@@ -76,7 +76,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
                 public void run() {
                     Iterator it = ready.iterator();
                     while (it.hasNext()) {
-                        BaseItemAnimationManager.this.createAnimation((ItemAnimationInfo) it.next());
+                        BaseItemAnimationManager.this.createAnimation((T) it.next());
                     }
                     ready.clear();
                     BaseItemAnimationManager.this.mDeferredReadySets.remove(ready);
@@ -177,13 +177,13 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         }
 
         /* JADX WARN: Multi-variable type inference failed */
-        @Override // android.support.v4.view.ViewPropertyAnimatorListener
+        @Override // androidx.core.view.ViewPropertyAnimatorListener
         public void onAnimationStart(View view) {
             this.mManager.dispatchStarting(this.mAnimationInfo, this.mHolder);
         }
 
         /* JADX WARN: Multi-variable type inference failed */
-        @Override // android.support.v4.view.ViewPropertyAnimatorListener
+        @Override // androidx.core.view.ViewPropertyAnimatorListener
         public void onAnimationEnd(View view) {
             BaseItemAnimationManager baseItemAnimationManager = this.mManager;
             ItemAnimationInfo info = this.mAnimationInfo;
@@ -201,7 +201,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         }
 
         /* JADX WARN: Multi-variable type inference failed */
-        @Override // android.support.v4.view.ViewPropertyAnimatorListener
+        @Override // androidx.core.view.ViewPropertyAnimatorListener
         public void onAnimationCancel(View view) {
             this.mManager.onAnimationCancel(this.mAnimationInfo, this.mHolder);
         }

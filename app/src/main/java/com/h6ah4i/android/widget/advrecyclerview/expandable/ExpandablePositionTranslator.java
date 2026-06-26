@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.support.v4.view.InputDeviceCompat;
+import androidx.core.view.InputDeviceCompat;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import java.util.Arrays;
 

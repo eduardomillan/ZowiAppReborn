@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.v4.os.EnvironmentCompat;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import androidx.core.os.EnvironmentCompat;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 /* JADX INFO: loaded from: classes.dex */
 public class IdHelperAndroid {
     public static final String NO_ID_AVAILABLE = "none";
+    private static final String GOOGLE_PLAY_STORE_PACKAGE = "com.android.vending";
     private static boolean c = false;
     private static final String a = "com.google.android.gms";
     private static final String b = "com.google.android.gms.ads.identifier.service.START";
@@ -139,7 +139,7 @@ public class IdHelperAndroid {
             return false;
         }
         try {
-            context.getPackageManager().getPackageInfo(GooglePlayServicesUtil.GOOGLE_PLAY_STORE_PACKAGE, 0);
+            context.getPackageManager().getPackageInfo(GOOGLE_PLAY_STORE_PACKAGE, 0);
             b bVar = new b();
             Intent intent = new Intent(b);
             intent.setPackage(a);

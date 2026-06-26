@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -155,7 +155,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         /*
             r3 = this;
             r1 = 1
-            int r0 = android.support.v4.view.MotionEventCompat.getActionMasked(r5)
+            int r0 = androidx.core.view.MotionEventCompat.getActionMasked(r5)
             switch(r0) {
                 case 0: goto L11;
                 case 1: goto La;

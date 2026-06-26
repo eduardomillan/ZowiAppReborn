@@ -24,7 +24,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
 
     void handleOnViewRecycled(RecyclerView.ViewHolder holder) {
         if (this.mListeners != null) {
-            for (T listener : this.mListeners) {
+            for (RecyclerView.RecyclerListener listener : this.mListeners) {
                 listener.onViewRecycled(holder);
             }
         }

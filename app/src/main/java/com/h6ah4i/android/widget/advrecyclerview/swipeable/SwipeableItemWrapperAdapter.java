@@ -1,7 +1,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.support.v4.view.ViewCompat;
-import android.support.v7.internal.widget.ActivityChooserView;
+import androidx.core.view.ViewCompat;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
@@ -275,7 +275,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         if (viewHolder instanceof SwipeableItemViewHolder) {
             SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) viewHolder;
             int curFlags = holder2.getSwipeStateFlags();
-            if (curFlags == -1 || ((curFlags ^ flags) & ActivityChooserView.ActivityChooserViewAdapter.MAX_ACTIVITY_COUNT_UNLIMITED) != 0) {
+            if (curFlags == -1 || ((curFlags ^ flags) & Integer.MAX_VALUE) != 0) {
                 flags |= Integer.MIN_VALUE;
             }
             ((SwipeableItemViewHolder) viewHolder).setSwipeStateFlags(flags);

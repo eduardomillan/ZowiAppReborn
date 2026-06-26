@@ -3,10 +3,10 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+import androidx.core.view.ViewPropertyAnimatorUpdateListener;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -427,18 +427,18 @@ public class ItemSlidingAnimator {
             this.mAnimator.start();
         }
 
-        @Override // android.support.v4.view.ViewPropertyAnimatorUpdateListener
+        @Override // androidx.core.view.ViewPropertyAnimatorUpdateListener
         public void onAnimationUpdate(View view) {
             float translation = this.mHorizontal ? ViewCompat.getTranslationX(view) : ViewCompat.getTranslationY(view);
             float amount = translation * this.mInvSize;
             this.mAdapter.onUpdateSlideAmount(this.mViewHolder, this.mViewHolder.getLayoutPosition(), this.mHorizontal, amount, false);
         }
 
-        @Override // android.support.v4.view.ViewPropertyAnimatorListener
+        @Override // androidx.core.view.ViewPropertyAnimatorListener
         public void onAnimationStart(View view) {
         }
 
-        @Override // android.support.v4.view.ViewPropertyAnimatorListener
+        @Override // androidx.core.view.ViewPropertyAnimatorListener
         public void onAnimationEnd(View view) {
             this.mAnimator.setListener(null);
             if (Build.VERSION.SDK_INT >= 19) {
@@ -458,7 +458,7 @@ public class ItemSlidingAnimator {
             this.mAdapter = null;
         }
 
-        @Override // android.support.v4.view.ViewPropertyAnimatorListener
+        @Override // androidx.core.view.ViewPropertyAnimatorListener
         public void onAnimationCancel(View view) {
         }
     }

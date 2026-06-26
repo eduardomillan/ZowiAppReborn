@@ -1,7 +1,7 @@
 package com.google.ads;
 
 import android.content.Context;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 /* JADX INFO: loaded from: classes.dex */
 @Deprecated

@@ -57,9 +57,9 @@ public class QuizView extends FrameLayout {
             for (ProjectViewModel.TestAnswerViewModel testAnswer : testQuestion.answers) {
                 View answerView = LayoutInflater.from(this.context).inflate(R.layout.quiz_answer_row_view, (ViewGroup) null);
                 if (answerIndex % 2 == 0) {
-                    answerView.setBackgroundColor(getResources().getColor(R.color.maker_box_odd_row_background));
+                    answerView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_odd_row_background", this.context));
                 } else {
-                    answerView.setBackgroundColor(getResources().getColor(R.color.maker_box_even_row_background));
+                    answerView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_even_row_background", this.context));
                 }
                 View answerRowView = answerView.findViewById(R.id.quiz_answer_row);
                 TextView answerTextView = (TextView) answerView.findViewById(R.id.quiz_answer_row_textview);

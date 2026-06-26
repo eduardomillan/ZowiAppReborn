@@ -160,7 +160,7 @@ public class BTConnectionControllerImpl implements BTConnectionController {
     public Observable<Integer> sendHexToZowi(final InputStream hexInputStream) {
         return Observable.create(new Observable.OnSubscribe<Integer>() { // from class: com.bq.zowi.controllers.BTConnectionControllerImpl.7
             @Override // rx.functions.Action1
-            public void call(final Subscriber<? super Integer> subscriber) throws Throwable {
+            public void call(final Subscriber<? super Integer> subscriber) {
                 BTConnectionControllerImpl.this.isSendingHexToZowi = true;
                 Logger log = new Logger() { // from class: com.bq.zowi.controllers.BTConnectionControllerImpl.7.1
                     private final String STK500v1_LOGGER_TAG = "STK500v1";
@@ -180,69 +180,18 @@ public class BTConnectionControllerImpl implements BTConnectionController {
                         Grove.tag("STK500v1").d(s + " " + s1, new Object[0]);
                     }
                 };
-                BufferedReader br = null;
                 StringBuilder hexData = new StringBuilder();
                 try {
-                    try {
-                        BufferedReader br2 = new BufferedReader(new InputStreamReader(hexInputStream));
+                    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(hexInputStream))) {
                         while (true) {
-                            try {
-                                String line = br2.readLine();
-                                if (line == null) {
-                                    break;
-                                } else {
-                                    hexData.append(line);
-                                }
-                            } catch (FileNotFoundException e) {
-                                e = e;
-                                br = br2;
-                                Grove.d("onSendClicked: " + e, "e");
-                                if (br != null) {
-                                    try {
-                                        br.close();
-                                    } catch (IOException e2) {
-                                        e2.printStackTrace();
-                                    }
-                                }
-                            } catch (IOException e3) {
-                                e = e3;
-                                br = br2;
-                                Grove.d("onSendClicked: " + e, "e");
-                                if (br != null) {
-                                    try {
-                                        br.close();
-                                    } catch (IOException e4) {
-                                        e4.printStackTrace();
-                                    }
-                                }
-                            } catch (Throwable th) {
-                                th = th;
-                                br = br2;
-                                if (br != null) {
-                                    try {
-                                        br.close();
-                                    } catch (IOException e5) {
-                                        e5.printStackTrace();
-                                    }
-                                }
-                                throw th;
+                            String line = bufferedReader.readLine();
+                            if (line == null) {
+                                break;
                             }
+                            hexData.append(line);
                         }
-                        if (br2 != null) {
-                            try {
-                                br2.close();
-                                br = br2;
-                            } catch (IOException e6) {
-                                e6.printStackTrace();
-                                br = br2;
-                            }
-                        } else {
-                            br = br2;
-                        }
-                    } catch (FileNotFoundException e7) {
-                        e = e7;
-                    } catch (IOException e8) {
-                        e = e8;
+                    } catch (IOException e) {
+                        Grove.d("onSendClicked: " + e, "e");
                     }
                     if (hexData.length() <= 0) {
                         subscriber.onError(new Exception("HEX data length is = 0. Invalid HEX data."));
@@ -288,8 +237,8 @@ public class BTConnectionControllerImpl implements BTConnectionController {
                     } else {
                         subscriber.onError(new Exception("Something went wrong while programming"));
                     }
-                } catch (Throwable th2) {
-                    th = th2;
+                } catch (Throwable throwable) {
+                    subscriber.onError(throwable);
                 }
             }
         }).doOnTerminate(new Action0() { // from class: com.bq.zowi.controllers.BTConnectionControllerImpl.6

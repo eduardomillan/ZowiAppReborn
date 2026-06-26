@@ -23,7 +23,7 @@ public class MeasureZowiBatteryLevelInteractorImpl implements MeasureZowiBattery
             public Single<? extends Boolean> call(Float receivedBatteryLevel) {
                 return MeasureZowiBatteryLevelInteractorImpl.this.manageZowiBatteryLevel(receivedBatteryLevel.floatValue());
             }
-        }).timeout(500L, TimeUnit.MILLISECONDS, (Single<? extends R>) Single.just(true));
+        }).timeout(500L, TimeUnit.MILLISECONDS, Single.just(true));
     }
 
     @Override // com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor

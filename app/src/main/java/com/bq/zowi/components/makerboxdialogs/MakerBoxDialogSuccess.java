@@ -35,25 +35,33 @@ public class MakerBoxDialogSuccess extends MakerBoxDialog {
 
     protected void init(Context context) {
         if (!isInEditMode()) {
-            LayoutInflater.from(context).inflate(R.layout.component_makerbox_success, this);
-            this.bgImageView = (ImageView) findViewById(R.id.makerbox_dialog_success_bg_image);
-            Animation rotation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_infinite);
-            this.bgImageView.startAnimation(rotation);
-            this.successDescriptionText = (TextView) findViewById(R.id.makerbox_success_description);
-            this.successMainText = (TextView) findViewById(R.id.makerbox_success_main_text);
-            this.continueButton = (Button) findViewById(R.id.makerbox_dialog_success_continue_button);
+            LayoutInflater.from(context).inflate(resolveLayoutId("component_makerbox_success", R.layout.component_makerbox_success), this);
+            this.bgImageView = (ImageView) findResolvedView("makerbox_dialog_success_bg_image", R.id.makerbox_dialog_success_bg_image);
+            if (this.bgImageView != null) {
+                Animation rotation = AnimationUtils.loadAnimation(getContext(), resolveAnimId("rotate_infinite", R.anim.rotate_infinite));
+                this.bgImageView.startAnimation(rotation);
+            }
+            this.successDescriptionText = (TextView) findResolvedView("makerbox_success_description", R.id.makerbox_success_description);
+            this.successMainText = (TextView) findResolvedView("makerbox_success_main_text", R.id.makerbox_success_main_text);
+            this.continueButton = (Button) findResolvedView("makerbox_dialog_success_continue_button", R.id.makerbox_dialog_success_continue_button);
         }
     }
 
     public void setSuccessDescriptionText(String description) {
-        this.successDescriptionText.setText(description);
+        if (this.successDescriptionText != null) {
+            this.successDescriptionText.setText(description);
+        }
     }
 
     public void setSuccessMainText(String description) {
-        this.successMainText.setText(description);
+        if (this.successMainText != null) {
+            this.successMainText.setText(description);
+        }
     }
 
     public void setOnContinueButtonClickedListener(View.OnClickListener onClickListener) {
-        this.continueButton.setOnClickListener(onClickListener);
+        if (this.continueButton != null) {
+            this.continueButton.setOnClickListener(onClickListener);
+        }
     }
 }

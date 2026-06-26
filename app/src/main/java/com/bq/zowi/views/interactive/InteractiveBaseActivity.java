@@ -1,7 +1,7 @@
 package com.bq.zowi.views.interactive;
 
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
+import androidx.annotation.CallSuper;
 import androidx.core.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,13 +60,13 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
     protected boolean isAltered = false;
     private boolean isInstallingFw = false;
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in, R.anim.still);
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         findViewById(R.id.notification_bar_container).setOnTouchListener(new View.OnTouchListener() { // from class: com.bq.zowi.views.interactive.InteractiveBaseActivity.1
             @Override // android.view.View.OnTouchListener

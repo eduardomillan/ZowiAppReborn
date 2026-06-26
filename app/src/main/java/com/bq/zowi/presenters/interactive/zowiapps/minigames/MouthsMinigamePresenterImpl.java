@@ -24,7 +24,6 @@ import com.bq.zowi.subscribers.CommandSingleSubscriber;
 import com.bq.zowi.utils.Grove;
 import com.bq.zowi.views.interactive.zowiapps.minigames.MouthsMiniGameView;
 import com.bq.zowi.wireframes.zowiapps.minigames.MinigameBaseWireframe;
-import com.comscore.streaming.Constants;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
@@ -67,7 +66,7 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         this.MIN_SCORE_TO_RANK = 2;
         this.MOUTH_TYPES = 4;
         this.ONE_SECOND_MILLIS = 1000L;
-        this.countdownTimeInMillis = Constants.HEARTBEAT_STAGE_ONE_INTERVAL;
+        this.countdownTimeInMillis = 10000L;
         this.connectionController = connectionController;
         this.sendCommandToZowiInteractor = sendCommandToZowiInteractor;
         this.rankingController = rankingController;

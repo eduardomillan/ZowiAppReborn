@@ -3,11 +3,11 @@ package com.comscore.android.id;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /* JADX INFO: loaded from: classes.dex */
 @SuppressLint({"NewApi"})
 public class API4 {
+    private static final String GOOGLE_PLAY_STORE_PACKAGE = "com.android.vending";
     private static boolean a = false;
     private static boolean b = false;
 
@@ -18,7 +18,7 @@ public class API4 {
         if (Build.VERSION.SDK_INT > 4) {
             try {
                 String installerPackageName = context.getPackageManager().getInstallerPackageName(context.getPackageName());
-                if (GooglePlayServicesUtil.GOOGLE_PLAY_STORE_PACKAGE.equals(installerPackageName) || "com.google.play".equals(installerPackageName)) {
+                if (GOOGLE_PLAY_STORE_PACKAGE.equals(installerPackageName) || "com.google.play".equals(installerPackageName)) {
                     a = true;
                     b = true;
                     return true;

@@ -9,7 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 import com.bq.robotic.droid2ino.BluetoothConnection;
@@ -20,7 +20,7 @@ import com.bq.robotic.droid2ino.utils.DeviceListDialogStyle;
 import com.bq.robotic.droid2ino.utils.Droid2InoConstants;
 
 /* JADX INFO: loaded from: classes.dex */
-public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity {
+public abstract class BaseBluetoothConnectionActivity extends AppCompatActivity {
     private static final String LOG_TAG = "BaseConnectActivity";
     private BroadcastReceiver bluetoothDisconnectReceiver;
     private IntentFilter disconnectBluetoothFilter;
@@ -66,7 +66,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
 
     public abstract void onNewMessage(String str);
 
-    @Override // android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -106,7 +106,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
         }
     }
 
-    @Override // android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onStop() {
         super.onStop();
         if (this.mBluetoothAdapter != null) {

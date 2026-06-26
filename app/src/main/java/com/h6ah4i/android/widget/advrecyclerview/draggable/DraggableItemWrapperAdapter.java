@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
-import android.support.v7.internal.widget.ActivityChooserView;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.util.Log;
@@ -252,7 +252,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         if (viewHolder instanceof DraggableItemViewHolder) {
             DraggableItemViewHolder holder2 = (DraggableItemViewHolder) viewHolder;
             int curFlags = holder2.getDragStateFlags();
-            if (curFlags == -1 || ((curFlags ^ flags) & ActivityChooserView.ActivityChooserViewAdapter.MAX_ACTIVITY_COUNT_UNLIMITED) != 0) {
+            if (curFlags == -1 || ((curFlags ^ flags) & Integer.MAX_VALUE) != 0) {
                 flags |= Integer.MIN_VALUE;
             }
             ((DraggableItemViewHolder) viewHolder).setDragStateFlags(flags);

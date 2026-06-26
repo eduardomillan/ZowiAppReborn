@@ -35,10 +35,10 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
     private boolean unlockerCondition2 = false;
     private boolean achievementsUnlocked = false;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_achievements_view);
+        setResolvedContentView("activity_achievements_view", R.layout.activity_achievements_view);
         this.viewpager = (ViewPager) findViewById(R.id.activity_achievements_view_pager);
         int margin = (int) (getResources().getDimension(R.dimen.sections_pager_horizontal_margin) * 2.0f);
         this.viewpager.setPageMargin(-margin);
@@ -95,7 +95,7 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
         });
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         ((AchievementsPresenter) getPresenter()).loadAchievements();

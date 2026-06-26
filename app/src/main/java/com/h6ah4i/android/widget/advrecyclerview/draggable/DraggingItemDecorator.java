@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -247,7 +247,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             shadow.setBounds(0, 0, width, height);
             shadow.draw(canvas);
         }
-        int savedCount = canvas.save(3);
+        int savedCount = canvas.save();
         canvas.clipRect(this.mShadowPadding.left, this.mShadowPadding.top, width - this.mShadowPadding.right, height - this.mShadowPadding.bottom);
         canvas.translate(this.mShadowPadding.left, this.mShadowPadding.top);
         v.draw(canvas);

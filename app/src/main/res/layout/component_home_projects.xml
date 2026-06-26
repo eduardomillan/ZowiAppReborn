@@ -29,7 +29,7 @@
                     android:layout_marginBottom="@dimen/sections_pager_box_title_margin"
                     android:text="@string/projects_box_title"
                     android:layout_centerHorizontal="true"/>
-                <android.support.v7.widget.GridLayout
+                <androidx.gridlayout.widget.GridLayout
                     android:paddingLeft="@dimen/home_maker_box_horizontal_padding"
                     android:paddingTop="@dimen/home_maker_box_vertical_padding"
                     android:paddingRight="@dimen/home_maker_box_horizontal_padding"
@@ -117,7 +117,7 @@
                         app:layout_gravity="fill"
                         app:buttonBackground="@drawable/project_gravity_button_selector"
                         app:label="@string/project_gravity_title"/>
-                </android.support.v7.widget.GridLayout>
+                </androidx.gridlayout.widget.GridLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

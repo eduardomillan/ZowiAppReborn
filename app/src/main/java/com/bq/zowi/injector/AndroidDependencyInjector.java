@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import androidx.fragment.app.FragmentActivity;
 import com.adobe.mobile.Config;
 import com.bq.analytics.core.AnalyticsController;
-import com.bq.gatracker.GoogleAnalyticsTracker;
 import com.bq.zowi.R;
 import com.bq.zowi.ZowiApplication;
 import com.bq.zowi.controllers.AchievementsController;
@@ -74,9 +73,6 @@ import com.bq.zowi.wireframes.wizard.WizardWireframeImpl;
 import com.bq.zowi.wireframes.zowiapps.MouthsEditorWireframeImpl;
 import com.bq.zowi.wireframes.zowiapps.minigames.MinigameBaseWireframe;
 import com.bq.zowi.wireframes.zowiapps.minigames.MinigameBaseWireframeImpl;
-import com.comscore.analytics.comScore;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import org.jetbrains.annotations.NotNull;
 import retrofit.RestAdapter;
 import rx.Scheduler;
@@ -115,10 +111,6 @@ public class AndroidDependencyInjector extends DependencyInjector {
         reporter.init();
         reporter.setReleaseStage("RELEASE");
         Config.setContext(this.application);
-        comScore.setAppContext(this.application);
-        comScore.setCustomerC2(this.application.getString(R.string.rtve_comscore_id));
-        comScore.setPublisherSecret(this.application.getString(R.string.rtve_comscore_key));
-        comScore.enableAutoUpdate(this.application.getResources().getInteger(R.integer.rtve_comscore_autoupdate_period), true);
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
@@ -286,7 +278,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public int provideFactoryFirmwareVersion() {
-        return this.application.getResources().getInteger(R.integer.factory_firmware_version);
+        return com.bq.zowi.utils.ResourceResolver.getIntegerByResourceId("factory_firmware_version", this.application);
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
@@ -432,12 +424,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
             @Override // com.bq.zowi.injector.DependencyCache.Provider
             @NotNull
             public AnalyticsController get() {
-                AnalyticsController controller = new AnalyticsController();
-                Tracker tracker = GoogleAnalytics.getInstance(AndroidDependencyInjector.this.application).newTracker(R.xml.app_tracker_pro);
-                tracker.enableAdvertisingIdCollection(true);
-                controller.addTracker(new GoogleAnalyticsTracker(tracker));
-                controller.addTracker(new GoogleAnalyticsTracker(AndroidDependencyInjector.this.application, R.xml.rtve_app_tracker_pro));
-                return controller;
+                return new AnalyticsController();
             }
         });
     }

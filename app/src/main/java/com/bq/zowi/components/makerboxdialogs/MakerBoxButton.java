@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Button;
 import com.bq.zowi.R;
+import com.bq.zowi.utils.ResourceResolver;
 
 /* JADX INFO: loaded from: classes.dex */
 public class MakerBoxButton extends Button {
@@ -36,7 +37,7 @@ public class MakerBoxButton extends Button {
         this.paddingTop = getPaddingTop();
         this.paddingRight = getPaddingRight();
         this.paddingBottom = getPaddingBottom();
-        setTextColor(getResources().getColorStateList(R.color.maker_box_action_button_color_selector));
+        setTextColor(ResourceResolver.getColorStateListByResourceId("maker_box_action_button_color_selector", getContext()));
     }
 
     @Override // android.widget.TextView, android.view.View

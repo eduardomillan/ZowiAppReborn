@@ -1,5 +1,6 @@
 package com.bq.error_reporting;
 
+import android.os.Build;
 import android.content.Context;
 import com.bq.error_reporting.ErrorReporter;
 import com.bugsnag.android.Bugsnag;
@@ -13,21 +14,29 @@ public class BugsnagErrorReporterImpl implements ErrorReporter {
     private String apiKey;
     private Context applicationContext;
     private ErrorReporter.Metadata defaultMetadata;
+    private boolean enabled;
 
     public BugsnagErrorReporterImpl(@NotNull Context context, @NotNull String apiKey, ErrorReporter.Metadata defaultMetadata) {
         this.applicationContext = context.getApplicationContext();
         this.apiKey = apiKey;
         this.defaultMetadata = defaultMetadata;
+        this.enabled = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU;
     }
 
     @Override // com.bq.error_reporting.ErrorReporter
     public void init() {
+        if (!this.enabled) {
+            return;
+        }
         Bugsnag.init(this.applicationContext, this.apiKey);
         Bugsnag.setMetaData(mapMetadata(this.defaultMetadata));
     }
 
     @Override // com.bq.error_reporting.ErrorReporter
     public void setUserData(String userId, String userName, String userEmail) {
+        if (!this.enabled) {
+            return;
+        }
         if (userId != null) {
             Bugsnag.setUserId(userId);
         }
@@ -41,6 +50,9 @@ public class BugsnagErrorReporterImpl implements ErrorReporter {
 
     @Override // com.bq.error_reporting.ErrorReporter
     public void setReleaseStage(String releaseStage) {
+        if (!this.enabled) {
+            return;
+        }
         Bugsnag.setReleaseStage(releaseStage);
     }
 
@@ -56,10 +68,16 @@ public class BugsnagErrorReporterImpl implements ErrorReporter {
 
     @Override // com.bq.error_reporting.ErrorReporter
     public void leaveBreadcrumb(String message) {
+        if (!this.enabled) {
+            return;
+        }
         Bugsnag.leaveBreadcrumb(message);
     }
 
     private void logHandledExceptionInternal(final Throwable throwable, ErrorReporter.Level errorLevel, ErrorReporter.Metadata metadata, boolean blocking) {
+        if (!this.enabled) {
+            return;
+        }
         final Severity severity = mapErrorLevel(errorLevel);
         final MetaData errorMetadata = mapMetadata(metadata);
         Thread notifyThread = new Thread(new Runnable() { // from class: com.bq.error_reporting.BugsnagErrorReporterImpl.1

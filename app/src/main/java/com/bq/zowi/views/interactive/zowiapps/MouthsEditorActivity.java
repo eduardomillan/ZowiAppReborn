@@ -19,10 +19,10 @@ public class MouthsEditorActivity extends InteractiveBaseActivity<MouthsEditorPr
     private MouthGridLayout gridMouth;
     private View helpLayout;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mouths_editor_view);
+        setResolvedContentView("activity_mouths_editor_view", R.layout.activity_mouths_editor_view);
         this.helpLayout = findViewById(R.id.mouths_editor_how_to_play_layout);
         View homeButton = findViewById(R.id.mouths_editor_home_button);
         homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.zowiapps.MouthsEditorActivity.1

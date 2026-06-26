@@ -1,7 +1,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.touchguard;
 
 import androidx.annotation.NonNull;
-import android.support.v4.view.MotionEventCompat;
+import androidx.core.view.MotionEventCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;

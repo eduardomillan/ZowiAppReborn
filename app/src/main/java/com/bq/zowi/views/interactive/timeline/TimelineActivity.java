@@ -20,6 +20,7 @@ import com.bq.zowi.models.commands.Command;
 import com.bq.zowi.models.commands.GridCommand;
 import com.bq.zowi.models.commands.TimelineCommand;
 import com.bq.zowi.presenters.interactive.timeline.TimelinePresenter;
+import com.bq.zowi.utils.ResourceResolver;
 import com.bq.zowi.views.interactive.InteractiveBaseActivity;
 import com.bq.zowi.views.interactive.timeline.CommandsTileViewHolder;
 import com.bq.zowi.views.interactive.timeline.TimelineDraggableItemAdapter;
@@ -52,11 +53,11 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
     private RecyclerViewDragDropManager timelineRecyclerViewDragDropManager;
     private RecyclerView.Adapter timelineWrappedAdapter;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(1024, 1024);
-        setContentView(R.layout.activity_timeline_view);
+        setResolvedContentView("activity_timeline_view", R.layout.activity_timeline_view);
         this.howToPlayLayout = (MakerBoxDialog) findViewById(R.id.timeline_how_to_play_layout);
         this.howToPlayText = (TextView) findViewById(R.id.timeline_how_to_play_text);
         this.homeButton = (Button) findViewById(R.id.timeline_home_button);
@@ -130,7 +131,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         this.timelineRecyclerViewDragDropManager.setOnItemDragEventListener(this);
         this.commandsSelectorDialog = (MakerBoxDialogScrollable) findViewById(R.id.timeline_actions_dialog);
         this.commandsRecyclerView = (RecyclerView) findViewById(R.id.activity_timeline_commands_recycler_view);
-        this.commandsLayoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.makerbox_dialog_scrollable_columns));
+        this.commandsLayoutManager = new GridLayoutManager(this, ResourceResolver.getIntegerByResourceId("makerbox_dialog_scrollable_columns", this));
         this.commandsRecyclerView.setLayoutManager(this.commandsLayoutManager);
         this.commandsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         this.commmandsAdapter = new RecyclerAdapter<>(new CommandsGridViewHolderResolver(this));
@@ -138,7 +139,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         this.zowiDependantViews = new View[]{this.playButton};
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         ((TimelinePresenter) getPresenter()).gameReady();
@@ -222,7 +223,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         this.commandsSelectorDialog.setVisibility(0);
         this.commmandsAdapter.setItems(commandList);
         float rowHeight = getResources().getDimension(R.dimen.achievement_row_item_height);
-        int columns = getResources().getInteger(R.integer.makerbox_dialog_scrollable_columns);
+        int columns = ResourceResolver.getIntegerByResourceId("makerbox_dialog_scrollable_columns", this);
         int numberOfRows = commandList.size() / columns;
         if (commandList.size() % columns != 0) {
             numberOfRows++;
@@ -243,7 +244,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         ((TimelinePresenter) getPresenter()).saveTimeline(this.timelineAdapter.getDataProvider().getTimelineDataCommandsList());
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onDestroy() {
         if (this.timelineRecyclerViewDragDropManager != null) {
             this.timelineRecyclerViewDragDropManager.release();

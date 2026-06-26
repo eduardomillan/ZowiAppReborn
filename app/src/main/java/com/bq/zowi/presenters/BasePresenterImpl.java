@@ -27,7 +27,7 @@ public abstract class BasePresenterImpl<V, W> implements BasePresenter<V, W> {
     }
 
     @Override // com.bq.zowi.presenters.BasePresenter
-    public void onDestroyView() throws Throwable {
+    public void onDestroyView() {
         if (this.subscriptions != null && !this.subscriptions.isUnsubscribed()) {
             this.subscriptions.unsubscribe();
         }

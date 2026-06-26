@@ -19,10 +19,10 @@ import com.bq.zowi.wireframes.home.HomeWireframe;
 public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> implements HomeView {
     private ZowiAppView loadMouthsEditorButton;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_view);
+        setResolvedContentView("activity_home_view", R.layout.activity_home_view);
         ViewPager viewpager = (ViewPager) findViewById(R.id.activity_home_view_pager);
         viewpager.setAdapter(new HomePagerAdapter());
         int margin = (int) (getResources().getDimension(R.dimen.sections_pager_horizontal_margin) * 2.0f);
@@ -150,7 +150,7 @@ public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> imp
         });
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         ((HomePresenter) getPresenter()).logAppStarted();

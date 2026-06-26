@@ -43,9 +43,9 @@ public class AchievementRowViewHolder extends RecyclerViewHolder<AchievementView
         this.descriptionText.setText(ResourceResolver.getStringByResourceId(item.getDescriptionResourceId(), this.context.getResources(), this.context.getPackageName()));
         this.unlockConditionsText.setText(ResourceResolver.getStringByResourceId(item.getUnlockConditionResouceId(), this.context.getResources(), this.context.getPackageName()));
         if (getAdapterPosition() % 2 == 0) {
-            this.itemView.setBackgroundColor(this.context.getResources().getColor(R.color.maker_box_odd_row_background));
+            this.itemView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_odd_row_background", this.context));
         } else {
-            this.itemView.setBackgroundColor(this.context.getResources().getColor(R.color.maker_box_even_row_background));
+            this.itemView.setBackgroundColor(ResourceResolver.getColorByResourceId("maker_box_even_row_background", this.context));
         }
     }
 }

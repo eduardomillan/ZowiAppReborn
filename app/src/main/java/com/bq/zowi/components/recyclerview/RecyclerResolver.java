@@ -19,6 +19,6 @@ public abstract class RecyclerResolver<T> {
         if (viewHolderFromViewType == null) {
             throw new RuntimeException("The selected view type doesn't have a View Holder");
         }
-        return viewHolderFromViewType;
+        return (RecyclerViewHolder<T>) viewHolderFromViewType;
     }
 }

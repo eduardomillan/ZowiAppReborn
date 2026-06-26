@@ -1,7 +1,7 @@
 package com.bq.zowi.views;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.View;
 import com.bq.analytics.core.AnalyticsController;
 import com.bq.zowi.injector.AndroidDependencyInjector;
@@ -14,7 +14,7 @@ public abstract class BaseFragment<T extends BasePresenter<?, ?>> extends Fragme
 
     protected abstract T resolvePresenter();
 
-    @Override // android.support.v4.app.Fragment
+    @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
         super.onViewCreated(view, bundle);
         this.presenter = (T) resolvePresenter();
@@ -22,14 +22,14 @@ public abstract class BaseFragment<T extends BasePresenter<?, ?>> extends Fragme
         this.analyticsController = AndroidDependencyInjector.getInstance().provideAnalyticsController();
     }
 
-    @Override // android.support.v4.app.Fragment
+    @Override // androidx.fragment.app.Fragment
     public void onDestroyView() {
         super.onDestroyView();
         getPresenter().onDestroyView();
         getPresenter().unBindViewAndWireframe();
     }
 
-    @Override // android.support.v4.app.Fragment
+    @Override // androidx.fragment.app.Fragment
     public void onDestroy() {
         super.onDestroy();
     }

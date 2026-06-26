@@ -76,7 +76,7 @@ public class GameControllerImpl implements GameController {
                 if (string == null) {
                     singleSubscriber.onSuccess(null);
                 } else {
-                    singleSubscriber.onSuccess((Object) GameControllerImpl.this.gson.fromJson(string, typeOfT));
+                    singleSubscriber.onSuccess((T) GameControllerImpl.this.gson.fromJson(string, typeOfT));
                 }
             }
         });
@@ -91,7 +91,7 @@ public class GameControllerImpl implements GameController {
                 if (string == null) {
                     singleSubscriber.onSuccess(null);
                 } else {
-                    singleSubscriber.onSuccess((Object) GameControllerImpl.this.gson.fromJson(string, (Class) classOfT));
+                    singleSubscriber.onSuccess((T) GameControllerImpl.this.gson.fromJson(string, (Class) classOfT));
                 }
             }
         });

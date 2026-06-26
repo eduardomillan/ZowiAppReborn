@@ -23,10 +23,10 @@ public class MouthsMinigameActivity extends MinigameBaseActivity<MouthsMinigameP
     private View progressLayout;
     private TextView progressText;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mouths_minigame_view);
+        setResolvedContentView("activity_mouths_minigame_view", R.layout.activity_mouths_minigame_view);
         this.mouthGrid = (MouthGridLayout) findViewById(R.id.minigame_mouths_grid);
         this.mouthGrid.setMouthGridLayoutTouchListener(new MouthGridLayout.MouthGridLayoutTouchListener() { // from class: com.bq.zowi.views.interactive.zowiapps.minigames.MouthsMinigameActivity.1
             @Override // com.bq.zowi.components.games.MouthGridLayout.MouthGridLayoutTouchListener

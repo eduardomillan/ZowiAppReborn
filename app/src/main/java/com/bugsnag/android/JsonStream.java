@@ -13,12 +13,6 @@ final class JsonStream extends JsonWriter {
         void toStream(JsonStream jsonStream) throws IOException;
     }
 
-    @Override // com.bugsnag.android.JsonWriter
-    public final /* bridge */ /* synthetic */ JsonWriter name(String str) throws IOException {
-        super.name(str);
-        return this;
-    }
-
     JsonStream(Writer out) {
         super(out);
         this.out = out;

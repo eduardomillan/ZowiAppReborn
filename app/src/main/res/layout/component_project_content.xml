@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/activity_project_view_pager"
         android:clipChildren="false"
         android:clipToPadding="false"
@@ -166,5 +166,5 @@
                 </RelativeLayout>
             </com.bq.zowi.components.makerboxdialogs.MakerBox>
         </RelativeLayout>
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 </merge>

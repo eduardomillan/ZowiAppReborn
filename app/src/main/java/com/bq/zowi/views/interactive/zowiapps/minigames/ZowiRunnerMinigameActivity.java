@@ -6,8 +6,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,10 +43,10 @@ public class ZowiRunnerMinigameActivity extends InteractiveBaseActivity<ZowiRunn
         return i;
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zowi_runner_minigame_view);
+        setResolvedContentView("activity_zowi_runner_minigame_view", R.layout.activity_zowi_runner_minigame_view);
         this.playButton = (FloatingActionButton) findViewById(R.id.zowi_runner_play_button);
         this.playButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.zowiapps.minigames.ZowiRunnerMinigameActivity.1
             @Override // android.view.View.OnClickListener

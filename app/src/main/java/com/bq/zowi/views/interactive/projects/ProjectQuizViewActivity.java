@@ -38,10 +38,10 @@ public class ProjectQuizViewActivity extends InteractiveBaseActivity<ProjectQuiz
     private QuizView quizView;
     private MakerBoxDialogSuccess successWithoutAchievementLayout;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_quiz_view);
+        setResolvedContentView("activity_project_quiz_view", R.layout.activity_project_quiz_view);
         this.projectId = getIntent().getStringExtra(ProjectViewActivity.PROJECT_ID_EXTRA);
         this.quizView = (QuizView) findViewById(R.id.activity_project_quiz_view_component);
         this.projectCompletedImageView = (ImageView) findViewById(R.id.activity_project_quiz_completed_imageview);
@@ -62,7 +62,7 @@ public class ProjectQuizViewActivity extends InteractiveBaseActivity<ProjectQuiz
         this.failureLayout = (MakerBoxDialogFailure) findViewById(R.id.project_failure_layout);
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         ((ProjectQuizPresenter) getPresenter()).loadProjectQuiz(this.projectId);

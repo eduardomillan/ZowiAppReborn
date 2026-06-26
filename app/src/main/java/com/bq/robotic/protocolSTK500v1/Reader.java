@@ -419,37 +419,32 @@ public class Reader implements Runnable, IReader {
 
         @Override // com.bq.robotic.protocolSTK500v1.Reader.BaseState, com.bq.robotic.protocolSTK500v1.IReaderState
         public void execute() {
-            long now;
             super.execute();
             if (!this.abort) {
                 try {
-                    now = System.currentTimeMillis();
-                } catch (IOException e) {
-                    Reader.this.logger.logcat("ReadingState.execute: " + e.getMessage(), "e");
-                    Reader.this.lastException = e;
-                    Reader.this.switchState(EReaderState.FAIL);
-                }
-                if (now - this.readInitiated > TimeoutValues.DEFAULT.getTimeout()) {
-                    Reader.this.switchState(EReaderState.TIMEOUT_OCCURRED);
-                    return;
-                }
-                int bytesInBuffer = Reader.this.bis.available();
-                if (bytesInBuffer > 0) {
-                    Reader.this.logger.logcat(getEnum() + ".execute: bytes in buffer: " + bytesInBuffer, "d");
-                    int b = Reader.this.bis.read();
-                    if (b == -1) {
-                        Reader.this.logger.logcat("ReadingState.execute: EndOfStream", "w");
+                    long now = System.currentTimeMillis();
+                    if (now - this.readInitiated > TimeoutValues.DEFAULT.getTimeout()) {
+                        Reader.this.switchState(EReaderState.TIMEOUT_OCCURRED);
+                        return;
+                    }
+                    int bytesInBuffer = Reader.this.bis.available();
+                    if (bytesInBuffer > 0) {
+                        Reader.this.logger.logcat(getEnum() + ".execute: bytes in buffer: " + bytesInBuffer, "d");
+                        int b = Reader.this.bis.read();
+                        if (b == -1) {
+                            Reader.this.logger.logcat("ReadingState.execute: EndOfStream", "w");
+                            synchronized (this.reader) {
+                                Reader.this.result = b;
+                            }
+                            Reader.this.switchState(EReaderState.FAIL);
+                            return;
+                        }
                         synchronized (this.reader) {
                             Reader.this.result = b;
                         }
-                        Reader.this.switchState(EReaderState.FAIL);
-                        return;
+                        Reader.this.switchState(EReaderState.RESULT_READY);
                     }
-                    synchronized (this.reader) {
-                        Reader.this.result = b;
-                    }
-                    Reader.this.switchState(EReaderState.RESULT_READY);
-                    return;
+                } catch (IOException e) {
                     Reader.this.logger.logcat("ReadingState.execute: " + e.getMessage(), "e");
                     Reader.this.lastException = e;
                     Reader.this.switchState(EReaderState.FAIL);

@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/timeline_empty_description"/>
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_timeline_recycler_view"
         android:paddingLeft="@dimen/timeline_padding"
         android:paddingRight="@dimen/timeline_padding"
@@ -100,7 +100,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/activity_timeline_commands_recycler_view"
             android:paddingLeft="@dimen/home_maker_box_horizontal_padding"
             android:paddingRight="@dimen/home_maker_box_horizontal_padding"

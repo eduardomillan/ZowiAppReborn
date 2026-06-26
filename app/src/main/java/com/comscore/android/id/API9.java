@@ -3,7 +3,7 @@ package com.comscore.android.id;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.os.EnvironmentCompat;
+import androidx.core.os.EnvironmentCompat;
 
 /* JADX INFO: loaded from: classes.dex */
 @SuppressLint({"NewApi"})

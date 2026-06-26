@@ -1,11 +1,11 @@
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
 import androidx.recyclerview.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.View;
 import android.view.animation.Interpolator;
 
@@ -55,11 +55,11 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
             animator.translationX(0.0f);
             animator.translationY(0.0f);
             animator.setListener(new ViewPropertyAnimatorListener() { // from class: com.h6ah4i.android.widget.advrecyclerview.draggable.BaseDraggableItemDecorator.1
-                @Override // android.support.v4.view.ViewPropertyAnimatorListener
+                @Override // androidx.core.view.ViewPropertyAnimatorListener
                 public void onAnimationStart(View view) {
                 }
 
-                @Override // android.support.v4.view.ViewPropertyAnimatorListener
+                @Override // androidx.core.view.ViewPropertyAnimatorListener
                 public void onAnimationEnd(View view) {
                     animator.setListener(null);
                     ViewCompat.setTranslationX(view, 0.0f);
@@ -69,7 +69,7 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
                     }
                 }
 
-                @Override // android.support.v4.view.ViewPropertyAnimatorListener
+                @Override // androidx.core.view.ViewPropertyAnimatorListener
                 public void onAnimationCancel(View view) {
                 }
             });

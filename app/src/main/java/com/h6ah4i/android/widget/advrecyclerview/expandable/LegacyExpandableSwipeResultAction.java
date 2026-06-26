@@ -26,9 +26,9 @@ public class LegacyExpandableSwipeResultAction<GVH extends RecyclerView.ViewHold
     @Override // com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction
     protected void onPerformAction() {
         if (this.mChildPosition == -1) {
-            this.mAdapter.onPerformAfterSwipeGroupReaction(this.mHolder, this.mGroupPosition, this.mResult, this.mReaction);
+            this.mAdapter.onPerformAfterSwipeGroupReaction((GVH) this.mHolder, this.mGroupPosition, this.mResult, this.mReaction);
         } else {
-            this.mAdapter.onPerformAfterSwipeChildReaction(this.mHolder, this.mGroupPosition, this.mChildPosition, this.mResult, this.mReaction);
+            this.mAdapter.onPerformAfterSwipeChildReaction((CVH) this.mHolder, this.mGroupPosition, this.mChildPosition, this.mResult, this.mReaction);
         }
     }
 
