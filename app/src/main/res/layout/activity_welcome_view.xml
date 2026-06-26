@@ -38,8 +38,7 @@
         android:id="@+id/welcome_letter_to_parents_dialog"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:padding="@dimen/vertical_margin"

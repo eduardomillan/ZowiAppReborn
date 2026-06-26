@@ -1,9 +1,9 @@
 package com.bq.zowi.views.interactive.achievements;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +35,7 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
     private boolean unlockerCondition2 = false;
     private boolean achievementsUnlocked = false;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements_view);
@@ -101,7 +101,7 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
         ((AchievementsPresenter) getPresenter()).loadAchievements();
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_ACHIEVEMENTS));
@@ -145,7 +145,7 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
             }
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public Object instantiateItem(ViewGroup collection, int position) {
             int resId = 0;
             switch (position) {
@@ -162,17 +162,17 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
             return collection.findViewById(resId);
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public int getCount() {
             return 3;
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public boolean isViewFromObject(View view, Object object) {
             return view == ((View) object);
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public void destroyItem(View container, int position, Object object) {
             ((ViewPager) container).removeView((View) object);
         }

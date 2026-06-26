@@ -2,8 +2,8 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.internal.widget.ActivityChooserView;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
@@ -44,7 +44,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         this.mSwipingItemId = -1L;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public void onViewRecycled(VH holder) {
         super.onViewRecycled(holder);
         if (this.mSwipingItemId == holder.getItemId()) {
@@ -62,7 +62,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         }
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public VH onCreateViewHolder(ViewGroup viewGroup, int i) {
         VH vh = (VH) super.onCreateViewHolder(viewGroup, i);
         if (vh instanceof SwipeableItemViewHolder) {
@@ -71,7 +71,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return vh;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public void onBindViewHolder(VH holder, int position) {
         float prevSwipeItemSlideAmount = 0.0f;
         if (holder instanceof SwipeableItemViewHolder) {

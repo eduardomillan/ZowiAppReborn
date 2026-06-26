@@ -1,7 +1,7 @@
 package com.bq.zowi.views.interactive.timeline;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bq.zowi.R;

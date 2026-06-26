@@ -3,7 +3,7 @@ package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemAnimationInfo;

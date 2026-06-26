@@ -25,7 +25,7 @@ public class ZowiSaysMinigameActivity extends MinigameBaseActivity<ZowiSaysMinig
     private ImageButton topLeftActionButton;
     private ImageButton topRightActionButton;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zowi_says_minigame_view);
@@ -64,7 +64,7 @@ public class ZowiSaysMinigameActivity extends MinigameBaseActivity<ZowiSaysMinig
         this.zowiDependantViews = new View[]{this.playButton, this.topLeftActionButton, this.topRightActionButton, this.bottomRightActionButton, this.bottomLeftActionButton};
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_ZOWI_SAYS));

@@ -66,7 +66,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
 
     public abstract void onNewMessage(String str);
 
-    @Override // android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -82,7 +82,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
         }
     }
 
-    @Override // android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         if (this.mBluetoothAdapter == null) {
@@ -98,7 +98,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
         }
     }
 
-    @Override // android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onPause() {
         super.onPause();
         if (this.mBluetoothAdapter != null) {
@@ -106,7 +106,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
         }
     }
 
-    @Override // android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onStop() {
         super.onStop();
         if (this.mBluetoothAdapter != null) {
@@ -114,7 +114,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
         }
     }
 
-    @Override // android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putBoolean(Droid2InoConstants.WAS_BLUETOOTH_ALLOWED_KEY, this.wasEnableBluetoothAllowed);
@@ -248,7 +248,7 @@ public abstract class BaseBluetoothConnectionActivity extends ActionBarActivity 
         this.mBluetoothConnection.connect(device);
     }
 
-    @Override // android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 1:

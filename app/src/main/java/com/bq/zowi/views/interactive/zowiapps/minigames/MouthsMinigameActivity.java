@@ -23,7 +23,7 @@ public class MouthsMinigameActivity extends MinigameBaseActivity<MouthsMinigameP
     private View progressLayout;
     private TextView progressText;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mouths_minigame_view);
@@ -41,7 +41,7 @@ public class MouthsMinigameActivity extends MinigameBaseActivity<MouthsMinigameP
         this.progressText = (TextView) findViewById(R.id.mouths_progress_text);
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_MOUTHS_GAME));

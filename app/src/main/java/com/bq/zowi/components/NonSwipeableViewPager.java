@@ -1,7 +1,7 @@
 package com.bq.zowi.components;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -15,12 +15,12 @@ public class NonSwipeableViewPager extends ViewPager {
         super(context, attrs);
     }
 
-    @Override // android.support.v4.view.ViewPager, android.view.ViewGroup
+    @Override // androidx.viewpager.widget.ViewPager, android.view.ViewGroup
     public boolean onInterceptTouchEvent(MotionEvent event) {
         return false;
     }
 
-    @Override // android.support.v4.view.ViewPager, android.view.View
+    @Override // androidx.viewpager.widget.ViewPager, android.view.View
     public boolean onTouchEvent(MotionEvent event) {
         return false;
     }

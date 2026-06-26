@@ -18,7 +18,7 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
 
     protected abstract T resolvePresenter();
 
-    @Override // android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         this.presenter = (T) resolvePresenter();
@@ -31,21 +31,21 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
         this.presenter.onCreateView();
     }
 
-    @Override // android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         Config.collectLifecycleData(this);
         comScore.onEnterForeground();
     }
 
-    @Override // android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onPause() {
         super.onPause();
         Config.pauseCollectingLifecycleData();
         comScore.onExitForeground();
     }
 
-    @Override // android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onDestroy() {
         super.onDestroy();
         getPresenter().onDestroyView();

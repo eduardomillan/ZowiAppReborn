@@ -1,8 +1,8 @@
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import android.support.v7.internal.widget.ActivityChooserView;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.BaseSwipeableItemAdapter;
@@ -54,7 +54,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         this.mDragDropManager = null;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public VH onCreateViewHolder(ViewGroup viewGroup, int i) {
         VH vh = (VH) super.onCreateViewHolder(viewGroup, i);
         if (vh instanceof DraggableItemViewHolder) {
@@ -63,7 +63,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return vh;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public void onBindViewHolder(VH holder, int position) {
         if (isDragging()) {
             long draggingItemId = this.mDraggingItemInfo.id;
@@ -93,7 +93,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         super.onBindViewHolder(holder, position);
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public long getItemId(int position) {
         if (!isDragging()) {
             return super.getItemId(position);
@@ -102,7 +102,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return super.getItemId(origPosition);
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemViewType(int position) {
         if (!isDragging()) {
             return super.getItemViewType(position);
@@ -208,7 +208,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         notifyDataSetChanged();
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public void onViewRecycled(VH holder) {
         if (isDragging() && holder == this.mDraggingItemViewHolder) {
             Log.i(TAG, "a view holder object which is bound to currently dragging item is recycled");

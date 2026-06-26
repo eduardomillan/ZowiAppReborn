@@ -1,7 +1,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
 import java.lang.ref.WeakReference;
 
@@ -38,42 +38,42 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
         return this.mWrappedAdapter;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         if (isWrappedAdapterAlive()) {
             this.mWrappedAdapter.onAttachedToRecyclerView(recyclerView);
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         if (isWrappedAdapterAlive()) {
             this.mWrappedAdapter.onDetachedFromRecyclerView(recyclerView);
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onViewAttachedToWindow(VH holder) {
         if (isWrappedAdapterAlive()) {
             this.mWrappedAdapter.onViewAttachedToWindow(holder);
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onViewDetachedFromWindow(VH holder) {
         if (isWrappedAdapterAlive()) {
             this.mWrappedAdapter.onViewDetachedFromWindow(holder);
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onViewRecycled(VH holder) {
         if (isWrappedAdapterAlive()) {
             this.mWrappedAdapter.onViewRecycled(holder);
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void setHasStableIds(boolean hasStableIds) {
         super.setHasStableIds(hasStableIds);
         if (isWrappedAdapterAlive()) {
@@ -81,19 +81,19 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public VH onCreateViewHolder(ViewGroup viewGroup, int i) {
         return (VH) this.mWrappedAdapter.onCreateViewHolder(viewGroup, i);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onBindViewHolder(VH holder, int position) {
         if (isWrappedAdapterAlive()) {
             this.mWrappedAdapter.onBindViewHolder(holder, position);
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemCount() {
         if (isWrappedAdapterAlive()) {
             return this.mWrappedAdapter.getItemCount();
@@ -101,12 +101,12 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
         return 0;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public long getItemId(int position) {
         return this.mWrappedAdapter.getItemId(position);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemViewType(int position) {
         return this.mWrappedAdapter.getItemViewType(position);
     }
@@ -169,7 +169,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
             this.mRefHolder = new WeakReference<>(holder);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.AdapterDataObserver
+        @Override // androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
         public void onChanged() {
             BaseWrapperAdapter<VH> holder = this.mRefHolder.get();
             if (holder != null) {
@@ -177,7 +177,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
             }
         }
 
-        @Override // android.support.v7.widget.RecyclerView.AdapterDataObserver
+        @Override // androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
         public void onItemRangeChanged(int positionStart, int itemCount) {
             BaseWrapperAdapter<VH> holder = this.mRefHolder.get();
             if (holder != null) {
@@ -192,7 +192,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
             }
         }
 
-        @Override // android.support.v7.widget.RecyclerView.AdapterDataObserver
+        @Override // androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
         public void onItemRangeInserted(int positionStart, int itemCount) {
             BaseWrapperAdapter<VH> holder = this.mRefHolder.get();
             if (holder != null) {
@@ -200,7 +200,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
             }
         }
 
-        @Override // android.support.v7.widget.RecyclerView.AdapterDataObserver
+        @Override // androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
         public void onItemRangeRemoved(int positionStart, int itemCount) {
             BaseWrapperAdapter<VH> holder = this.mRefHolder.get();
             if (holder != null) {
@@ -208,7 +208,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Recy
             }
         }
 
-        @Override // android.support.v7.widget.RecyclerView.AdapterDataObserver
+        @Override // androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
             BaseWrapperAdapter<VH> holder = this.mRefHolder.get();
             if (holder != null) {

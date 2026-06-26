@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -47,7 +47,7 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
     private TextView titleTextView;
     private ViewPager viewPager;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_view);
@@ -88,7 +88,7 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
         ((ProjectPresenter) getPresenter()).loadProject(this.projectId);
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, "Project" + this.projectId));
@@ -96,7 +96,7 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
         ((ProjectPresenter) getPresenter()).checkProjectQuizBlocked(this.projectId);
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onPause() {
         super.onPause();
         if (this.blockedQuizCountdownTimer != null) {
@@ -293,7 +293,7 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
             }
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public Object instantiateItem(ViewGroup collection, int position) {
             int resId = 0;
             switch (position) {
@@ -317,17 +317,17 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
             return collection.findViewById(resId);
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public int getCount() {
             return this.numPages;
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }

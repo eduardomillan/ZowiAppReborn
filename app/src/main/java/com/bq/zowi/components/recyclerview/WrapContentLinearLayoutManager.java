@@ -1,8 +1,8 @@
 package com.bq.zowi.components.recyclerview;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -30,7 +30,7 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
         return View.MeasureSpec.makeMeasureSpec(0, 0);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.LayoutManager
+    @Override // androidx.recyclerview.widget.RecyclerView.LayoutManager
     public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
         int width;
         int height;
@@ -117,7 +117,7 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
         }
     }
 
-    @Override // android.support.v7.widget.LinearLayoutManager
+    @Override // androidx.recyclerview.widget.LinearLayoutManager
     public void setOrientation(int orientation) {
         if (this.childDimensions != null && getOrientation() != orientation) {
             this.childDimensions[0] = 0;

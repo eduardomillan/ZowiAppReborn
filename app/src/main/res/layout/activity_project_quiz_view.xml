@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
     <Button
         android:id="@+id/activity_project_quiz_home_button"
         android:background="@drawable/home_button_selector"
@@ -65,12 +65,10 @@
         android:id="@+id/project_success_without_achievement_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="false"/>
+        android:layout_height="match_parent"/>
     <com.bq.zowi.components.makerboxdialogs.MakerBoxDialogFailure
         android:id="@+id/project_failure_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="false"/>
+        android:layout_height="match_parent"/>
 </RelativeLayout>

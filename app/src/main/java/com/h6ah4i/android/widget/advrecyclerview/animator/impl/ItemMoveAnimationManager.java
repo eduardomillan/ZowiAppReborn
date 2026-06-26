@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 

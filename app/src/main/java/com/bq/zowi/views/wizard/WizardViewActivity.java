@@ -1,8 +1,8 @@
 package com.bq.zowi.views.wizard;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -38,7 +38,7 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
     private Button setNameButton;
     private NonSwipeableViewPager viewPager;
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard_view);
@@ -119,7 +119,7 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
         this.viewPager.setAdapter(adapter);
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
     }
@@ -196,7 +196,7 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
             }
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public Object instantiateItem(ViewGroup collection, int position) {
             int resId = 0;
             switch (position) {
@@ -216,17 +216,17 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
             return collection.findViewById(resId);
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public int getCount() {
             return 4;
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public boolean isViewFromObject(View view, Object object) {
             return view == ((View) object);
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public void destroyItem(View container, int position, Object object) {
             ((ViewPager) container).removeView((View) object);
         }

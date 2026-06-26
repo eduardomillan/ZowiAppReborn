@@ -14,7 +14,7 @@ import com.bq.zowi.wireframes.welcome.WelcomeWireframe;
 public class WelcomeViewActivity extends BaseActivity<WelcomePresenter> implements WelcomeView {
     private View letterToParentsDialog;
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_view);
@@ -44,7 +44,7 @@ public class WelcomeViewActivity extends BaseActivity<WelcomePresenter> implemen
         return presenter;
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_HELLO));

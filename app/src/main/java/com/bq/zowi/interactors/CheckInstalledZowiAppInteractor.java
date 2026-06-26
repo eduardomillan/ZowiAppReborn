@@ -1,6 +1,6 @@
 package com.bq.zowi.interactors;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import rx.Single;
 
 /* JADX INFO: loaded from: classes.dex */

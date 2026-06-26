@@ -1,7 +1,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 /* JADX INFO: loaded from: classes.dex */
 public interface BaseSwipeableItemAdapter<T extends RecyclerView.ViewHolder> {

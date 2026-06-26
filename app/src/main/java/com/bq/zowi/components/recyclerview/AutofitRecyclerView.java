@@ -3,8 +3,8 @@ package com.bq.zowi.components.recyclerview;
 import android.R;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -44,7 +44,7 @@ public class AutofitRecyclerView extends RecyclerView {
         setLayoutManager(this.manager);
     }
 
-    @Override // android.support.v7.widget.RecyclerView, android.view.View
+    @Override // androidx.recyclerview.widget.RecyclerView, android.view.View
     protected void onMeasure(int widthSpec, int heightSpec) {
         super.onMeasure(widthSpec, heightSpec);
         if (this.columnWidth > 0) {

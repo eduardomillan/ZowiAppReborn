@@ -38,30 +38,31 @@
             <FrameLayout
                 android:background="@color/gray_medium50"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <LinearLayout
-                android:orientation="vertical"
-                android:paddingTop="@dimen/maker_box_dialog_padding_top_bottom"
-                android:paddingBottom="@dimen/maker_box_dialog_padding_top_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="@dimen/maker_box_dialog_points_text_size"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:id="@+id/makerbox_dialog_achievement_title_text"
-                    android:background="@android:color/transparent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/maker_box_dialog_padding_top_bottom"
+                    android:paddingBottom="@dimen/maker_box_dialog_padding_top_bottom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:id="@+id/makerbox_dialog_achievement_description_text"
-                    android:background="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="@dimen/maker_box_dialog_points_text_size"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:id="@+id/makerbox_dialog_achievement_title_text"
+                        android:background="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:id="@+id/makerbox_dialog_achievement_description_text"
+                        android:background="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
         </RelativeLayout>
         <com.bq.zowi.components.makerboxdialogs.MakerBoxButton
             android:textSize="@dimen/maker_box_dialog_button_text_size"

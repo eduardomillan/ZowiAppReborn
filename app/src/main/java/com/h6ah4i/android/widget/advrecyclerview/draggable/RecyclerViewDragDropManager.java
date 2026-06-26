@@ -5,11 +5,11 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MotionEvent;
 import android.view.View;
@@ -88,28 +88,28 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     };
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() { // from class: com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager.1
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
             return RecyclerViewDragDropManager.this.onInterceptTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             RecyclerViewDragDropManager.this.onTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             RecyclerViewDragDropManager.this.onRequestDisallowInterceptTouchEvent(disallowIntercept);
         }
     };
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener = new RecyclerView.OnScrollListener() { // from class: com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager.2
-        @Override // android.support.v7.widget.RecyclerView.OnScrollListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnScrollListener
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             RecyclerViewDragDropManager.this.onScrollStateChanged(recyclerView, newState);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnScrollListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnScrollListener
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             RecyclerViewDragDropManager.this.onScrolled(recyclerView, dx, dy);
         }
@@ -274,7 +274,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         Code decompiled incorrectly, please refer to instructions dump.
         To view partially-correct code enable 'Show inconsistent code' option in preferences
     */
-    boolean onInterceptTouchEvent(android.support.v7.widget.RecyclerView r4, android.view.MotionEvent r5) {
+    boolean onInterceptTouchEvent(androidx.recyclerview.widget.RecyclerView r4, android.view.MotionEvent r5) {
         /*
             r3 = this;
             r1 = 1
@@ -308,7 +308,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             if (r2 == 0) goto L8
             goto L9
         */
-        throw new UnsupportedOperationException("Method not decompiled: com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager.onInterceptTouchEvent(android.support.v7.widget.RecyclerView, android.view.MotionEvent):boolean");
+        throw new UnsupportedOperationException("Method not decompiled: com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager.onInterceptTouchEvent(androidx.recyclerview.widget.RecyclerView, android.view.MotionEvent):boolean");
     }
 
     void onTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -637,12 +637,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         Code decompiled incorrectly, please refer to instructions dump.
         To view partially-correct code enable 'Show inconsistent code' option in preferences
     */
-    private void handleScrollOnDraggingInternal(android.support.v7.widget.RecyclerView r34, boolean r35) {
+    private void handleScrollOnDraggingInternal(androidx.recyclerview.widget.RecyclerView r34, boolean r35) {
         /*
             Method dump skipped, instruction units count: 540
             To view this dump change 'Code comments level' option to 'DEBUG'
         */
-        throw new UnsupportedOperationException("Method not decompiled: com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager.handleScrollOnDraggingInternal(android.support.v7.widget.RecyclerView, boolean):void");
+        throw new UnsupportedOperationException("Method not decompiled: com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager.handleScrollOnDraggingInternal(androidx.recyclerview.widget.RecyclerView, boolean):void");
     }
 
     private void updateEdgeEffect(float distance) {

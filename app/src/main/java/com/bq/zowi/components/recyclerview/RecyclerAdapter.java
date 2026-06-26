@@ -1,6 +1,6 @@
 package com.bq.zowi.components.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +20,22 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder<
         addAll(items);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemCount() {
         return this.items.size();
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public RecyclerViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
         return this.resolver.getViewHolderFromViewTypeInternal(viewType, parent);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onBindViewHolder(RecyclerViewHolder<T> holder, int position) {
         holder.bind(getItem(position));
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemViewType(int position) {
         return this.resolver.getItemViewType(getItem(position));
     }

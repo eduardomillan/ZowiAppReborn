@@ -3,7 +3,7 @@ package com.bq.zowi.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 /* JADX INFO: loaded from: classes.dex */
 public class ResourceResolver {

@@ -3,7 +3,7 @@ package com.bq.zowi.wireframes.settings;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import com.bq.zowi.views.interactive.home.HomeViewActivity;
 import com.bq.zowi.views.interactive.settings.CalibrationViewActivity;
 import com.bq.zowi.wireframes.interactive.InteractiveWireframeImpl;

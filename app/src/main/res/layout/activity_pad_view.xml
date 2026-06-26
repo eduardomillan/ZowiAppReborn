@@ -179,8 +179,7 @@
         android:id="@+id/gamepad_how_to_play_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <LinearLayout
             android:gravity="center_horizontal"
             android:orientation="vertical"
@@ -214,8 +213,7 @@
         android:id="@+id/gamepad_actions_dialog"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/gamepad_actions_grid_commands_recycler_view"
             android:paddingLeft="@dimen/home_maker_box_horizontal_padding"

@@ -1,8 +1,8 @@
 package com.bq.zowi.components;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,22 +76,22 @@ public class QuizView extends FrameLayout {
             this.viewpager.addView(questionView);
         }
         PagerAdapter pagerAdapter = new PagerAdapter() { // from class: com.bq.zowi.components.QuizView.1
-            @Override // android.support.v4.view.PagerAdapter
+            @Override // androidx.viewpager.widget.PagerAdapter
             public int getCount() {
                 return testQuestions.size();
             }
 
-            @Override // android.support.v4.view.PagerAdapter
+            @Override // androidx.viewpager.widget.PagerAdapter
             public boolean isViewFromObject(View view, Object object) {
                 return view == ((View) object);
             }
 
-            @Override // android.support.v4.view.PagerAdapter
+            @Override // androidx.viewpager.widget.PagerAdapter
             public Object instantiateItem(ViewGroup container, int position) {
                 return QuizView.this.viewpager.getChildAt(position);
             }
 
-            @Override // android.support.v4.view.PagerAdapter
+            @Override // androidx.viewpager.widget.PagerAdapter
             public void destroyItem(ViewGroup container, int position, Object object) {
                 ((ViewPager) container).removeView((View) object);
             }

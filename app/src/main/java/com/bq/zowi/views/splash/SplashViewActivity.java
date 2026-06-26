@@ -9,7 +9,7 @@ import com.bq.zowi.wireframes.splash.SplashWireframe;
 
 /* JADX INFO: loaded from: classes.dex */
 public class SplashViewActivity extends BaseActivity<SplashPresenter> implements SplashView {
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_view);

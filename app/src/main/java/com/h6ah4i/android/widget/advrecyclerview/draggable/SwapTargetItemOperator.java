@@ -3,7 +3,7 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
@@ -43,7 +43,7 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
         this.mSwapTargetTranslationInterpolator = interpolator;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         RecyclerView.ViewHolder draggingItem = this.mDraggingItemViewHolder;
         if (draggingItem != null && draggingItem.getItemId() == this.mDraggingItemInfo.id) {

@@ -1,10 +1,10 @@
 package com.bq.zowi.views.interactive.timeline;
 
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -52,7 +52,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
     private RecyclerViewDragDropManager timelineRecyclerViewDragDropManager;
     private RecyclerView.Adapter timelineWrappedAdapter;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(1024, 1024);
@@ -145,7 +145,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         ((TimelinePresenter) getPresenter()).loadAndResumeTimeline();
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_TIMELINE));
@@ -235,7 +235,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         this.commandsSelectorDialog.setVisibility(8);
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onPause() {
         this.timelineRecyclerViewDragDropManager.cancelDrag();
         super.onPause();
@@ -243,7 +243,7 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         ((TimelinePresenter) getPresenter()).saveTimeline(this.timelineAdapter.getDataProvider().getTimelineDataCommandsList());
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onDestroy() {
         if (this.timelineRecyclerViewDragDropManager != null) {
             this.timelineRecyclerViewDragDropManager.release();

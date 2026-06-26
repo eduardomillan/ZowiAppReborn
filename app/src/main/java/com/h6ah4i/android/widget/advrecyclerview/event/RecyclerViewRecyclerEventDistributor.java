@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import java.lang.ref.WeakReference;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -37,7 +37,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
             this.mRefDistributor = new WeakReference<>(distributor);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.RecyclerListener
+        @Override // androidx.recyclerview.widget.RecyclerView.RecyclerListener
         public void onViewRecycled(RecyclerView.ViewHolder holder) {
             RecyclerViewRecyclerEventDistributor distributor = this.mRefDistributor.get();
             if (distributor != null) {

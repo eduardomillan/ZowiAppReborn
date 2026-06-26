@@ -47,8 +47,7 @@
         android:id="@+id/mouths_editor_how_to_play_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <LinearLayout
             android:gravity="center_horizontal"
             android:orientation="vertical"

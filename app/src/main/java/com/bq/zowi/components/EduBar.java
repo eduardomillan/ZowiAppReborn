@@ -4,11 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.AttrRes;
-import android.support.annotation.StringRes;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.SwipeDismissBehavior;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import androidx.annotation.AttrRes;
+import androidx.annotation.StringRes;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.behavior.SwipeDismissBehavior;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -166,14 +166,14 @@ public class EduBar extends LinearLayout {
     private static final class Behavior extends SwipeDismissBehavior<EduBar> {
         private Behavior() {
             setListener(new SwipeDismissBehavior.OnDismissListener() { // from class: com.bq.zowi.components.EduBar.Behavior.1
-                @Override // android.support.design.widget.SwipeDismissBehavior.OnDismissListener
+                @Override // com.google.android.material.behavior.SwipeDismissBehavior.OnDismissListener
                 public void onDismiss(View view) {
                     if (view instanceof EduBar) {
                         ((EduBar) view).initialize();
                     }
                 }
 
-                @Override // android.support.design.widget.SwipeDismissBehavior.OnDismissListener
+                @Override // com.google.android.material.behavior.SwipeDismissBehavior.OnDismissListener
                 public void onDragStateChanged(int i) {
                 }
             });

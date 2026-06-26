@@ -3,7 +3,7 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 import android.graphics.Canvas;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.EdgeEffectCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /* JADX INFO: loaded from: classes.dex */
 abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
@@ -24,7 +24,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
         this.mRecyclerView = recyclerView;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         boolean needsInvalidate = this.mGlow1 != null ? false | drawGlow(c, parent, this.mGlow1Dir, this.mGlow1) : false;
         if (this.mGlow2 != null) {

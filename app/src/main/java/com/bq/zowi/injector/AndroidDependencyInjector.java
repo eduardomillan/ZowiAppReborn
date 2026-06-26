@@ -2,7 +2,7 @@ package com.bq.zowi.injector;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import com.adobe.mobile.Config;
 import com.bq.analytics.core.AnalyticsController;
 import com.bq.gatracker.GoogleAnalyticsTracker;

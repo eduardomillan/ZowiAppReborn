@@ -132,4 +132,7 @@
     <color name="zowi_says_red_innner_shadow">#a10621</color>
     <color name="zowi_says_yellow">#ffe000</color>
     <color name="zowi_says_yellow_innner_shadow">#af9b23</color>
+    <color name="primary">#21a69b</color>
+    <color name="primary_dark">#17736c</color>
+    <color name="accent">#f6a000</color>
 </resources>

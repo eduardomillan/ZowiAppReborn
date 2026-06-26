@@ -4,11 +4,11 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -51,17 +51,17 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private long mSwipingItemId = -1;
     private Rect mSwipingItemMargins = new Rect();
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() { // from class: com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager.1
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
             return RecyclerViewSwipeManager.this.onInterceptTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             RecyclerViewSwipeManager.this.onTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             RecyclerViewSwipeManager.this.onRequestDisallowInterceptTouchEvent(disallowIntercept);
         }
@@ -151,7 +151,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         Code decompiled incorrectly, please refer to instructions dump.
         To view partially-correct code enable 'Show inconsistent code' option in preferences
     */
-    boolean onInterceptTouchEvent(android.support.v7.widget.RecyclerView r4, android.view.MotionEvent r5) {
+    boolean onInterceptTouchEvent(androidx.recyclerview.widget.RecyclerView r4, android.view.MotionEvent r5) {
         /*
             r3 = this;
             r1 = 1
@@ -186,7 +186,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             if (r2 == 0) goto L8
             goto L9
         */
-        throw new UnsupportedOperationException("Method not decompiled: com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager.onInterceptTouchEvent(android.support.v7.widget.RecyclerView, android.view.MotionEvent):boolean");
+        throw new UnsupportedOperationException("Method not decompiled: com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager.onInterceptTouchEvent(androidx.recyclerview.widget.RecyclerView, android.view.MotionEvent):boolean");
     }
 
     void onTouchEvent(RecyclerView rv, MotionEvent e) {

@@ -1,7 +1,7 @@
 package com.bq.zowi.wireframes.home;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import com.bq.zowi.views.interactive.achievements.AchievementsViewActivity;
 import com.bq.zowi.views.interactive.pad.PadViewActivity;
 import com.bq.zowi.views.interactive.projects.ProjectViewActivity;

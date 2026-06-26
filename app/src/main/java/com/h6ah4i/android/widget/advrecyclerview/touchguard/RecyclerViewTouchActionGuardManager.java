@@ -1,8 +1,8 @@
 package com.h6ah4i.android.widget.advrecyclerview.touchguard;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
@@ -16,17 +16,17 @@ public class RecyclerViewTouchActionGuardManager {
     private int mInitialTouchY;
     private boolean mInterceptScrollingWhileAnimationRunning;
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() { // from class: com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager.1
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
             return RecyclerViewTouchActionGuardManager.this.onInterceptTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             RecyclerViewTouchActionGuardManager.this.onTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     };

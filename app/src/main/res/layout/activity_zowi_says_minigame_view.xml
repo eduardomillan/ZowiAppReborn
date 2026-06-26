@@ -125,8 +125,7 @@
         android:id="@+id/minigame_how_to_play_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <LinearLayout
             android:gravity="center_horizontal"
             android:orientation="vertical"
@@ -160,8 +159,7 @@
         android:id="@+id/zowi_says_look_at_zowi_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="false">
+        android:layout_height="match_parent">
         <LinearLayout
             android:gravity="center"
             android:orientation="vertical"
@@ -186,18 +184,15 @@
         android:id="@+id/minigame_points_earned_enable_ranking_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true"/>
+        android:layout_height="match_parent"/>
     <com.bq.zowi.components.makerboxdialogs.MakerBoxDialogFailure
         android:id="@+id/minigame_points_earned_disable_ranking_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true"/>
+        android:layout_height="match_parent"/>
     <com.bq.zowi.components.makerboxdialogs.MakerBoxDialogRanking
         android:id="@+id/minigame_ranking_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true"/>
+        android:layout_height="match_parent"/>
 </RelativeLayout>

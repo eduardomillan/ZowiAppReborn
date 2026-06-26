@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import java.lang.ref.WeakReference;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -49,7 +49,7 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
             this.mRefDistributor = new WeakReference<>(distributor);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnScrollListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnScrollListener
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             RecyclerViewOnScrollEventDistributor distributor = this.mRefDistributor.get();
             if (distributor != null) {
@@ -57,7 +57,7 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
             }
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnScrollListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnScrollListener
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             RecyclerViewOnScrollEventDistributor holder = this.mRefDistributor.get();
             if (holder != null) {

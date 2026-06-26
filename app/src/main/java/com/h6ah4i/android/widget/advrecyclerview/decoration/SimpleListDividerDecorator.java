@@ -3,9 +3,9 @@ package com.h6ah4i.android.widget.advrecyclerview.decoration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -28,7 +28,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
         this.mOverlap = overlap;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int childCount = parent.getChildCount();
         if (childCount != 0) {
@@ -75,7 +75,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (this.mOverlap) {
             outRect.set(0, 0, 0, 0);

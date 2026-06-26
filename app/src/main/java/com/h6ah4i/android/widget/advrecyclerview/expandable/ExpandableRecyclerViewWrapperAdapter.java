@@ -1,7 +1,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import android.support.v7.internal.widget.ActivityChooserView;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
@@ -60,12 +60,12 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
         this.mOnGroupCollapseListener = null;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemCount() {
         return this.mPositionTranslator.getItemCount();
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public long getItemId(int position) {
         if (this.mExpandableItemAdapter == null) {
             return -1L;
@@ -82,7 +82,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
         return ExpandableAdapterHelper.getCombinedChildId(groupId2, childId);
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemViewType(int position) {
         int type;
         if (this.mExpandableItemAdapter == null) {
@@ -102,7 +102,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
         return childPosition == -1 ? type | Integer.MIN_VALUE : type;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
         if (this.mExpandableItemAdapter == null) {
@@ -121,7 +121,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
         return holder;
     }
 
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int flags;
         if (this.mExpandableItemAdapter != null) {
@@ -156,7 +156,7 @@ class ExpandableRecyclerViewWrapperAdapter extends BaseWrapperAdapter<RecyclerVi
     }
 
     /* JADX WARN: Multi-variable type inference failed */
-    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, android.support.v7.widget.RecyclerView.Adapter
+    @Override // com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter, androidx.recyclerview.widget.RecyclerView.Adapter
     public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
         if (viewHolder instanceof ExpandableItemViewHolder) {
             ((ExpandableItemViewHolder) viewHolder).setExpandStateFlags(-1);

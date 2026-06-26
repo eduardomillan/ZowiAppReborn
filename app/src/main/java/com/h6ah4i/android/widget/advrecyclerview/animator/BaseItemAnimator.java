@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 
 /* JADX INFO: loaded from: classes.dex */

@@ -1,6 +1,6 @@
 package com.bq.zowi.models;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /* JADX INFO: loaded from: classes.dex */
 public class RankingEntry implements Comparable<RankingEntry> {

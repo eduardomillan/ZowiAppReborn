@@ -1,7 +1,7 @@
 package com.bq.zowi.wireframes.zowiapps;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import com.bq.zowi.views.interactive.home.HomeViewActivity;
 import com.bq.zowi.wireframes.interactive.InteractiveWireframeImpl;
 

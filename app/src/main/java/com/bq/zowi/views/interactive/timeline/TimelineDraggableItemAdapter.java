@@ -3,7 +3,7 @@ package com.bq.zowi.views.interactive.timeline;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,17 +130,17 @@ public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<ItemViewH
         return this.provider;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public long getItemId(int position) {
         return this.provider.getItem(position).getId();
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemViewType(int position) {
         return this.provider.getItem(position).getViewType();
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(this.context);
@@ -148,7 +148,7 @@ public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<ItemViewH
         return new ItemViewHolder(v, this.itemChangeListener, this.itemClickListener, this.itemDeleteClickListener);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         TimelineDataProvider.TimelineData item = this.provider.getItem(position);
         TimelineCommand timelineCommand = item.getTimelineCommand();
@@ -189,7 +189,7 @@ public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<ItemViewH
         }
     }
 
-    @Override // android.support.v7.widget.RecyclerView.Adapter
+    @Override // androidx.recyclerview.widget.RecyclerView.Adapter
     public int getItemCount() {
         return this.provider.getCount();
     }

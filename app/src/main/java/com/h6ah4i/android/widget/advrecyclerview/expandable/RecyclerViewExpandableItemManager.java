@@ -2,12 +2,12 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -27,16 +27,16 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     private int mTouchSlop;
     private long mTouchedItemId = -1;
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() { // from class: com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager.1
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
             return RecyclerViewExpandableItemManager.this.onInterceptTouchEvent(rv, e);
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
         }
 
-        @Override // android.support.v7.widget.RecyclerView.OnItemTouchListener
+        @Override // androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     };

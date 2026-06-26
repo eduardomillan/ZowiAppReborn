@@ -2,7 +2,7 @@ package com.bq.zowi.views.interactive.timeline;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import com.bq.zowi.R;
 import com.bq.zowi.models.commands.TimelineCommand;
 

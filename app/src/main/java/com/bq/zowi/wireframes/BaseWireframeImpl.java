@@ -1,6 +1,6 @@
 package com.bq.zowi.wireframes;
 
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 
 /* JADX INFO: loaded from: classes.dex */
 public class BaseWireframeImpl {

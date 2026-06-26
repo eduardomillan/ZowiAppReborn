@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Movie;
 import android.os.Build;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import com.bq.zowi.R;

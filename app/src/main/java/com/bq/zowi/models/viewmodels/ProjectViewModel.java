@@ -1,6 +1,6 @@
 package com.bq.zowi.models.viewmodels;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.bq.zowi.models.Project;
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package com.bq.zowi.controllers;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.bq.zowi.models.networkModels.KitonIsAliveResponseNetworkModel;
 import rx.Single;
 

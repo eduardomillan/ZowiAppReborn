@@ -5,9 +5,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -20,7 +20,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         this.mShadowDrawable.getPadding(this.mShadowPadding);
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int childCount = parent.getChildCount();
         if (childCount != 0) {
@@ -48,7 +48,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         return false;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.set(0, 0, 0, 0);
     }

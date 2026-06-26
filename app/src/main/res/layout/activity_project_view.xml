@@ -29,8 +29,7 @@
         android:id="@+id/activity_project_install_hex_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="false">
+        android:layout_height="match_parent">
         <LinearLayout
             android:gravity="center_horizontal"
             android:orientation="vertical"

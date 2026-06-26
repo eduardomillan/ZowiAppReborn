@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
@@ -73,7 +73,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         return null;
     }
 
-    @Override // android.support.v7.widget.RecyclerView.ItemDecoration
+    @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (this.mDraggingItemImage != null) {
             float left = (this.mTranslationX + this.mDraggingItemInfo.margins.left) - this.mShadowPadding.left;

@@ -1,6 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 

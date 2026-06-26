@@ -1,6 +1,6 @@
 package com.bq.zowi.interactors;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.bq.zowi.controllers.ZowiDataController;
 import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
 import java.util.concurrent.TimeUnit;

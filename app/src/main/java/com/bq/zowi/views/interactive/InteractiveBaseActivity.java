@@ -2,7 +2,7 @@ package com.bq.zowi.views.interactive;
 
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -60,7 +60,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
     protected boolean isAltered = false;
     private boolean isInstallingFw = false;
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in, R.anim.still);
@@ -391,7 +391,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         this.lowBatteryForInstallingFwDialog.setVisibility(0);
     }
 
-    @Override // com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getPresenter().manageConnection();

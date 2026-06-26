@@ -1,8 +1,8 @@
 package com.bq.zowi.views.interactive.home;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,7 +19,7 @@ import com.bq.zowi.wireframes.home.HomeWireframe;
 public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> implements HomeView {
     private ZowiAppView loadMouthsEditorButton;
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v7.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_view);
@@ -156,7 +156,7 @@ public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> imp
         ((HomePresenter) getPresenter()).logAppStarted();
     }
 
-    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, android.support.v4.app.FragmentActivity, android.app.Activity
+    @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_HOME));
@@ -190,7 +190,7 @@ public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> imp
             }
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public Object instantiateItem(ViewGroup collection, int position) {
             int resId = 0;
             switch (position) {
@@ -204,17 +204,17 @@ public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> imp
             return collection.findViewById(resId);
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public int getCount() {
             return 2;
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
 
-        @Override // android.support.v4.view.PagerAdapter
+        @Override // androidx.viewpager.widget.PagerAdapter
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }

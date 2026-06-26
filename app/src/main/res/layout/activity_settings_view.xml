@@ -295,8 +295,7 @@
         android:id="@+id/activity_settings_change_zowi_name_dialog"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/maker_box_dialog_height">
@@ -355,8 +354,7 @@
         android:id="@+id/activity_settings_forget_playing_history_button_dialog"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/maker_box_dialog_height">
@@ -418,8 +416,7 @@
         android:id="@+id/activity_settings_forget_zowi_button_dialog"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showCloseButton="true">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/maker_box_dialog_height">

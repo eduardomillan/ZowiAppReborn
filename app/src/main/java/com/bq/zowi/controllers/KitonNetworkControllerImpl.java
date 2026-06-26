@@ -1,7 +1,7 @@
 package com.bq.zowi.controllers;
 
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.bq.zowi.models.networkModels.KitonIsAliveResponseNetworkModel;
 import java.util.Date;
 import rx.Single;
