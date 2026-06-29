@@ -4,15 +4,21 @@ import android.R;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import com.adobe.mobile.Config;
 import com.bq.analytics.core.AnalyticsController;
+import com.bq.zowi.BuildConfig;
 import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.presenters.BasePresenter;
 
 /* JADX INFO: loaded from: classes.dex */
 public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCompatActivity {
+    private static final String VERSION_BADGE_TAG = "app_version_badge";
     private AnalyticsController analyticsController;
     private T presenter;
 
@@ -29,6 +35,8 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         this.presenter.onCreateView();
+        setTitle(getString(com.bq.zowi.R.string.app_name) + " v" + BuildConfig.VERSION_NAME);
+        ensureVersionBadgeIsVisible();
     }
 
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
@@ -79,6 +87,31 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
     @Override // androidx.appcompat.app.AppCompatActivity
     public void supportNavigateUpTo(Intent upIntent) {
         onBackPressed();
+    }
+
+    private void ensureVersionBadgeIsVisible() {
+        View root = getWindow().getDecorView();
+        if (root.findViewWithTag(VERSION_BADGE_TAG) != null) {
+            return;
+        }
+        TextView versionBadge = new TextView(this);
+        versionBadge.setTag(VERSION_BADGE_TAG);
+        String versionText = "v" + BuildConfig.VERSION_NAME;
+        versionBadge.setText(versionText);
+        versionBadge.setContentDescription(versionText);
+        versionBadge.setTextColor(-1);
+        versionBadge.setTextSize(2, 12.0f);
+        versionBadge.setShadowLayer(4.0f, 0.0f, 0.0f, -16777216);
+        versionBadge.setPadding(dpToPx(8), dpToPx(4), dpToPx(8), dpToPx(4));
+        versionBadge.setClickable(false);
+        versionBadge.setFocusable(false);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2, -2, Gravity.TOP | Gravity.END);
+        params.setMargins(dpToPx(8), dpToPx(24), dpToPx(8), dpToPx(8));
+        addContentView(versionBadge, params);
+    }
+
+    private int dpToPx(int dp) {
+        return Math.round(TypedValue.applyDimension(1, dp, getResources().getDisplayMetrics()));
     }
 
     @Override // android.app.Activity
