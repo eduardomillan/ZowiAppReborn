@@ -346,3 +346,63 @@ Open the SharedPreferences database and delete the `achievementsList` key, or ca
 ```bash
 adb shell "dumpsys backup com.bq.zowi" | grep achievementsListVersion
 ```
+
+---
+
+## Unlock Conditions for Each Achievement
+
+The following table summarizes how each achievement is unlocked, based on the current code. The achievements are grouped by type.
+
+### Movements (`type: movement`)
+
+| ID | Initially unlocked | Unlock condition | Source |
+|---|---|---|---|
+| `ascending_turn` | **Yes** | Available from the start, no action required | `initial_list.json` (`"unlocked": true`) |
+| `crusaito` | No | Open the app for the **second time** (not the first launch) | `HomePresenterImpl.logAppStarted()` → `APP_SECOND_USAGE_ACHIEVEMENT` |
+| `shake_leg` | No | Open either the **Gamepad or the Timeline** for the first time (whichever is used first) | `PadPresenterImpl.gameReady()` and `TimelinePresenterImpl.gameReady()` → `FIRST_TIME_ACHIEVEMENT` |
+| `flapping` | No | Complete the **quiz of project 01** ("Mueve") | `01_project_mueve.json` → `"achievement": "flapping"` |
+| `swing` | No | Complete the **quiz of project 02** ("Choreography") | `02_project_choreography.json` → `"achievement": "swing"` |
+| `jitter` | No | Complete the **quiz of project 05** ("Bio3") | `05_project_bio3.json` → `"achievement": "jitter"` |
+| `tip_toe` | No | Complete the **quiz of project 08** ("Bitbloq2") | `08_project_bitbloq2.json` → `"achievement": "tip_toe"` |
+
+### Animations (`type: animation`)
+
+| ID | Initially unlocked | Unlock condition | Source |
+|---|---|---|---|
+| `fart` | No | Open the app on at least **4 different days** | `HomePresenterImpl.logAppStarted()` → `APP_DAYS_OF_USE_ACHIEVEMENT` (condition: `daysOfUse >= 4`) |
+| `anxious` | No | Execute a Timeline sequence with **at least 15 commands** until completion | `TimelinePresenterImpl.TimelineCommandSubscriber.onCompleted()` (condition: `timelineCommandsCount >= 15`) |
+| `in_love` | No | Score **12 or more** in the **Zowi Says** minigame | `ZowiSaysMinigamePresenterImpl.gameOver()` (condition: `score >= 12`) |
+| `super_happy` | No | Complete the **quiz of project 07** ("Hello World") | `07_project_helloworld.json` → `"achievement": "super_happy"` |
+| `sleepy` | No | Complete the **quiz of project 10** ("Gravity") | `10_project_gravity.json` → `"achievement": "sleepy"` |
+| `confused` | No | Complete the **quiz of project 03** ("Forma") | `03_project_forma.json` → `"achievement": "confused"` |
+| `angry` | No | Complete the **quiz of project 06** ("Reprogram") | `06_project_reprogram.json` → `"achievement": "angry"` |
+| `magic` | No | Complete the **quiz of project 09** ("Adivinawi") | `09_project_adivinawi.json` → `"achievement": "magic"` |
+| `wave` | No | Complete the **quiz of project 04** ("Bio1") | `04_project_bio1.json` → `"achievement": "wave"` |
+
+### Games (`type: game`)
+
+| ID | Initially unlocked | Unlock condition | Source |
+|---|---|---|---|
+| `mouths_editor` | No | Score **8 or more** in the **Mouths** minigame. Also gates the Mouths Editor button on the home screen | `MouthsMinigamePresenterImpl.gameOver()` (condition: `score >= 8`) |
+
+### Summary by trigger type
+
+| Trigger | Achievements unlocked |
+|---|---|
+| **Default (from start)** | `ascending_turn` |
+| **2nd app launch** | `crusaito` |
+| **4 days of use** | `fart` |
+| **First time using Gamepad or Timeline** | `shake_leg` |
+| **Timeline: sequence ≥ 15 commands** | `anxious` |
+| **Zowi Says: score ≥ 12** | `in_love` |
+| **Mouths minigame: score ≥ 8** | `mouths_editor` |
+| **Complete project quiz 01** | `flapping` |
+| **Complete project quiz 02** | `swing` |
+| **Complete project quiz 03** | `confused` |
+| **Complete project quiz 04** | `wave` |
+| **Complete project quiz 05** | `jitter` |
+| **Complete project quiz 06** | `angry` |
+| **Complete project quiz 07** | `super_happy` |
+| **Complete project quiz 08** | `tip_toe` |
+| **Complete project quiz 09** | `magic` |
+| **Complete project quiz 10** | `sleepy` |
