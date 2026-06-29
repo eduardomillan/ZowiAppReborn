@@ -63,28 +63,34 @@ public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<TimelineD
         public ItemViewHolder(View v, ItemChangeListener itemChangeListener, final ItemClickListener itemClickListener, final ItemDeleteClickListener itemDeleteClickListener) {
             super(v);
             this.itemChangeListener = null;
-            this.container = (RelativeLayout) v.findViewById(R.id.container);
-            this.deleteButton = (Button) v.findViewById(R.id.delete_button);
-            this.selectedCommandRowView = (SelectedCommandRowView) v.findViewById(R.id.selected_command_row_view_item);
-            this.selectedCommandRowViewContent = this.selectedCommandRowView.findViewById(R.id.selected_command_row_view_content);
+            this.container = (RelativeLayout) v.findViewById(resolveViewId(v, "container", R.id.container));
+            this.deleteButton = (Button) v.findViewById(resolveViewId(v, "delete_button", R.id.delete_button));
+            this.selectedCommandRowView = (SelectedCommandRowView) v.findViewById(resolveViewId(v, "selected_command_row_view_item", R.id.selected_command_row_view_item));
+            this.selectedCommandRowViewContent = this.selectedCommandRowView != null ? this.selectedCommandRowView.findViewById(resolveViewId(this.selectedCommandRowView, "selected_command_row_view_content", R.id.selected_command_row_view_content)) : null;
             this.itemChangeListener = itemChangeListener;
-            this.selectedCommandRowView.setSelectedCommandRowViewChangesListener(this);
-            this.container.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineDraggableItemAdapter.ItemViewHolder.1
-                @Override // android.view.View.OnClickListener
-                public void onClick(View view) {
-                    if (itemClickListener != null && ItemViewHolder.this.clickable) {
-                        itemClickListener.onItemClicked(ItemViewHolder.this.getAdapterPosition());
+            if (this.selectedCommandRowView != null) {
+                this.selectedCommandRowView.setSelectedCommandRowViewChangesListener(this);
+            }
+            if (this.container != null) {
+                this.container.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineDraggableItemAdapter.ItemViewHolder.1
+                    @Override // android.view.View.OnClickListener
+                    public void onClick(View view) {
+                        if (itemClickListener != null && ItemViewHolder.this.clickable) {
+                            itemClickListener.onItemClicked(ItemViewHolder.this.getAdapterPosition());
+                        }
                     }
-                }
-            });
-            this.deleteButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineDraggableItemAdapter.ItemViewHolder.2
-                @Override // android.view.View.OnClickListener
-                public void onClick(View view) {
-                    if (itemDeleteClickListener != null && ItemViewHolder.this.clickable) {
-                        itemDeleteClickListener.onItemDeleteClicked(ItemViewHolder.this.getAdapterPosition());
+                });
+            }
+            if (this.deleteButton != null) {
+                this.deleteButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineDraggableItemAdapter.ItemViewHolder.2
+                    @Override // android.view.View.OnClickListener
+                    public void onClick(View view) {
+                        if (itemDeleteClickListener != null && ItemViewHolder.this.clickable) {
+                            itemDeleteClickListener.onItemDeleteClicked(ItemViewHolder.this.getAdapterPosition());
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         public void setClickable(boolean clickable) {
@@ -144,7 +150,7 @@ public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<TimelineD
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(this.context);
-        View v = inflater.inflate(R.layout.timeline_selected_command_row_view, parent, false);
+        View v = inflater.inflate(resolveLayoutId(parent, "timeline_selected_command_row_view", R.layout.timeline_selected_command_row_view), parent, false);
         return new ItemViewHolder(v, this.itemChangeListener, this.itemClickListener, this.itemDeleteClickListener);
     }
 
@@ -240,5 +246,15 @@ public class TimelineDraggableItemAdapter extends RecyclerView.Adapter<TimelineD
         int top = v.getTop() + ty;
         int bottom = v.getBottom() + ty;
         return x >= left && x <= right && y >= top && y <= bottom;
+    }
+
+    private static int resolveLayoutId(ViewGroup parent, String layoutName, int fallbackLayoutId) {
+        int layoutId = parent.getResources().getIdentifier(layoutName, "layout", parent.getContext().getPackageName());
+        return layoutId != 0 ? layoutId : fallbackLayoutId;
+    }
+
+    private static int resolveViewId(View root, String viewIdName, int fallbackViewId) {
+        int viewId = root.getResources().getIdentifier(viewIdName, "id", root.getContext().getPackageName());
+        return viewId != 0 ? viewId : fallbackViewId;
     }
 }

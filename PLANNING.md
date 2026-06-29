@@ -53,6 +53,11 @@ An incremental and low-risk strategy was adopted:
 - Fixed `EduBar` inflation crash in Wizard by resolving layout/view/dimen resources by name with fallback IDs.
 - Validation result: app process stays alive and reaches `WizardViewActivity` as resumed activity in runtime checks.
 
+### 5.6 Settings/Timeline follow-up
+- Migrated `SettingsViewActivity` and `CalibrationViewActivity` to name-based view resolution and null-safe dialog handling.
+- Migrated `TimelineActivity` and its row/adapters (`CommandsTileViewHolder`, `TimelineDraggableItemAdapter`) to resilient resource lookup.
+- Validation result: debug build succeeds and launcher smoke test completes without `AndroidRuntime` fatal output in the latest run.
+
 ## 6) Collaboration conventions going forward
 - When touching legacy screens, prioritize name-based runtime resolution for critical resources.
 - Keep `R.*` fallback where applicable.
@@ -94,7 +99,7 @@ This phase is considered complete when:
 - Debug build: successful.
 - APK installation: successful.
 - Process alive after launch/navigation: yes.
-- Foreground activity in latest check: `WizardViewActivity`.
+- Foreground activity in latest check: `WelcomeViewActivity`.
 - AndroidRuntime fatal in latest run: none.
 
 ---

@@ -214,8 +214,8 @@ public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> imp
             return;
         }
         this.loadMouthsEditorButton.setClickable(unlock);
-        int drawable = unlock ? R.drawable.mouths_editor_button_selector : R.drawable.blocked_option_button;
-        this.loadMouthsEditorButton.setButtonBackground(drawable, this);
+        String drawableName = unlock ? "mouths_editor_button_selector" : "blocked_option_button";
+        this.loadMouthsEditorButton.setButtonBackground(drawableName, this);
     }
 
     static class HomePagerAdapter extends PagerAdapter {

@@ -23,9 +23,11 @@ public class CommandsTileViewHolder extends RecyclerViewHolder<GridCommand> impl
     public CommandsTileViewHolder(int layoutId, ViewGroup parent, CommandItemListener itemListener, Context context) {
         super(layoutId, parent, context);
         this.context = context;
-        this.commandTileView = (CommandTileView) this.itemView.findViewById(R.id.command_tile_view_item);
+        this.commandTileView = (CommandTileView) this.itemView.findViewById(resolveViewId(this.itemView, "command_tile_view_item", R.id.command_tile_view_item));
         this.itemListener = itemListener;
-        this.commandTileView.setOnClickListener(this);
+        if (this.commandTileView != null) {
+            this.commandTileView.setOnClickListener(this);
+        }
     }
 
     @Override // com.bq.zowi.components.recyclerview.RecyclerViewHolder
@@ -43,5 +45,10 @@ public class CommandsTileViewHolder extends RecyclerViewHolder<GridCommand> impl
         if (this.itemListener != null) {
             this.itemListener.onCommandSelected(this.gridCommand);
         }
+    }
+
+    private int resolveViewId(View root, String viewIdName, int fallbackViewId) {
+        int viewId = root.getResources().getIdentifier(viewIdName, "id", root.getContext().getPackageName());
+        return viewId != 0 ? viewId : fallbackViewId;
     }
 }

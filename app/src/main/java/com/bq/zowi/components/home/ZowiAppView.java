@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bq.zowi.R;
+import com.bq.zowi.utils.ResourceResolver;
 
 /* JADX INFO: loaded from: classes.dex */
 public class ZowiAppView extends LinearLayout {
@@ -33,11 +34,15 @@ public class ZowiAppView extends LinearLayout {
         init(context, attrs);
     }
 
-    public void setButtonBackground(int drawableId, Context context) {
+    public void setButtonBackground(String drawableName, Context context) {
+        Drawable backgroundDrawable = ResourceResolver.getDrawableByResourceId(drawableName, context);
+        if (backgroundDrawable == null) {
+            return;
+        }
         if (Build.VERSION.SDK_INT < 16) {
-            this.button.setBackgroundDrawable(ContextCompat.getDrawable(context, drawableId));
+            this.button.setBackgroundDrawable(backgroundDrawable);
         } else {
-            this.button.setBackground(ContextCompat.getDrawable(context, drawableId));
+            this.button.setBackground(backgroundDrawable);
         }
     }
 
@@ -47,11 +52,13 @@ public class ZowiAppView extends LinearLayout {
             String labelText = a.getString(1);
             Drawable buttonBackgroundDrawable = a.getDrawable(0);
             boolean enabled = a.getBoolean(2, true);
-            a.recycle();
             if (!isInEditMode()) {
-                LayoutInflater.from(context).inflate(R.layout.component_zowi_app, this);
-                this.button = (Button) findViewById(R.id.zowi_app_button);
-                this.label = (TextView) findViewById(R.id.zowi_app_label);
+                int layoutId = context.getResources().getIdentifier("component_zowi_app", "layout", context.getPackageName());
+                LayoutInflater.from(context).inflate(layoutId != 0 ? layoutId : R.layout.component_zowi_app, this);
+                int buttonId = context.getResources().getIdentifier("zowi_app_button", "id", context.getPackageName());
+                int labelId = context.getResources().getIdentifier("zowi_app_label", "id", context.getPackageName());
+                this.button = (Button) findViewById(buttonId != 0 ? buttonId : R.id.zowi_app_button);
+                this.label = (TextView) findViewById(labelId != 0 ? labelId : R.id.zowi_app_label);
                 if (labelText != null) {
                     this.label.setText(labelText);
                 }
@@ -65,7 +72,6 @@ public class ZowiAppView extends LinearLayout {
                 this.button.setEnabled(enabled);
             }
         } catch (Throwable th) {
-            a.recycle();
             throw th;
         }
     }

@@ -58,84 +58,104 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         super.onCreate(savedInstanceState);
         getWindow().setFlags(1024, 1024);
         setResolvedContentView("activity_timeline_view", R.layout.activity_timeline_view);
-        this.howToPlayLayout = (MakerBoxDialog) findViewById(R.id.timeline_how_to_play_layout);
-        this.howToPlayText = (TextView) findViewById(R.id.timeline_how_to_play_text);
-        this.homeButton = (Button) findViewById(R.id.timeline_home_button);
-        this.homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.1
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((TimelinePresenter) TimelineActivity.this.getPresenter()).homeButtonPressed();
-            }
-        });
-        this.helpButton = (Button) findViewById(R.id.timeline_help_button);
-        this.helpButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.2
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((TimelinePresenter) TimelineActivity.this.getPresenter()).helpButtonPressed();
-            }
-        });
-        this.playButton = (Button) findViewById(R.id.activity_timeline_play_button);
-        this.playButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.3
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                if (TimelineActivity.this.timelineAdapter.getDataProvider().getCount() > 0) {
-                    TimelineActivity.this.isTimelinePlaying = true;
-                    TimelineActivity.this.timelineAdapter.markAllItemsAsTimelinePlaying(true);
-                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).playTimelineButtonPressed(TimelineActivity.this.timelineAdapter.getDataProvider().getTimelineDataCommandsList());
-                    TimelineActivity.this.playButton.setVisibility(8);
-                    TimelineActivity.this.stopButton.setVisibility(0);
+        this.howToPlayLayout = (MakerBoxDialog) findResolvedView("timeline_how_to_play_layout", R.id.timeline_how_to_play_layout);
+        this.howToPlayText = (TextView) findResolvedView("timeline_how_to_play_text", R.id.timeline_how_to_play_text);
+        this.homeButton = (Button) findResolvedView("timeline_home_button", R.id.timeline_home_button);
+        if (this.homeButton != null) {
+            this.homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.1
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).homeButtonPressed();
                 }
-            }
-        });
-        this.stopButton = (Button) findViewById(R.id.activity_timeline_stop_button);
-        this.stopButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.4
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((TimelinePresenter) TimelineActivity.this.getPresenter()).stopTimelineButtonPressed();
-                TimelineActivity.this.playButton.setVisibility(0);
-                TimelineActivity.this.stopButton.setVisibility(8);
-            }
-        });
-        this.addMovementButton = (Button) findViewById(R.id.activity_timeline_add_movement_button);
-        this.addMovementButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.5
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((TimelinePresenter) TimelineActivity.this.getPresenter()).addNewMovementCommandButtonClicked();
-            }
-        });
-        this.addAnimationButton = (Button) findViewById(R.id.activity_timeline_add_animation_button);
-        this.addAnimationButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.6
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((TimelinePresenter) TimelineActivity.this.getPresenter()).addNewAnimationCommandButtonClicked();
-            }
-        });
-        this.addMouthButton = (Button) findViewById(R.id.activity_timeline_add_mouth_button);
-        this.addMouthButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.7
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((TimelinePresenter) TimelineActivity.this.getPresenter()).addNewMouthCommandButtonClicked();
-            }
-        });
-        this.emptyTimelineLayout = (LinearLayout) findViewById(R.id.timeline_empty_message);
-        this.timelineRecyclerView = (RecyclerView) findViewById(R.id.activity_timeline_recycler_view);
+            });
+        }
+        this.helpButton = (Button) findResolvedView("timeline_help_button", R.id.timeline_help_button);
+        if (this.helpButton != null) {
+            this.helpButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.2
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).helpButtonPressed();
+                }
+            });
+        }
+        this.playButton = (Button) findResolvedView("activity_timeline_play_button", R.id.activity_timeline_play_button);
+        if (this.playButton != null) {
+            this.playButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.3
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (TimelineActivity.this.timelineAdapter != null && TimelineActivity.this.timelineAdapter.getDataProvider().getCount() > 0) {
+                        TimelineActivity.this.isTimelinePlaying = true;
+                        TimelineActivity.this.timelineAdapter.markAllItemsAsTimelinePlaying(true);
+                        ((TimelinePresenter) TimelineActivity.this.getPresenter()).playTimelineButtonPressed(TimelineActivity.this.timelineAdapter.getDataProvider().getTimelineDataCommandsList());
+                        TimelineActivity.this.playButton.setVisibility(8);
+                        TimelineActivity.this.stopButton.setVisibility(0);
+                    }
+                }
+            });
+        }
+        this.stopButton = (Button) findResolvedView("activity_timeline_stop_button", R.id.activity_timeline_stop_button);
+        if (this.stopButton != null) {
+            this.stopButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.4
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).stopTimelineButtonPressed();
+                    if (TimelineActivity.this.playButton != null) {
+                        TimelineActivity.this.playButton.setVisibility(0);
+                    }
+                    TimelineActivity.this.stopButton.setVisibility(8);
+                }
+            });
+        }
+        this.addMovementButton = (Button) findResolvedView("activity_timeline_add_movement_button", R.id.activity_timeline_add_movement_button);
+        if (this.addMovementButton != null) {
+            this.addMovementButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.5
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).addNewMovementCommandButtonClicked();
+                }
+            });
+        }
+        this.addAnimationButton = (Button) findResolvedView("activity_timeline_add_animation_button", R.id.activity_timeline_add_animation_button);
+        if (this.addAnimationButton != null) {
+            this.addAnimationButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.6
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).addNewAnimationCommandButtonClicked();
+                }
+            });
+        }
+        this.addMouthButton = (Button) findResolvedView("activity_timeline_add_mouth_button", R.id.activity_timeline_add_mouth_button);
+        if (this.addMouthButton != null) {
+            this.addMouthButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.timeline.TimelineActivity.7
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((TimelinePresenter) TimelineActivity.this.getPresenter()).addNewMouthCommandButtonClicked();
+                }
+            });
+        }
+        this.emptyTimelineLayout = (LinearLayout) findResolvedView("timeline_empty_message", R.id.timeline_empty_message);
+        this.timelineRecyclerView = (RecyclerView) findResolvedView("activity_timeline_recycler_view", R.id.activity_timeline_recycler_view);
         this.timelineLayoutManager = new LinearLayoutManager(this, 0, false);
         this.timelineRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
         this.timelineRecyclerViewDragDropManager.setInitiateOnLongPress(true);
         this.timelineRecyclerViewDragDropManager.setInitiateOnMove(false);
         this.timelineAdapter = new TimelineDraggableItemAdapter(new TimelineDataProvider(), this, this, this, this);
         this.timelineWrappedAdapter = this.timelineRecyclerViewDragDropManager.createWrappedAdapter(this.timelineAdapter);
-        this.timelineRecyclerView.setLayoutManager(this.timelineLayoutManager);
-        this.timelineRecyclerView.setAdapter(this.timelineWrappedAdapter);
-        this.timelineRecyclerViewDragDropManager.attachRecyclerView(this.timelineRecyclerView);
-        this.timelineRecyclerViewDragDropManager.setOnItemDragEventListener(this);
-        this.commandsSelectorDialog = (MakerBoxDialogScrollable) findViewById(R.id.timeline_actions_dialog);
-        this.commandsRecyclerView = (RecyclerView) findViewById(R.id.activity_timeline_commands_recycler_view);
+        if (this.timelineRecyclerView != null) {
+            this.timelineRecyclerView.setLayoutManager(this.timelineLayoutManager);
+            this.timelineRecyclerView.setAdapter(this.timelineWrappedAdapter);
+            this.timelineRecyclerViewDragDropManager.attachRecyclerView(this.timelineRecyclerView);
+            this.timelineRecyclerViewDragDropManager.setOnItemDragEventListener(this);
+        }
+        this.commandsSelectorDialog = (MakerBoxDialogScrollable) findResolvedView("timeline_actions_dialog", R.id.timeline_actions_dialog);
+        this.commandsRecyclerView = (RecyclerView) findResolvedView("activity_timeline_commands_recycler_view", R.id.activity_timeline_commands_recycler_view);
         this.commandsLayoutManager = new GridLayoutManager(this, ResourceResolver.getIntegerByResourceId("makerbox_dialog_scrollable_columns", this));
-        this.commandsRecyclerView.setLayoutManager(this.commandsLayoutManager);
-        this.commandsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        this.commmandsAdapter = new RecyclerAdapter<>(new CommandsGridViewHolderResolver(this));
-        this.commandsRecyclerView.setAdapter(this.commmandsAdapter);
+        if (this.commandsRecyclerView != null) {
+            this.commandsRecyclerView.setLayoutManager(this.commandsLayoutManager);
+            this.commandsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            this.commmandsAdapter = new RecyclerAdapter<>(new CommandsGridViewHolderResolver(this));
+            this.commandsRecyclerView.setAdapter(this.commmandsAdapter);
+        }
         this.zowiDependantViews = new View[]{this.playButton};
     }
 
@@ -155,18 +175,25 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseView
     public void showZowiName(String zowiName) {
         super.showZowiName(zowiName);
-        this.howToPlayText.setText(getResources().getString(R.string.timeline_how_to_play_text, zowiName));
+        if (this.howToPlayText != null) {
+            this.howToPlayText.setText(getResources().getString(R.string.timeline_how_to_play_text, zowiName));
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.timeline.TimelineView
     public void showHelp() {
-        this.howToPlayLayout.setVisibility(0);
+        if (this.howToPlayLayout != null) {
+            this.howToPlayLayout.setVisibility(0);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.timeline.TimelineView
     public void showCommandIsBeingPlayed(TimelineCommand playingTimelineCommand) {
         if (playingTimelineCommand != null) {
             this.isTimelinePlaying = true;
+        }
+        if (this.timelineAdapter == null || this.timelineRecyclerView == null) {
+            return;
         }
         List<TimelineCommand> timelineCommands = this.timelineAdapter.getDataProvider().getTimelineDataCommandsList();
         for (TimelineCommand timelineCommand : timelineCommands) {
@@ -185,9 +212,15 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
     public void showTimelineStoppedPlaying() {
         this.isTimelinePlaying = false;
         showCommandIsBeingPlayed(null);
-        this.timelineAdapter.markAllItemsAsTimelinePlaying(false);
-        this.playButton.setVisibility(0);
-        this.stopButton.setVisibility(8);
+        if (this.timelineAdapter != null) {
+            this.timelineAdapter.markAllItemsAsTimelinePlaying(false);
+        }
+        if (this.playButton != null) {
+            this.playButton.setVisibility(0);
+        }
+        if (this.stopButton != null) {
+            this.stopButton.setVisibility(8);
+        }
     }
 
     /* JADX INFO: Access modifiers changed from: protected */
@@ -201,10 +234,14 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
 
     @Override // com.bq.zowi.views.interactive.timeline.TimelineView
     public void addTimelineCommandToTimeline(TimelineCommand timelineCommand) {
-        this.emptyTimelineLayout.setVisibility(8);
+        if (this.emptyTimelineLayout != null) {
+            this.emptyTimelineLayout.setVisibility(8);
+        }
         this.timelineAdapter.getDataProvider().addTimelineDataFromCommand(timelineCommand);
         this.timelineAdapter.notifyItemInserted(this.timelineAdapter.getItemCount() - 1);
-        this.timelineRecyclerView.smoothScrollToPosition(this.timelineAdapter.getItemCount() - 1);
+        if (this.timelineRecyclerView != null) {
+            this.timelineRecyclerView.smoothScrollToPosition(this.timelineAdapter.getItemCount() - 1);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.timeline.TimelineView
@@ -212,36 +249,52 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
         this.timelineAdapter.getDataProvider().addTimelineDataFromCommadList(timelineCommands);
         this.timelineAdapter.notifyDataSetChanged();
         if (this.timelineAdapter.getItemCount() == 0) {
-            this.emptyTimelineLayout.setVisibility(0);
+            if (this.emptyTimelineLayout != null) {
+                this.emptyTimelineLayout.setVisibility(0);
+            }
         } else {
-            this.emptyTimelineLayout.setVisibility(8);
+            if (this.emptyTimelineLayout != null) {
+                this.emptyTimelineLayout.setVisibility(8);
+            }
         }
     }
 
     @Override // com.bq.zowi.views.interactive.timeline.TimelineView
     public void showCommandsSelector(List<GridCommand> commandList) {
-        this.commandsSelectorDialog.setVisibility(0);
-        this.commmandsAdapter.setItems(commandList);
+        if (this.commandsSelectorDialog != null) {
+            this.commandsSelectorDialog.setVisibility(0);
+        }
+        if (this.commmandsAdapter != null) {
+            this.commmandsAdapter.setItems(commandList);
+        }
         float rowHeight = getResources().getDimension(R.dimen.achievement_row_item_height);
         int columns = ResourceResolver.getIntegerByResourceId("makerbox_dialog_scrollable_columns", this);
         int numberOfRows = commandList.size() / columns;
         if (commandList.size() % columns != 0) {
             numberOfRows++;
         }
-        this.commandsRecyclerView.getLayoutParams().height = (int) (numberOfRows * rowHeight);
+        if (this.commandsRecyclerView != null) {
+            this.commandsRecyclerView.getLayoutParams().height = (int) (numberOfRows * rowHeight);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.timeline.TimelineView
     public void hideCommandsSelector() {
-        this.commandsSelectorDialog.setVisibility(8);
+        if (this.commandsSelectorDialog != null) {
+            this.commandsSelectorDialog.setVisibility(8);
+        }
     }
 
     @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onPause() {
-        this.timelineRecyclerViewDragDropManager.cancelDrag();
+        if (this.timelineRecyclerViewDragDropManager != null) {
+            this.timelineRecyclerViewDragDropManager.cancelDrag();
+        }
         super.onPause();
-        this.timelineAdapter.markAllItemsAsTimelinePlaying(false);
-        ((TimelinePresenter) getPresenter()).saveTimeline(this.timelineAdapter.getDataProvider().getTimelineDataCommandsList());
+        if (this.timelineAdapter != null) {
+            this.timelineAdapter.markAllItemsAsTimelinePlaying(false);
+            ((TimelinePresenter) getPresenter()).saveTimeline(this.timelineAdapter.getDataProvider().getTimelineDataCommandsList());
+        }
     }
 
     @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity

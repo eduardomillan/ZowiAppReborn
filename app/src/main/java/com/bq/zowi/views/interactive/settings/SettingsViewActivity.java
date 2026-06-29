@@ -44,44 +44,59 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResolvedContentView("activity_settings_view", R.layout.activity_settings_view);
-        Button homeButton = (Button) findViewById(R.id.activity_settings_home_button);
-        homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.1
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).homeButtonPressed();
-            }
-        });
-        this.loadFactoryFirmwareOption = (RelativeLayout) findViewById(R.id.activity_settings_load_factory_firmware_option);
-        this.loadFactoryFirmwareOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.2
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryForInstallingFirmware(false);
-            }
-        });
-        Button loadFactoryFirmwareButton = (Button) findViewById(R.id.activity_settings_load_factory_firmware_button);
-        loadFactoryFirmwareButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.3
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryForInstallingFirmware(false);
-            }
-        });
-        this.changeZowiNameOption = (RelativeLayout) findViewById(R.id.activity_settings_change_zowi_name_option);
-        this.changeZowiNameOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.4
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.changeNameDialog.setVisibility(0);
-            }
-        });
-        Button changeZowiNameButton = (Button) findViewById(R.id.activity_settings_change_zowi_name_button);
-        changeZowiNameButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.5
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.changeNameDialog.setVisibility(0);
-            }
-        });
-        this.changeNameDialog = (MakerBoxDialog) findViewById(R.id.activity_settings_change_zowi_name_dialog);
-        this.zowiNameEditText = (EditText) findViewById(R.id.activity_settings_change_zowi_name_dialog_edit_text);
-        this.zowiNameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.6
+        Button homeButton = (Button) findResolvedView("activity_settings_home_button", R.id.activity_settings_home_button);
+        if (homeButton != null) {
+            homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.1
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).homeButtonPressed();
+                }
+            });
+        }
+        this.loadFactoryFirmwareOption = (RelativeLayout) findResolvedView("activity_settings_load_factory_firmware_option", R.id.activity_settings_load_factory_firmware_option);
+        if (this.loadFactoryFirmwareOption != null) {
+            this.loadFactoryFirmwareOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.2
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryForInstallingFirmware(false);
+                }
+            });
+        }
+        Button loadFactoryFirmwareButton = (Button) findResolvedView("activity_settings_load_factory_firmware_button", R.id.activity_settings_load_factory_firmware_button);
+        if (loadFactoryFirmwareButton != null) {
+            loadFactoryFirmwareButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.3
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryForInstallingFirmware(false);
+                }
+            });
+        }
+        this.changeZowiNameOption = (RelativeLayout) findResolvedView("activity_settings_change_zowi_name_option", R.id.activity_settings_change_zowi_name_option);
+        if (this.changeZowiNameOption != null) {
+            this.changeZowiNameOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.4
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.changeNameDialog != null) {
+                        SettingsViewActivity.this.changeNameDialog.setVisibility(0);
+                    }
+                }
+            });
+        }
+        Button changeZowiNameButton = (Button) findResolvedView("activity_settings_change_zowi_name_button", R.id.activity_settings_change_zowi_name_button);
+        if (changeZowiNameButton != null) {
+            changeZowiNameButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.5
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.changeNameDialog != null) {
+                        SettingsViewActivity.this.changeNameDialog.setVisibility(0);
+                    }
+                }
+            });
+        }
+        this.changeNameDialog = (MakerBoxDialog) findResolvedView("activity_settings_change_zowi_name_dialog", R.id.activity_settings_change_zowi_name_dialog);
+        this.zowiNameEditText = (EditText) findResolvedView("activity_settings_change_zowi_name_dialog_edit_text", R.id.activity_settings_change_zowi_name_dialog_edit_text);
+        if (this.zowiNameEditText != null) {
+            this.zowiNameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.6
             private String textBeforeLastChange = "";
 
             @Override // android.text.TextWatcher
@@ -94,7 +109,7 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
 
             @Override // android.text.TextWatcher
             public void afterTextChanged(Editable editable) {
-                if (SettingsViewActivity.this.zowiNameEditText.getText().length() <= 0 || NameValidator.isNameValid(SettingsViewActivity.this.zowiNameEditText.getText().toString())) {
+                if (SettingsViewActivity.this.zowiNameEditText == null || SettingsViewActivity.this.zowiNameEditText.getText().length() <= 0 || NameValidator.isNameValid(SettingsViewActivity.this.zowiNameEditText.getText().toString())) {
                     this.textBeforeLastChange = SettingsViewActivity.this.zowiNameEditText.getText().toString();
                     return;
                 }
@@ -102,132 +117,183 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
                 SettingsViewActivity.this.zowiNameEditText.setSelection(this.textBeforeLastChange.length());
                 ToastUtils.showNonOverlappingToast(SettingsViewActivity.this, R.string.wizard_connecting_set_name_warning_text, 0);
             }
-        });
-        this.changeNameButtonOk = (MakerBoxButton) findViewById(R.id.activity_settings_change_zowi_name_dialog_button_ok);
-        this.changeNameButtonOk.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.7
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).changeZowiName(SettingsViewActivity.this.zowiNameEditText.getText().toString());
-                SettingsViewActivity.this.changeNameDialog.setVisibility(8);
-            }
-        });
-        this.lookForUpdatesOption = (RelativeLayout) findViewById(R.id.activity_settings_look_for_updates_option);
-        this.lookForUpdatesOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.8
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).lookForAppUpdates();
-            }
-        });
-        Button lookForUpdatesButton = (Button) findViewById(R.id.activity_settings_look_for_updates_button);
-        lookForUpdatesButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.9
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).lookForAppUpdates();
-            }
-        });
-        this.forgetPlayingHistoryOption = (RelativeLayout) findViewById(R.id.activity_settings_forget_playing_history_option);
-        this.forgetPlayingHistoryOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.10
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(0);
-            }
-        });
-        Button forgetPlayingHistoryButton = (Button) findViewById(R.id.activity_settings_forget_playing_history_button);
-        forgetPlayingHistoryButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.11
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(0);
-            }
-        });
-        this.forgetPlayingHistoryDialog = (MakerBoxDialog) findViewById(R.id.activity_settings_forget_playing_history_button_dialog);
-        this.forgetPlayingHistoryButtonOk = (MakerBoxButton) findViewById(R.id.activity_settings_forget_playing_history_button_dialog_button_ok);
-        this.forgetPlayingHistoryButtonOk.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.12
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).forgetPlayingHistory();
-                SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(8);
-            }
-        });
-        this.forgetPlayingHistoryButtonCancel = (TextView) findViewById(R.id.activity_settings_forget_playing_history_button_dialog_button_cancel);
-        this.forgetPlayingHistoryButtonCancel.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.13
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(8);
-            }
-        });
-        this.forgetZowiOption = (RelativeLayout) findViewById(R.id.activity_settings_forget_zowi_option);
-        this.forgetZowiOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.14
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.forgetZowiDialog.setVisibility(0);
-            }
-        });
-        Button forgetZowiButton = (Button) findViewById(R.id.activity_settings_forget_zowi_button);
-        forgetZowiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.15
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.forgetZowiDialog.setVisibility(0);
-            }
-        });
-        this.forgetZowiDialog = (MakerBoxDialog) findViewById(R.id.activity_settings_forget_zowi_button_dialog);
-        this.forgetZowiButtonOk = (MakerBoxButton) findViewById(R.id.activity_settings_forget_zowi_button_dialog_button_ok);
-        this.forgetZowiButtonOk.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.16
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).forgetZowi();
-                SettingsViewActivity.this.forgetZowiDialog.setVisibility(8);
-            }
-        });
-        this.forgetZowiButtonCancel = (TextView) findViewById(R.id.activity_settings_forget_zowi_button_dialog_button_cancel);
-        this.forgetZowiButtonCancel.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.17
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                SettingsViewActivity.this.forgetZowiDialog.setVisibility(8);
-            }
-        });
-        this.calibrateZowiOption = (RelativeLayout) findViewById(R.id.activity_settings_calibrate_zowi_option);
-        this.calibrateZowiOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.18
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                if (SettingsViewActivity.this.isZowiAltered()) {
-                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryWhenCalibratingForInstallingFirmware();
-                } else {
-                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).calibrateZowi();
+            });
+        }
+        this.changeNameButtonOk = (MakerBoxButton) findResolvedView("activity_settings_change_zowi_name_dialog_button_ok", R.id.activity_settings_change_zowi_name_dialog_button_ok);
+        if (this.changeNameButtonOk != null) {
+            this.changeNameButtonOk.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.7
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.zowiNameEditText != null && SettingsViewActivity.this.changeNameDialog != null) {
+                        ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).changeZowiName(SettingsViewActivity.this.zowiNameEditText.getText().toString());
+                        SettingsViewActivity.this.changeNameDialog.setVisibility(8);
+                    }
                 }
-            }
-        });
-        Button calibrateZowiButton = (Button) findViewById(R.id.activity_settings_calibrate_zowi_button);
-        calibrateZowiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.19
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                if (SettingsViewActivity.this.isZowiAltered()) {
-                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryWhenCalibratingForInstallingFirmware();
-                } else {
-                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).calibrateZowi();
+            });
+        }
+        this.lookForUpdatesOption = (RelativeLayout) findResolvedView("activity_settings_look_for_updates_option", R.id.activity_settings_look_for_updates_option);
+        if (this.lookForUpdatesOption != null) {
+            this.lookForUpdatesOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.8
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).lookForAppUpdates();
                 }
-            }
-        });
-        this.hospitalOption = (RelativeLayout) findViewById(R.id.activity_settings_hospital_option);
-        this.hospitalOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.20
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).visitHospital();
-            }
-        });
-        Button hospitalButton = (Button) findViewById(R.id.activity_settings_hospital_button);
-        hospitalButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.21
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).visitHospital();
-            }
-        });
+            });
+        }
+        Button lookForUpdatesButton = (Button) findResolvedView("activity_settings_look_for_updates_button", R.id.activity_settings_look_for_updates_button);
+        if (lookForUpdatesButton != null) {
+            lookForUpdatesButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.9
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).lookForAppUpdates();
+                }
+            });
+        }
+        this.forgetPlayingHistoryOption = (RelativeLayout) findResolvedView("activity_settings_forget_playing_history_option", R.id.activity_settings_forget_playing_history_option);
+        if (this.forgetPlayingHistoryOption != null) {
+            this.forgetPlayingHistoryOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.10
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.forgetPlayingHistoryDialog != null) {
+                        SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(0);
+                    }
+                }
+            });
+        }
+        Button forgetPlayingHistoryButton = (Button) findResolvedView("activity_settings_forget_playing_history_button", R.id.activity_settings_forget_playing_history_button);
+        if (forgetPlayingHistoryButton != null) {
+            forgetPlayingHistoryButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.11
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.forgetPlayingHistoryDialog != null) {
+                        SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(0);
+                    }
+                }
+            });
+        }
+        this.forgetPlayingHistoryDialog = (MakerBoxDialog) findResolvedView("activity_settings_forget_playing_history_button_dialog", R.id.activity_settings_forget_playing_history_button_dialog);
+        this.forgetPlayingHistoryButtonOk = (MakerBoxButton) findResolvedView("activity_settings_forget_playing_history_button_dialog_button_ok", R.id.activity_settings_forget_playing_history_button_dialog_button_ok);
+        if (this.forgetPlayingHistoryButtonOk != null) {
+            this.forgetPlayingHistoryButtonOk.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.12
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).forgetPlayingHistory();
+                    if (SettingsViewActivity.this.forgetPlayingHistoryDialog != null) {
+                        SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(8);
+                    }
+                }
+            });
+        }
+        this.forgetPlayingHistoryButtonCancel = (TextView) findResolvedView("activity_settings_forget_playing_history_button_dialog_button_cancel", R.id.activity_settings_forget_playing_history_button_dialog_button_cancel);
+        if (this.forgetPlayingHistoryButtonCancel != null) {
+            this.forgetPlayingHistoryButtonCancel.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.13
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.forgetPlayingHistoryDialog != null) {
+                        SettingsViewActivity.this.forgetPlayingHistoryDialog.setVisibility(8);
+                    }
+                }
+            });
+        }
+        this.forgetZowiOption = (RelativeLayout) findResolvedView("activity_settings_forget_zowi_option", R.id.activity_settings_forget_zowi_option);
+        if (this.forgetZowiOption != null) {
+            this.forgetZowiOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.14
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.forgetZowiDialog != null) {
+                        SettingsViewActivity.this.forgetZowiDialog.setVisibility(0);
+                    }
+                }
+            });
+        }
+        Button forgetZowiButton = (Button) findResolvedView("activity_settings_forget_zowi_button", R.id.activity_settings_forget_zowi_button);
+        if (forgetZowiButton != null) {
+            forgetZowiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.15
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.forgetZowiDialog != null) {
+                        SettingsViewActivity.this.forgetZowiDialog.setVisibility(0);
+                    }
+                }
+            });
+        }
+        this.forgetZowiDialog = (MakerBoxDialog) findResolvedView("activity_settings_forget_zowi_button_dialog", R.id.activity_settings_forget_zowi_button_dialog);
+        this.forgetZowiButtonOk = (MakerBoxButton) findResolvedView("activity_settings_forget_zowi_button_dialog_button_ok", R.id.activity_settings_forget_zowi_button_dialog_button_ok);
+        if (this.forgetZowiButtonOk != null) {
+            this.forgetZowiButtonOk.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.16
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).forgetZowi();
+                    if (SettingsViewActivity.this.forgetZowiDialog != null) {
+                        SettingsViewActivity.this.forgetZowiDialog.setVisibility(8);
+                    }
+                }
+            });
+        }
+        this.forgetZowiButtonCancel = (TextView) findResolvedView("activity_settings_forget_zowi_button_dialog_button_cancel", R.id.activity_settings_forget_zowi_button_dialog_button_cancel);
+        if (this.forgetZowiButtonCancel != null) {
+            this.forgetZowiButtonCancel.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.17
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.forgetZowiDialog != null) {
+                        SettingsViewActivity.this.forgetZowiDialog.setVisibility(8);
+                    }
+                }
+            });
+        }
+        this.calibrateZowiOption = (RelativeLayout) findResolvedView("activity_settings_calibrate_zowi_option", R.id.activity_settings_calibrate_zowi_option);
+        if (this.calibrateZowiOption != null) {
+            this.calibrateZowiOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.18
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.isZowiAltered()) {
+                        ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryWhenCalibratingForInstallingFirmware();
+                    } else {
+                        ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).calibrateZowi();
+                    }
+                }
+            });
+        }
+        Button calibrateZowiButton = (Button) findResolvedView("activity_settings_calibrate_zowi_button", R.id.activity_settings_calibrate_zowi_button);
+        if (calibrateZowiButton != null) {
+            calibrateZowiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.19
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (SettingsViewActivity.this.isZowiAltered()) {
+                        ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).manageLowBatteryWhenCalibratingForInstallingFirmware();
+                    } else {
+                        ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).calibrateZowi();
+                    }
+                }
+            });
+        }
+        this.hospitalOption = (RelativeLayout) findResolvedView("activity_settings_hospital_option", R.id.activity_settings_hospital_option);
+        if (this.hospitalOption != null) {
+            this.hospitalOption.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.20
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).visitHospital();
+                }
+            });
+        }
+        Button hospitalButton = (Button) findResolvedView("activity_settings_hospital_button", R.id.activity_settings_hospital_button);
+        if (hospitalButton != null) {
+            hospitalButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.settings.SettingsViewActivity.21
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((SettingsPresenter) SettingsViewActivity.this.getPresenter()).visitHospital();
+                }
+            });
+        }
         this.zowiDependantViews = new View[]{this.loadFactoryFirmwareOption, loadFactoryFirmwareButton, this.changeZowiNameOption, changeZowiNameButton, this.calibrateZowiOption, calibrateZowiButton};
     }
 
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseView
     public void showZowiName(String zowiName) {
         super.showZowiName(zowiName);
-        this.zowiNameEditText.setHint(zowiName);
+        if (this.zowiNameEditText != null) {
+            this.zowiNameEditText.setHint(zowiName);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
@@ -247,51 +313,77 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showNameChangeSuccess() {
-        this.eduBar.show(R.string.settings_change_zowi_name_success);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_change_zowi_name_success);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showNameChangeError() {
-        this.eduBar.show(R.string.settings_change_zowi_name_fail);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_change_zowi_name_fail);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showInvalidNameError() {
-        this.eduBar.show(R.string.settings_change_zowi_name_invalid);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_change_zowi_name_invalid);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetPlayingHistorySuccess() {
-        this.eduBar.show(R.string.settings_forget_playing_history_success);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_forget_playing_history_success);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetPlayingHistoryError() {
-        this.eduBar.show(R.string.settings_forget_playing_history_fail);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_forget_playing_history_fail);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetZowiSuccess() {
-        this.eduBar.show(R.string.settings_forget_zowi_success);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_forget_zowi_success);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetZowiError() {
-        this.eduBar.show(R.string.settings_forget_zowi_fail);
+        if (this.eduBar != null) {
+            this.eduBar.show(R.string.settings_forget_zowi_fail);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showRestoringInfoWhenCalibratingAlteredZowi() {
-        this.restoreFirmwareDialogTitle.setText(R.string.settings_calibration_altered_zowi_dialog_title);
-        this.restoreFirmwareDialogDescription.setText(R.string.settings_calibration_altered_zowi_dialog_description);
-        this.restoreFirmwareDialog.setVisibility(0);
+        if (this.restoreFirmwareDialogTitle != null) {
+            this.restoreFirmwareDialogTitle.setText(R.string.settings_calibration_altered_zowi_dialog_title);
+        }
+        if (this.restoreFirmwareDialogDescription != null) {
+            this.restoreFirmwareDialogDescription.setText(R.string.settings_calibration_altered_zowi_dialog_description);
+        }
+        if (this.restoreFirmwareDialog != null) {
+            this.restoreFirmwareDialog.setVisibility(0);
+        }
     }
 
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseView
     public void showLowBatteryForInstallingFirmwareDialog(String zowiName, boolean isAutoUpdate) {
-        this.lowBatteryForInstallingFwDescription.setText(getString(R.string.low_battery_when_installing_fw_restore_dialog_description, new Object[]{zowiName}));
-        this.lowBatteryForInstallingFwButtonOk.setText(isAutoUpdate ? R.string.calibration_warning_continue_button : R.string.settings_load_factory_firmware_dialog_button_ok);
-        this.lowBatteryForInstallingFwButtonCancel.setText(R.string.settings_load_factory_firmware_dialog_button_cancel);
+        if (this.lowBatteryForInstallingFwDescription != null) {
+            this.lowBatteryForInstallingFwDescription.setText(getString(R.string.low_battery_when_installing_fw_restore_dialog_description, new Object[]{zowiName}));
+        }
+        if (this.lowBatteryForInstallingFwButtonOk != null) {
+            this.lowBatteryForInstallingFwButtonOk.setText(isAutoUpdate ? R.string.calibration_warning_continue_button : R.string.settings_load_factory_firmware_dialog_button_ok);
+        }
+        if (this.lowBatteryForInstallingFwButtonCancel != null) {
+            this.lowBatteryForInstallingFwButtonCancel.setText(R.string.settings_load_factory_firmware_dialog_button_cancel);
+        }
         super.showLowBatteryForInstallingFirmwareDialog(zowiName, isAutoUpdate);
     }
 }
