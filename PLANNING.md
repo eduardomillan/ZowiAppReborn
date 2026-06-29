@@ -73,9 +73,7 @@ An incremental and low-risk strategy was adopted:
   - No black-screen recurrence observed after latest patch in current checks.
 
 ### 5.8 Tag normalization
-- Normalized legacy release tag naming for `1.9.1.3` in remote:
-  - Removed `v1.9.1.3`.
-  - Kept `1.9.1.3` as canonical tag name.
+- Normalized legacy release tag naming. Example:`1.9.1.3`
 
 ## 6) Collaboration conventions going forward
 - When touching legacy screens, prioritize name-based runtime resolution for critical resources.
