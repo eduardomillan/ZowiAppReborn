@@ -314,59 +314,59 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showNameChangeSuccess() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_change_zowi_name_success);
+            this.eduBar.show(resolveStringText("settings_change_zowi_name_success", R.string.settings_change_zowi_name_success).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showNameChangeError() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_change_zowi_name_fail);
+            this.eduBar.show(resolveStringText("settings_change_zowi_name_fail", R.string.settings_change_zowi_name_fail).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showInvalidNameError() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_change_zowi_name_invalid);
+            this.eduBar.show(resolveStringText("settings_change_zowi_name_invalid", R.string.settings_change_zowi_name_invalid).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetPlayingHistorySuccess() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_forget_playing_history_success);
+            this.eduBar.show(resolveStringText("settings_forget_playing_history_success", R.string.settings_forget_playing_history_success).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetPlayingHistoryError() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_forget_playing_history_fail);
+            this.eduBar.show(resolveStringText("settings_forget_playing_history_fail", R.string.settings_forget_playing_history_fail).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetZowiSuccess() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_forget_zowi_success);
+            this.eduBar.show(resolveStringText("settings_forget_zowi_success", R.string.settings_forget_zowi_success).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showForgetZowiError() {
         if (this.eduBar != null) {
-            this.eduBar.show(R.string.settings_forget_zowi_fail);
+            this.eduBar.show(resolveStringText("settings_forget_zowi_fail", R.string.settings_forget_zowi_fail).toString());
         }
     }
 
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showRestoringInfoWhenCalibratingAlteredZowi() {
         if (this.restoreFirmwareDialogTitle != null) {
-            this.restoreFirmwareDialogTitle.setText(R.string.settings_calibration_altered_zowi_dialog_title);
+            this.restoreFirmwareDialogTitle.setText(resolveStringText("settings_calibration_altered_zowi_dialog_title", R.string.settings_calibration_altered_zowi_dialog_title));
         }
         if (this.restoreFirmwareDialogDescription != null) {
-            this.restoreFirmwareDialogDescription.setText(R.string.settings_calibration_altered_zowi_dialog_description);
+            this.restoreFirmwareDialogDescription.setText(resolveStringText("settings_calibration_altered_zowi_dialog_description", R.string.settings_calibration_altered_zowi_dialog_description));
         }
         if (this.restoreFirmwareDialog != null) {
             this.restoreFirmwareDialog.setVisibility(0);

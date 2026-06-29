@@ -63,7 +63,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
     @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in, R.anim.still);
+        applyTransitionAnimation("slide_in", "still");
     }
 
     @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity
@@ -383,8 +383,8 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
 
     @Override // com.bq.zowi.views.interactive.InteractiveBaseView
     public void showInstallingFirmwareInfoDialog() {
-        this.restoreFirmwareDialogTitle.setText(R.string.settings_load_factory_firmware_dialog_title);
-        this.restoreFirmwareDialogDescription.setText(R.string.settings_load_factory_firmware_dialog_description);
+        this.restoreFirmwareDialogTitle.setText(resolveStringText("settings_load_factory_firmware_dialog_title", R.string.settings_load_factory_firmware_dialog_title));
+        this.restoreFirmwareDialogDescription.setText(resolveStringText("settings_load_factory_firmware_dialog_description", R.string.settings_load_factory_firmware_dialog_description));
         this.restoreFirmwareDialog.setVisibility(0);
     }
 
@@ -424,13 +424,25 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
     @Override // android.app.Activity
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.still, R.anim.slide_out);
+        applyTransitionAnimation("still", "slide_out");
+    }
+
+    private void applyTransitionAnimation(String enterAnimationName, String exitAnimationName) {
+        int enterAnimationId = resolveAnimationResourceId(enterAnimationName);
+        int exitAnimationId = resolveAnimationResourceId(exitAnimationName);
+        if (enterAnimationId != 0 && exitAnimationId != 0) {
+            overridePendingTransition(enterAnimationId, exitAnimationId);
+        }
+    }
+
+    private int resolveAnimationResourceId(String animationName) {
+        return getResources().getIdentifier(animationName, "anim", getPackageName());
     }
 
     protected void updateStatusBar() {
         if (this.isDemoMode) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_demo_icon", this));
-            this.zowiStatusTextView.setText(R.string.status_demo);
+            this.zowiStatusTextView.setText(resolveStringText("status_demo", R.string.status_demo));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(0);
@@ -440,7 +452,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isInstallingFw) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_altered_icon", this));
-            this.zowiStatusTextView.setText(R.string.status_installing_firmware);
+            this.zowiStatusTextView.setText(resolveStringText("status_installing_firmware", R.string.status_installing_firmware));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -450,7 +462,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isAltered) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_altered_icon", this));
-            this.zowiStatusTextView.setText(R.string.status_altered);
+            this.zowiStatusTextView.setText(resolveStringText("status_altered", R.string.status_altered));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(0);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -460,7 +472,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isLowBattery) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_low_battery_icon", this));
-            this.zowiStatusTextView.setText(R.string.status_low_battery);
+            this.zowiStatusTextView.setText(resolveStringText("status_low_battery", R.string.status_low_battery));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -470,7 +482,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isConnected) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_connected_icon", this));
-            this.zowiStatusTextView.setText(R.string.status_connected);
+            this.zowiStatusTextView.setText(resolveStringText("status_connected", R.string.status_connected));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -482,14 +494,14 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
             if (this.shouldShowConnectingSpinner) {
                 this.shouldShowConnectingSpinner = false;
                 this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_disconnected_icon", this));
-                this.zowiStatusTextView.setText(R.string.status_connecting);
+                this.zowiStatusTextView.setText(resolveStringText("status_connecting", R.string.status_connecting));
                 this.zowiConnectButton.setVisibility(8);
                 this.zowiFactoryResetButton.setVisibility(8);
                 this.zowiLaunchWizardButton.setVisibility(8);
                 this.connectingProgressBar.setVisibility(0);
             } else {
                 this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_disconnected_icon", this));
-                this.zowiStatusTextView.setText(R.string.status_disconnected);
+                this.zowiStatusTextView.setText(resolveStringText("status_disconnected", R.string.status_disconnected));
                 this.zowiConnectButton.setVisibility(0);
                 this.zowiFactoryResetButton.setVisibility(8);
                 this.zowiLaunchWizardButton.setVisibility(8);
@@ -500,13 +512,18 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (!this.isConnected) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_disconnected_icon", this));
-            this.zowiStatusTextView.setText(R.string.status_disconnected);
+            this.zowiStatusTextView.setText(resolveStringText("status_disconnected", R.string.status_disconnected));
             this.zowiConnectButton.setVisibility(0);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
             this.connectingProgressBar.setVisibility(8);
             disableZowiConnexionDependantViews();
         }
+    }
+
+    protected CharSequence resolveStringText(String resourceName, int fallbackStringResId) {
+        int resolvedStringResId = getResources().getIdentifier(resourceName, "string", getPackageName());
+        return getText(resolvedStringResId != 0 ? resolvedStringResId : fallbackStringResId);
     }
 
     private void enabledZowiConnexionDependantViews() {

@@ -378,7 +378,7 @@
     <string name="settings_load_factory_firmware_progress_dialog_title">Un momento</string>
     <string name="settings_load_factory_firmware_success">Funciones originales restauradas correctamente.</string>
     <string name="settings_load_factory_firmware_title">RESTAURAR FUNCIONES ORIGINALES</string>
-    <string name="settings_look_for_updates_description">Comprueba si hay una nueva versión de la app en Google Play.</string>
+    <string name="settings_look_for_updates_description">Comprueba si hay una nueva versión de la app.</string>
     <string name="settings_look_for_updates_title">BUSCAR ACTUALIZACIÓN DE LA APP</string>
     <string name="settings_title">Ajustes</string>
     <string name="status_altered">Modificado</string>

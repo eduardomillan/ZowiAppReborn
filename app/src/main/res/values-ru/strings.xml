@@ -378,7 +378,7 @@
     <string name="settings_load_factory_firmware_progress_dialog_title">Подождите</string>
     <string name="settings_load_factory_firmware_success">Начальные функции восстановлены корректно.</string>
     <string name="settings_load_factory_firmware_title">ВОССТАНОВИТЬ НАЧАЛЬНЫЕ ФУНКЦИИ</string>
-    <string name="settings_look_for_updates_description">Проверяется наличие новой версии приложения на веб-сайте Google Play.</string>
+    <string name="settings_look_for_updates_description">Проверяет наличие новой версии приложения.</string>
     <string name="settings_look_for_updates_title">ПОИСК ОБНОВЛЕНИЯ ПРИЛОЖЕНИЯ</string>
     <string name="settings_title">Регулировки</string>
     <string name="status_altered">Измененный</string>

@@ -130,7 +130,7 @@
     <string name="settings_hospital_title">HOSPITAL</string>
     <string name="settings_hospital_description">If you have any problems with your Zowi, you can find the solution in the Hospital.</string>
     <string name="settings_look_for_updates_title">SEARCH FOR APP UPDATES</string>
-    <string name="settings_look_for_updates_description">Check if a new version of the app is available on Google Play.</string>
+    <string name="settings_look_for_updates_description">Check if a new version of the app is available.</string>
     <string name="settings_calibration_altered_zowi_dialog_title">Calibration not allowed</string>
     <string name="settings_calibration_altered_zowi_dialog_description">Zowi\'s functions have now been modified. Press \"Restore\" to return to the original functions and calibrate it.</string>
     <string name="settings_calibration_altered_zowi_dialog_button_ok">DO NOT RESTORE</string>
