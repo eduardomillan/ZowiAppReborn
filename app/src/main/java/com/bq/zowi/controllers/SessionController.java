@@ -11,9 +11,13 @@ public interface SessionController {
 
     String loadDefaultZowiName();
 
+    boolean hasDismissedWizard();
+
     void resetActiveZowi();
 
     void saveActiveZowiDeviceAddress(String str);
 
     void saveActiveZowiName(String str);
+
+    void saveWizardDismissed(boolean dismissed);
 }

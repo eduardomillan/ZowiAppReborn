@@ -120,6 +120,7 @@ public class WizardPresenterImpl extends BasePresenterImpl<WizardView, WizardWir
 
     @Override // com.bq.zowi.presenters.wizard.WizardPresenter
     public void dismissWizard() {
+        this.sessionController.saveWizardDismissed(true);
         getWireframe().presentWizardCompleteView();
     }
 

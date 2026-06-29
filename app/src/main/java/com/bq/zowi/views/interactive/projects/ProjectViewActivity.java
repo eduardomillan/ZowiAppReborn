@@ -52,33 +52,39 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
         super.onCreate(savedInstanceState);
         setResolvedContentView("activity_project_view", R.layout.activity_project_view);
         this.projectId = getIntent().getStringExtra(PROJECT_ID_EXTRA);
-        this.viewPager = (ViewPager) findViewById(R.id.activity_project_view_pager);
+        this.viewPager = (ViewPager) findResolvedView("activity_project_view_pager", R.id.activity_project_view_pager);
         int margin = (int) (getResources().getDimension(R.dimen.sections_pager_horizontal_margin) * 2.0f);
-        this.viewPager.setPageMargin(-margin);
-        this.projectCompletedImageView = (ImageView) findViewById(R.id.activity_project_completed_imageview);
-        this.installHexMakerbox = (MakerBoxDialog) findViewById(R.id.activity_project_install_hex_layout);
-        this.hexInstallationProgressBar = (ProgressBar) findViewById(R.id.activity_project_install_hex_progressbar);
-        this.titleTextView = (TextView) findViewById(R.id.activity_project_title_textview);
-        this.descriptionTextView = (TextView) findViewById(R.id.activity_project_description_textview);
-        this.linkTextView = (TextView) findViewById(R.id.activity_project_link_textview);
-        this.projectImageView = (ImageView) findViewById(R.id.activity_project_image);
-        this.installHexDescriptionTextView = (TextView) findViewById(R.id.activity_project_install_hex_description);
-        this.installHexButtonTextView = (TextView) findViewById(R.id.activity_project_install_hex_button_textview);
-        this.installingHexDescriptionTextView = (TextView) findViewById(R.id.activity_project_installing_hex_description_textview);
-        this.runTestButton = (MakerBoxButton) findViewById(R.id.activity_project_run_test_button);
-        this.runTestButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.projects.ProjectViewActivity.1
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((ProjectPresenter) ProjectViewActivity.this.getPresenter()).loadProjectQuiz(ProjectViewActivity.this.projectId);
-            }
-        });
-        ImageButton homeButton = (ImageButton) findViewById(R.id.activity_project_home_button);
-        homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.projects.ProjectViewActivity.2
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((ProjectPresenter) ProjectViewActivity.this.getPresenter()).homeButtonPressed();
-            }
-        });
+        if (this.viewPager != null) {
+            this.viewPager.setPageMargin(-margin);
+        }
+        this.projectCompletedImageView = (ImageView) findResolvedView("activity_project_completed_imageview", R.id.activity_project_completed_imageview);
+        this.installHexMakerbox = (MakerBoxDialog) findResolvedView("activity_project_install_hex_layout", R.id.activity_project_install_hex_layout);
+        this.hexInstallationProgressBar = (ProgressBar) findResolvedView("activity_project_install_hex_progressbar", R.id.activity_project_install_hex_progressbar);
+        this.titleTextView = (TextView) findResolvedView("activity_project_title_textview", R.id.activity_project_title_textview);
+        this.descriptionTextView = (TextView) findResolvedView("activity_project_description_textview", R.id.activity_project_description_textview);
+        this.linkTextView = (TextView) findResolvedView("activity_project_link_textview", R.id.activity_project_link_textview);
+        this.projectImageView = (ImageView) findResolvedView("activity_project_image", R.id.activity_project_image);
+        this.installHexDescriptionTextView = (TextView) findResolvedView("activity_project_install_hex_description", R.id.activity_project_install_hex_description);
+        this.installHexButtonTextView = (TextView) findResolvedView("activity_project_install_hex_button_textview", R.id.activity_project_install_hex_button_textview);
+        this.installingHexDescriptionTextView = (TextView) findResolvedView("activity_project_installing_hex_description_textview", R.id.activity_project_installing_hex_description_textview);
+        this.runTestButton = (MakerBoxButton) findResolvedView("activity_project_run_test_button", R.id.activity_project_run_test_button);
+        if (this.runTestButton != null) {
+            this.runTestButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.projects.ProjectViewActivity.1
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((ProjectPresenter) ProjectViewActivity.this.getPresenter()).loadProjectQuiz(ProjectViewActivity.this.projectId);
+                }
+            });
+        }
+        ImageButton homeButton = (ImageButton) findResolvedView("activity_project_home_button", R.id.activity_project_home_button);
+        if (homeButton != null) {
+            homeButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.projects.ProjectViewActivity.2
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((ProjectPresenter) ProjectViewActivity.this.getPresenter()).homeButtonPressed();
+                }
+            });
+        }
         this.zowiDependantViews = new View[]{this.installHexButtonTextView};
     }
 

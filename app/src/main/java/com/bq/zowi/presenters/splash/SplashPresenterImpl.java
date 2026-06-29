@@ -26,7 +26,7 @@ public class SplashPresenterImpl extends BasePresenterImpl<SplashView, SplashWir
         this.subscriptions.add(Observable.timer(SPLASH_TIME_MILLIS, TimeUnit.MILLISECONDS).observeOn(this.uiThread).subscribe(new Action1<Long>() { // from class: com.bq.zowi.presenters.splash.SplashPresenterImpl.1
             @Override // rx.functions.Action1
             public void call(Long aLong) {
-                SplashPresenterImpl.this.getWireframe().dismissSplash(activeZowiDeviceAddress != null);
+                SplashPresenterImpl.this.getWireframe().dismissSplash(activeZowiDeviceAddress != null || SplashPresenterImpl.this.sessionController.hasDismissedWizard());
             }
         }));
     }

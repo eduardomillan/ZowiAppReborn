@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 public class SessionControllerImpl implements SessionController {
     private final String ACTIVE_ZOWI_DEVICE_ADDRESS = "activeZowiDeviceAddress";
     private final String ACTIVE_ZOWI_NAME = "activeZowiName";
+    private final String WIZARD_DISMISSED = "wizardDismissed";
     private String defaultZowiName;
     private SharedPreferences sharedPreferences;
 
@@ -36,6 +37,13 @@ public class SessionControllerImpl implements SessionController {
     }
 
     @Override // com.bq.zowi.controllers.SessionController
+    public void saveWizardDismissed(boolean dismissed) {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putBoolean("wizardDismissed", dismissed);
+        editor.commit();
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
     public String loadActiveZowiName() {
         return this.sharedPreferences.getString("activeZowiName", this.defaultZowiName);
     }
@@ -51,5 +59,10 @@ public class SessionControllerImpl implements SessionController {
         editor.remove("activeZowiName");
         editor.remove("activeZowiDeviceAddress");
         editor.commit();
+    }
+
+    @Override // com.bq.zowi.controllers.SessionController
+    public boolean hasDismissedWizard() {
+        return this.sharedPreferences.getBoolean("wizardDismissed", false);
     }
 }
