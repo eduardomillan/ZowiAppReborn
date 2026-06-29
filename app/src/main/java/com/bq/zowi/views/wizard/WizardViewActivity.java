@@ -42,81 +42,99 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResolvedContentView("activity_wizard_view", R.layout.activity_wizard_view);
-        this.viewPager = (NonSwipeableViewPager) findViewById(R.id.activity_wizard_view_pager);
-        this.searchingWizardLayout = findViewById(R.id.searching_wizard_layout);
-        this.noZowisFoundWizardLayout = findViewById(R.id.no_zowis_found_wizard_layout);
-        this.nameEditText = (EditText) findViewById(R.id.wizard_name_edit_text);
-        this.eduBar = (EduBar) findViewById(R.id.wizard_edubar);
+        this.viewPager = (NonSwipeableViewPager) findResolvedView("activity_wizard_view_pager", R.id.activity_wizard_view_pager);
+        this.searchingWizardLayout = findResolvedView("searching_wizard_layout", R.id.searching_wizard_layout);
+        this.noZowisFoundWizardLayout = findResolvedView("no_zowis_found_wizard_layout", R.id.no_zowis_found_wizard_layout);
+        this.nameEditText = (EditText) findResolvedView("wizard_name_edit_text", R.id.wizard_name_edit_text);
+        this.eduBar = (EduBar) findResolvedView("wizard_edubar", R.id.wizard_edubar);
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_WELCOME));
-        this.nameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.1
-            private String textBeforeLastChange = "";
+        if (this.nameEditText != null) {
+            this.nameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.1
+                private String textBeforeLastChange = "";
 
-            @Override // android.text.TextWatcher
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override // android.text.TextWatcher
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override // android.text.TextWatcher
-            public void afterTextChanged(Editable editable) {
-                if (WizardViewActivity.this.nameEditText.getText().length() <= 0 || NameValidator.isNameValid(WizardViewActivity.this.nameEditText.getText().toString())) {
-                    this.textBeforeLastChange = WizardViewActivity.this.nameEditText.getText().toString();
-                    return;
+                @Override // android.text.TextWatcher
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 }
-                WizardViewActivity.this.nameEditText.setText(this.textBeforeLastChange);
-                WizardViewActivity.this.nameEditText.setSelection(this.textBeforeLastChange.length());
-                ToastUtils.showNonOverlappingToast(WizardViewActivity.this, R.string.wizard_connecting_set_name_warning_text, 0);
-            }
-        });
-        this.findZowisButton = (Button) findViewById(R.id.wizard_find_zowis_button);
-        this.findZowisButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.2
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((WizardPresenter) WizardViewActivity.this.getPresenter()).findZowis();
-            }
-        });
-        this.dismissWizardButton = findViewById(R.id.wizard_dismiss_button);
-        this.dismissWizardButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.3
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((WizardPresenter) WizardViewActivity.this.getPresenter()).dismissWizard();
-            }
-        });
-        this.retryDismissWizardButton = findViewById(R.id.wizard_retry_dismiss_button);
-        this.retryDismissWizardButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.4
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((WizardPresenter) WizardViewActivity.this.getPresenter()).dismissWizard();
-            }
-        });
-        this.retryFindZowisButton = (Button) findViewById(R.id.wizard_retry_find_zowis_button);
-        this.retryFindZowisButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.5
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((WizardPresenter) WizardViewActivity.this.getPresenter()).findZowis();
-            }
-        });
-        this.connectToZowiButton = (Button) findViewById(R.id.wizard_connect_to_zowi_button);
-        this.connectToZowiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.6
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                WizardViewActivity.this.connectToZowiButton.setEnabled(false);
-                WizardViewActivity.this.connectToZowiButton.setText(WizardViewActivity.this.getString(R.string.wizard_pairing_button_text));
-                ((WizardPresenter) WizardViewActivity.this.getPresenter()).connectToZowi(WizardViewActivity.this.connectedZowiDeviceAddress);
-            }
-        });
-        this.setNameButton = (Button) findViewById(R.id.wizard_set_name_button);
-        this.setNameButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.7
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view) {
-                ((WizardPresenter) WizardViewActivity.this.getPresenter()).changeZowiName(WizardViewActivity.this.nameEditText.getText().toString(), WizardViewActivity.this.connectedZowiDeviceAddress);
-            }
-        });
-        this.searchingProgressBar = (ProgressBar) findViewById(R.id.wizard_searching_progress_bar);
+
+                @Override // android.text.TextWatcher
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override // android.text.TextWatcher
+                public void afterTextChanged(Editable editable) {
+                    if (WizardViewActivity.this.nameEditText.getText().length() <= 0 || NameValidator.isNameValid(WizardViewActivity.this.nameEditText.getText().toString())) {
+                        this.textBeforeLastChange = WizardViewActivity.this.nameEditText.getText().toString();
+                        return;
+                    }
+                    WizardViewActivity.this.nameEditText.setText(this.textBeforeLastChange);
+                    WizardViewActivity.this.nameEditText.setSelection(this.textBeforeLastChange.length());
+                    ToastUtils.showNonOverlappingToast(WizardViewActivity.this, R.string.wizard_connecting_set_name_warning_text, 0);
+                }
+            });
+        }
+        this.findZowisButton = (Button) findResolvedView("wizard_find_zowis_button", R.id.wizard_find_zowis_button);
+        if (this.findZowisButton != null) {
+            this.findZowisButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.2
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((WizardPresenter) WizardViewActivity.this.getPresenter()).findZowis();
+                }
+            });
+        }
+        this.dismissWizardButton = findResolvedView("wizard_dismiss_button", R.id.wizard_dismiss_button);
+        if (this.dismissWizardButton != null) {
+            this.dismissWizardButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.3
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((WizardPresenter) WizardViewActivity.this.getPresenter()).dismissWizard();
+                }
+            });
+        }
+        this.retryDismissWizardButton = findResolvedView("wizard_retry_dismiss_button", R.id.wizard_retry_dismiss_button);
+        if (this.retryDismissWizardButton != null) {
+            this.retryDismissWizardButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.4
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((WizardPresenter) WizardViewActivity.this.getPresenter()).dismissWizard();
+                }
+            });
+        }
+        this.retryFindZowisButton = (Button) findResolvedView("wizard_retry_find_zowis_button", R.id.wizard_retry_find_zowis_button);
+        if (this.retryFindZowisButton != null) {
+            this.retryFindZowisButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.5
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    ((WizardPresenter) WizardViewActivity.this.getPresenter()).findZowis();
+                }
+            });
+        }
+        this.connectToZowiButton = (Button) findResolvedView("wizard_connect_to_zowi_button", R.id.wizard_connect_to_zowi_button);
+        if (this.connectToZowiButton != null) {
+            this.connectToZowiButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.6
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    WizardViewActivity.this.connectToZowiButton.setEnabled(false);
+                    WizardViewActivity.this.connectToZowiButton.setText(WizardViewActivity.this.getString(R.string.wizard_pairing_button_text));
+                    ((WizardPresenter) WizardViewActivity.this.getPresenter()).connectToZowi(WizardViewActivity.this.connectedZowiDeviceAddress);
+                }
+            });
+        }
+        this.setNameButton = (Button) findResolvedView("wizard_set_name_button", R.id.wizard_set_name_button);
+        if (this.setNameButton != null) {
+            this.setNameButton.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.7
+                @Override // android.view.View.OnClickListener
+                public void onClick(View view) {
+                    if (WizardViewActivity.this.nameEditText != null) {
+                        ((WizardPresenter) WizardViewActivity.this.getPresenter()).changeZowiName(WizardViewActivity.this.nameEditText.getText().toString(), WizardViewActivity.this.connectedZowiDeviceAddress);
+                    }
+                }
+            });
+        }
+        this.searchingProgressBar = (ProgressBar) findResolvedView("wizard_searching_progress_bar", R.id.wizard_searching_progress_bar);
         WizardPagerAdapter adapter = new WizardPagerAdapter();
-        this.viewPager.setAdapter(adapter);
+        if (this.viewPager != null) {
+            this.viewPager.setAdapter(adapter);
+        }
     }
 
     @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
@@ -135,46 +153,66 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void showSpinner() {
-        this.searchingProgressBar.setVisibility(0);
+        if (this.searchingProgressBar != null) {
+            this.searchingProgressBar.setVisibility(0);
+        }
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void hideSpinner() {
-        this.searchingProgressBar.setVisibility(4);
+        if (this.searchingProgressBar != null) {
+            this.searchingProgressBar.setVisibility(4);
+        }
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void showSearchingForZowis() {
-        this.searchingWizardLayout.setVisibility(0);
-        this.noZowisFoundWizardLayout.setVisibility(8);
-        this.viewPager.setCurrentItem(1);
+        if (this.searchingWizardLayout != null) {
+            this.searchingWizardLayout.setVisibility(0);
+        }
+        if (this.noZowisFoundWizardLayout != null) {
+            this.noZowisFoundWizardLayout.setVisibility(8);
+        }
+        if (this.viewPager != null) {
+            this.viewPager.setCurrentItem(1);
+        }
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void showNoZowisFound() {
-        this.searchingWizardLayout.setVisibility(8);
-        this.noZowisFoundWizardLayout.setVisibility(0);
+        if (this.searchingWizardLayout != null) {
+            this.searchingWizardLayout.setVisibility(8);
+        }
+        if (this.noZowisFoundWizardLayout != null) {
+            this.noZowisFoundWizardLayout.setVisibility(0);
+        }
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_ZOWI_NOT_FOUND));
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void showZowiFound(String foundZowiDeviceAddress) {
         this.connectedZowiDeviceAddress = foundZowiDeviceAddress;
-        this.viewPager.setCurrentItem(2);
+        if (this.viewPager != null) {
+            this.viewPager.setCurrentItem(2);
+        }
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_ZOWI_FOUND));
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void showConnectionSuccessWithEditableName(String connectedZowiDeviceAddress) {
         this.connectedZowiDeviceAddress = connectedZowiDeviceAddress;
-        this.viewPager.setCurrentItem(3);
+        if (this.viewPager != null) {
+            this.viewPager.setCurrentItem(3);
+        }
         getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_SET_NAME));
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
     public void showConnectionError() {
-        this.connectToZowiButton.setEnabled(true);
-        this.connectToZowiButton.setText(getString(R.string.wizard_pair_button_text));
+        if (this.connectToZowiButton != null) {
+            this.connectToZowiButton.setEnabled(true);
+            this.connectToZowiButton.setText(getString(R.string.wizard_pair_button_text));
+        }
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
@@ -201,19 +239,24 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
             int resId = 0;
             switch (position) {
                 case 0:
-                    resId = R.id.start_wizard_layout;
+                    resId = resolvePageId(collection, "start_wizard_layout", R.id.start_wizard_layout);
                     break;
                 case 1:
-                    resId = R.id.search_wizard_layout;
+                    resId = resolvePageId(collection, "search_wizard_layout", R.id.search_wizard_layout);
                     break;
                 case 2:
-                    resId = R.id.found_wizard_layout;
+                    resId = resolvePageId(collection, "found_wizard_layout", R.id.found_wizard_layout);
                     break;
                 case 3:
-                    resId = R.id.connected_wizard_layout;
+                    resId = resolvePageId(collection, "connected_wizard_layout", R.id.connected_wizard_layout);
                     break;
             }
             return collection.findViewById(resId);
+        }
+
+        private int resolvePageId(ViewGroup collection, String viewIdName, int fallbackViewId) {
+            int viewId = collection.getResources().getIdentifier(viewIdName, "id", collection.getContext().getPackageName());
+            return viewId != 0 ? viewId : fallbackViewId;
         }
 
         @Override // androidx.viewpager.widget.PagerAdapter

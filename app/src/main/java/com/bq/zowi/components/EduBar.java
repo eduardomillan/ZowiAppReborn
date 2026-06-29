@@ -18,6 +18,7 @@ import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bq.zowi.R;
+import com.bq.zowi.utils.ResourceResolver;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,7 +46,7 @@ public class EduBar extends LinearLayout {
 
     public EduBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        LayoutInflater.from(getContext()).inflate(R.layout.component_edubar, (ViewGroup) this, true);
+        LayoutInflater.from(getContext()).inflate(resolveLayoutId("component_edubar", R.layout.component_edubar), (ViewGroup) this, true);
         if (attrs != null) {
             readAttrs(attrs, defStyle);
         }
@@ -60,8 +61,8 @@ public class EduBar extends LinearLayout {
     @Override // android.view.View
     protected void onFinishInflate() {
         super.onFinishInflate();
-        this.message = (TextView) findViewById(R.id.eduBarMessage);
-        this.action = (TextView) findViewById(R.id.eduBarAction);
+        this.message = (TextView) findViewById(resolveViewId("eduBarMessage", R.id.eduBarMessage));
+        this.action = (TextView) findViewById(resolveViewId("eduBarAction", R.id.eduBarAction));
         setOnTouchListener(new View.OnTouchListener() { // from class: com.bq.zowi.components.EduBar.1
             @Override // android.view.View.OnTouchListener
             public boolean onTouch(View v, MotionEvent event) {
@@ -102,6 +103,9 @@ public class EduBar extends LinearLayout {
 
     public void show(@NotNull final String message, @Nullable String actionMessage, @Nullable View.OnClickListener listener) {
         if (!isVisible()) {
+            if (this.message == null || this.action == null) {
+                return;
+            }
             this.message.setText(message);
             if (actionMessage != null && listener != null) {
                 this.action.setText(actionMessage);
@@ -142,11 +146,21 @@ public class EduBar extends LinearLayout {
     private void readAttrs(AttributeSet attrs, @AttrRes int defStyleAttr) {
         TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.EduBar, defStyleAttr, 0);
         try {
-            this.height = typedArray.getDimension(0, getResources().getDimension(R.dimen.edubar_height));
+            this.height = typedArray.getDimension(0, ResourceResolver.getDimensionByResourceId("edubar_height", getContext()));
             this.indefinite = typedArray.getBoolean(1, false);
         } finally {
             typedArray.recycle();
         }
+    }
+
+    private int resolveLayoutId(String layoutName, int fallbackLayoutId) {
+        int layoutId = getResources().getIdentifier(layoutName, "layout", getContext().getPackageName());
+        return layoutId != 0 ? layoutId : fallbackLayoutId;
+    }
+
+    private int resolveViewId(String viewIdName, int fallbackViewId) {
+        int viewId = getResources().getIdentifier(viewIdName, "id", getContext().getPackageName());
+        return viewId != 0 ? viewId : fallbackViewId;
     }
 
     /* JADX INFO: Access modifiers changed from: private */

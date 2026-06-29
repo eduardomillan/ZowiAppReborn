@@ -1,4 +1,4 @@
-# ZowiAppReborn - Project Plan and Progress Tracking (Status as of 2026-06-26)
+# ZowiAppReborn - Project Plan and Progress Tracking (Status as of 2026-06-29)
 
 ## 1) Project goal
 Recover and stabilize the Zowi Android app so that it:
@@ -47,6 +47,12 @@ An incremental and low-risk strategy was adopted:
   - Corrected `TypedArray` usage (avoid double recycle).
 - Result: Welcome no longer crashes in current smoke tests.
 
+### 5.5 Milestone A progress (Home/Wizard path)
+- Migrated `HomeViewActivity` and `WizardViewActivity` view lookups to name-based ID resolution with fallbacks.
+- Added null-safe listener/view handling in both activities to prevent startup/navigation NPEs.
+- Fixed `EduBar` inflation crash in Wizard by resolving layout/view/dimen resources by name with fallback IDs.
+- Validation result: app process stays alive and reaches `WizardViewActivity` as resumed activity in runtime checks.
+
 ## 6) Collaboration conventions going forward
 - When touching legacy screens, prioritize name-based runtime resolution for critical resources.
 - Keep `R.*` fallback where applicable.
@@ -87,8 +93,9 @@ This phase is considered complete when:
 ## 10) Latest verification snapshot
 - Debug build: successful.
 - APK installation: successful.
-- Process alive after launch: yes.
-- Foreground activity in latest check: `WelcomeViewActivity`.
+- Process alive after launch/navigation: yes.
+- Foreground activity in latest check: `WizardViewActivity`.
+- AndroidRuntime fatal in latest run: none.
 
 ---
 This document is intended for fast collaborator onboarding and coordination of next iterations.
