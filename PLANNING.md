@@ -9,9 +9,10 @@ Recover and stabilize the Zowi Android app so that it:
 ## 2) Current status (executive summary)
 - Build: OK (`assembleDebug` succeeded in recent validations).
 - Install: OK (`adb install -r` succeeded).
-- Initial launch: OK (app reaches and remains in `WelcomeViewActivity` in foreground).
+- Runtime navigation: OK on main interactive routes under current smoke checks.
+- Release management: version `1.9.1.4` published (`master` + tag `1.9.1.4`).
 - Original startup crash: mitigated.
-- Residual risk: many navigation paths are still untested after recent fixes, so deeper screens may still fail.
+- Residual risk: broad route coverage is improved but still incomplete across all features/device variants.
 
 ## 3) Main technical issue identified
 In a large part of legacy/decompiled code, there are direct references to resource IDs (`R.layout`, `R.id`, `R.color`, `R.integer`, `R.dimen`, `R.drawable`, etc.) that do not always match the actual runtime resource table.
@@ -58,6 +59,24 @@ An incremental and low-risk strategy was adopted:
 - Migrated `TimelineActivity` and its row/adapters (`CommandsTileViewHolder`, `TimelineDraggableItemAdapter`) to resilient resource lookup.
 - Validation result: debug build succeeds and launcher smoke test completes without `AndroidRuntime` fatal output in the latest run.
 
+### 5.7 Release and UX/runtime hardening (latest)
+- Version updated to `1.9.1.4` and published to `origin/master` with release tag `1.9.1.4`.
+- Added global app version visibility across activities (title text + top-right badge).
+- Updated app update destination and settings wording from Google Play to GitHub/GitHub Packages flow.
+- Confirmed and persisted "No tengo un Zowi" behavior across relaunches.
+- Investigated Huawei tablet black-screen reports and applied transition hardening:
+  - Replaced static `R.anim.*` transition usage in interactive base activity with runtime animation lookup by name.
+  - Added guard to avoid applying transitions when animation lookup fails.
+- Fixed occasional user-visible `false` text in status/dialog feedback by resolving critical strings by name at runtime (with fallback IDs).
+- Performed physical-device validation on Huawei AGS2-L09 (Android 8):
+  - Build/install and Bluetooth flow validated.
+  - No black-screen recurrence observed after latest patch in current checks.
+
+### 5.8 Tag normalization
+- Normalized legacy release tag naming for `1.9.1.3` in remote:
+  - Removed `v1.9.1.3`.
+  - Kept `1.9.1.3` as canonical tag name.
+
 ## 6) Collaboration conventions going forward
 - When touching legacy screens, prioritize name-based runtime resolution for critical resources.
 - Keep `R.*` fallback where applicable.
@@ -87,7 +106,8 @@ An incremental and low-risk strategy was adopted:
 ## 8) Open risks
 - Failures may still appear in untested routes.
 - Legacy resource inconsistencies may remain in less-used modules.
-- Emulator vs. physical-device differences may affect timing/Bluetooth/permissions.
+- Emulator vs. physical-device differences may affect timing/Bluetooth/permissions and graphics behavior.
+- Additional long-session Bluetooth tests are still pending for full confidence on stability.
 
 ## 9) Definition of done for this phase
 This phase is considered complete when:
@@ -99,8 +119,10 @@ This phase is considered complete when:
 - Debug build: successful.
 - APK installation: successful.
 - Process alive after launch/navigation: yes.
-- Foreground activity in latest check: `WelcomeViewActivity`.
+- Foreground activity in latest physical-device check: interactive Home flow stable.
 - AndroidRuntime fatal in latest run: none.
+- Black-screen symptom on Huawei tablet after latest transition fix: not reproduced in current validation.
+- Release state: `master` updated and tag `1.9.1.4` published.
 
 ---
 This document is intended for fast collaborator onboarding and coordination of next iterations.
