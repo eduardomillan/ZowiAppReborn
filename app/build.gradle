@@ -30,8 +30,8 @@ android {
         applicationId 'com.bq.zowi'
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 581
-        versionName "1.9.1.4"
+        versionCode 582
+        versionName "1.9.1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

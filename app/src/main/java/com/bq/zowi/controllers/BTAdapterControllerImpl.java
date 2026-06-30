@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
+import com.bq.zowi.BuildConfig;
 import com.bq.zowi.controllers.BTAdapterController;
 import com.bq.zowi.utils.Grove;
 import rx.Observable;
@@ -15,6 +17,7 @@ import rx.Subscriber;
 
 /* JADX INFO: loaded from: classes.dex */
 public class BTAdapterControllerImpl implements BTAdapterController {
+    private static final String BT_LOG_TAG = "ZowiBT";
     private BluetoothAdapter bluetoothAdapter;
     private Subscriber<? super BluetoothDevice> bluetoothDeviceFoundSubscriber;
     private Context context;
@@ -60,10 +63,25 @@ public class BTAdapterControllerImpl implements BTAdapterController {
         @Override // android.content.BroadcastReceiver
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if ("android.bluetooth.device.action.FOUND".equals(action)) {
+            if ("android.bluetooth.adapter.action.DISCOVERY_STARTED".equals(action)) {
+                Grove.d("Bluetooth discovery started.", new Object[0]);
+                if (BuildConfig.DEBUG) {
+                    Log.d(BTAdapterControllerImpl.BT_LOG_TAG, "Bluetooth discovery started");
+                }
+            } else if ("android.bluetooth.device.action.FOUND".equals(action)) {
                 BluetoothDevice bluetoothDevice = (BluetoothDevice) intent.getParcelableExtra("android.bluetooth.device.extra.DEVICE");
+                if (bluetoothDevice != null) {
+                    Grove.d("Bluetooth device FOUND. name=" + bluetoothDevice.getName() + " address=" + bluetoothDevice.getAddress(), new Object[0]);
+                    if (BuildConfig.DEBUG) {
+                        Log.d(BTAdapterControllerImpl.BT_LOG_TAG, "Bluetooth device FOUND name=" + bluetoothDevice.getName() + " address=" + bluetoothDevice.getAddress());
+                    }
+                }
                 BTAdapterControllerImpl.this.bluetoothDeviceFoundSubscriber.onNext(bluetoothDevice);
             } else if ("android.bluetooth.adapter.action.DISCOVERY_FINISHED".equals(action)) {
+                Grove.d("Bluetooth discovery finished.", new Object[0]);
+                if (BuildConfig.DEBUG) {
+                    Log.d(BTAdapterControllerImpl.BT_LOG_TAG, "Bluetooth discovery finished");
+                }
                 BTAdapterControllerImpl.this.bluetoothDeviceFoundSubscriber.onCompleted();
                 context.unregisterReceiver(this);
             }
@@ -127,6 +145,18 @@ public class BTAdapterControllerImpl implements BTAdapterController {
             @Override // rx.functions.Action1
             public void call(Subscriber<? super BluetoothDevice> subscriber) {
                 BTAdapterControllerImpl.this.bluetoothDeviceFoundSubscriber = subscriber;
+                try {
+                    for (BluetoothDevice bondedDevice : BTAdapterControllerImpl.this.bluetoothAdapter.getBondedDevices()) {
+                        Grove.d("Bonded device found. name=" + bondedDevice.getName() + " address=" + bondedDevice.getAddress(), new Object[0]);
+                        if (BuildConfig.DEBUG) {
+                            Log.d(BTAdapterControllerImpl.BT_LOG_TAG, "Bonded device found name=" + bondedDevice.getName() + " address=" + bondedDevice.getAddress());
+                        }
+                        subscriber.onNext(bondedDevice);
+                    }
+                } catch (SecurityException securityException) {
+                    Grove.d(securityException, "Could not read bonded devices.", new Object[0]);
+                    Log.e(BTAdapterControllerImpl.BT_LOG_TAG, "Could not read bonded devices", securityException);
+                }
                 BTAdapterControllerImpl.this.bluetoothAdapter.cancelDiscovery();
                 BTAdapterControllerImpl.this.registerDiscoveryReceivers();
                 BTAdapterControllerImpl.this.bluetoothAdapter.startDiscovery();

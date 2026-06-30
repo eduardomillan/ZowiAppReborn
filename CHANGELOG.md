@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.9.1.5 - 2026-06-30
+
+### Added
+- Added a Bluetooth connection regression checklist in `docs/bluetooth-regression-checklist.md`.
+
+### Changed
+- App version updated to `1.9.1.5` (`versionCode` 582).
+
+### Fixed
+- Reduced noisy Bluetooth discovery diagnostics in production by gating verbose candidate/discovery logs behind `BuildConfig.DEBUG`.
+
 ## 1.9.1.4 - 2026-06-29
 
 ### Added

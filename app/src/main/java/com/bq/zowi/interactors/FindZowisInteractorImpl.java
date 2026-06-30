@@ -1,6 +1,8 @@
 package com.bq.zowi.interactors;
 
 import android.bluetooth.BluetoothDevice;
+import android.util.Log;
+import com.bq.zowi.BuildConfig;
 import com.bq.zowi.controllers.BTAdapterController;
 import com.bq.zowi.utils.Grove;
 import rx.Observable;
@@ -9,6 +11,7 @@ import rx.functions.Func1;
 
 /* JADX INFO: loaded from: classes.dex */
 public class FindZowisInteractorImpl implements FindZowisInteractor {
+    private static final String BT_LOG_TAG = "ZowiBT";
     private final String ZOWI_DEVICE_PREFIX = "Zowi";
     private final String ZOWI_MAC_HEADER = "B4:9D:0B:3";
     private BTAdapterController btAdapterController;
@@ -27,16 +30,18 @@ public class FindZowisInteractorImpl implements FindZowisInteractor {
         }).filter(new Func1<BluetoothDevice, Boolean>() { // from class: com.bq.zowi.interactors.FindZowisInteractorImpl.1
             @Override // rx.functions.Func1
             public Boolean call(BluetoothDevice bluetoothDevice) {
-                if (bluetoothDevice != null && bluetoothDevice.getName() != null && bluetoothDevice.getAddress() != null) {
-                    Grove.d("Device found! " + bluetoothDevice.getName(), new Object[0]);
-                    if (bluetoothDevice.getName().startsWith("Zowi")) {
-                        if (bluetoothDevice.getAddress().startsWith("B4:9D:0B:3")) {
-                            return true;
-                        }
-                        return true;
-                    }
+                if (bluetoothDevice == null || bluetoothDevice.getAddress() == null) {
+                    return false;
                 }
-                return false;
+                String deviceName = bluetoothDevice.getName();
+                String deviceAddress = bluetoothDevice.getAddress();
+                Grove.d("Device found! name=" + deviceName + " address=" + deviceAddress, new Object[0]);
+                boolean isZowiName = deviceName != null && deviceName.startsWith("Zowi");
+                boolean isZowiMac = deviceAddress.startsWith("B4:9D:0B:3");
+                if (BuildConfig.DEBUG) {
+                    Log.d(BT_LOG_TAG, "Filter candidate name=" + deviceName + " address=" + deviceAddress + " matchName=" + isZowiName + " matchMac=" + isZowiMac);
+                }
+                return Boolean.valueOf(isZowiName || isZowiMac);
             }
         }).first().toSingle();
     }

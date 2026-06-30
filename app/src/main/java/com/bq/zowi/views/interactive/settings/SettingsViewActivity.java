@@ -363,10 +363,10 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
     @Override // com.bq.zowi.views.interactive.settings.SettingsView
     public void showRestoringInfoWhenCalibratingAlteredZowi() {
         if (this.restoreFirmwareDialogTitle != null) {
-            this.restoreFirmwareDialogTitle.setText(resolveStringText("settings_calibration_altered_zowi_dialog_title", R.string.settings_calibration_altered_zowi_dialog_title));
+            this.restoreFirmwareDialogTitle.setText(resolveDisplayText("settings_calibration_altered_zowi_dialog_title", R.string.settings_calibration_altered_zowi_dialog_title));
         }
         if (this.restoreFirmwareDialogDescription != null) {
-            this.restoreFirmwareDialogDescription.setText(resolveStringText("settings_calibration_altered_zowi_dialog_description", R.string.settings_calibration_altered_zowi_dialog_description));
+            this.restoreFirmwareDialogDescription.setText(resolveDisplayText("settings_calibration_altered_zowi_dialog_description", R.string.settings_calibration_altered_zowi_dialog_description));
         }
         if (this.restoreFirmwareDialog != null) {
             this.restoreFirmwareDialog.setVisibility(0);
