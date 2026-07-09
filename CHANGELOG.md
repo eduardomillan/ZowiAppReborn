@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.9.1.6 - 2026-07-09
+
+### Added
+- Added `run_app.sh` to build, install, and launch the app on a connected device or emulator.
+- Added `.github/copilot-instructions.md` with repository-specific build, architecture, and validation guidance for future work.
+
+### Changed
+- App version updated to `1.9.1.6` (`versionCode` 583).
+- `run_emulator.sh` now enforces Spanish locale, landscape orientation, compact UI density, and font scale for app test runs.
+
+### Fixed
+- Fixed Discover project cards so the whole tile, including the icon area, consistently opens the selected project.
+- Fixed Project detail screen startup and paging so Discover projects render their content pages instead of showing blank screens.
+- Fixed dynamic project resource resolution and packaged missing base project strings so descriptions, links, and quiz content load across all Discover projects.
+- Fixed project detail layouts and install dialog inflation issues that were preventing content from rendering correctly.
+- Fixed invalid `true`/`false` and blank fallback text leaks in interactive status labels and persisted Zowi names.
+
 ## 1.9.1.5 - 2026-06-30
 
 ### Added

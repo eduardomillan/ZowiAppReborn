@@ -10,6 +10,8 @@ COUNTRY_CODE="${LOCALE_TAG##*-}"
 WINDOW_SKIN="${EMULATOR_SKIN:-1920x1080}"
 WINDOW_SCALE="${EMULATOR_SCALE:-0.9}"
 LANDSCAPE_ROTATION="${EMULATOR_ROTATION:-1}"
+UI_DENSITY="${EMULATOR_DENSITY:-350}"
+FONT_SCALE="${EMULATOR_FONT_SCALE:-1.0}"
 
 find_sdk_dir() {
   local sdk_dir
@@ -129,6 +131,37 @@ ensure_landscape_mode() {
   echo "Orientación horizontal confirmada."
 }
 
+get_current_density() {
+  adb_shell wm density | awk -F': ' '/Override density|Physical density/ {print $2}' | tail -n 1
+}
+
+ensure_compact_ui() {
+  local current_density=""
+  local current_font_scale=""
+
+  current_density="$(get_current_density)"
+  if [[ "${current_density}" != "${UI_DENSITY}" ]]; then
+    adb_shell wm density "${UI_DENSITY}" >/dev/null
+  fi
+
+  adb_shell settings put system font_scale "${FONT_SCALE}" >/dev/null
+
+  current_density="$(get_current_density)"
+  current_font_scale="$(adb_shell settings get system font_scale)"
+
+  if [[ "${current_density}" != "${UI_DENSITY}" ]]; then
+    echo "No se ha podido fijar la densidad visual a ${UI_DENSITY}. Densidad actual: ${current_density:-desconocida}" >&2
+    return 1
+  fi
+
+  if [[ "${current_font_scale}" != "${FONT_SCALE}" ]]; then
+    echo "No se ha podido fijar la escala de fuente a ${FONT_SCALE}. Escala actual: ${current_font_scale:-desconocida}" >&2
+    return 1
+  fi
+
+  echo "Densidad visual compacta confirmada (${UI_DENSITY} dpi, fuente ${FONT_SCALE})."
+}
+
 SDK_DIR="$(find_sdk_dir)"
 ADB_BIN="${SDK_DIR}/platform-tools/adb"
 EMULATOR_BIN="${SDK_DIR}/emulator/emulator"
@@ -181,8 +214,9 @@ wait_for_boot
 EMULATOR_SERIAL="$(get_emulator_serial)"
 ensure_spanish_locale
 ensure_landscape_mode
+ensure_compact_ui
 
-echo "Emulador listo en español y horizontal."
+echo "Emulador listo en español, horizontal y con interfaz compacta."
 echo "AVD: ${AVD_NAME}"
 echo "Serial: ${EMULATOR_SERIAL}"
 echo "Log: ${LOG_FILE}"

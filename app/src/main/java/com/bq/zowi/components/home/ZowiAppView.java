@@ -49,9 +49,9 @@ public class ZowiAppView extends LinearLayout {
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ZowiAppView, 0, 0);
         try {
-            String labelText = a.getString(1);
-            Drawable buttonBackgroundDrawable = a.getDrawable(0);
-            boolean enabled = a.getBoolean(2, true);
+            String labelText = a.getString(R.styleable.ZowiAppView_label);
+            Drawable buttonBackgroundDrawable = a.getDrawable(R.styleable.ZowiAppView_buttonBackground);
+            boolean enabled = true;
             if (!isInEditMode()) {
                 int layoutId = context.getResources().getIdentifier("component_zowi_app", "layout", context.getPackageName());
                 LayoutInflater.from(context).inflate(layoutId != 0 ? layoutId : R.layout.component_zowi_app, this);
@@ -69,7 +69,10 @@ public class ZowiAppView extends LinearLayout {
                         this.button.setBackground(buttonBackgroundDrawable);
                     }
                 }
-                this.button.setEnabled(enabled);
+                this.button.setFocusable(false);
+                this.label.setFocusable(false);
+                setEnabled(enabled);
+                setClickable(enabled);
             }
         } catch (Throwable th) {
             throw th;
@@ -78,6 +81,34 @@ public class ZowiAppView extends LinearLayout {
 
     @Override // android.view.View
     public void setOnClickListener(View.OnClickListener l) {
-        this.button.setOnClickListener(l);
+        super.setOnClickListener(l);
+        if (this.button != null) {
+            this.button.setOnClickListener(l);
+        }
+        if (this.label != null) {
+            this.label.setOnClickListener(l);
+        }
+    }
+
+    @Override // android.view.View
+    public void setClickable(boolean clickable) {
+        super.setClickable(clickable);
+        if (this.button != null) {
+            this.button.setClickable(clickable);
+        }
+        if (this.label != null) {
+            this.label.setClickable(clickable);
+        }
+    }
+
+    @Override // android.view.View
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (this.button != null) {
+            this.button.setEnabled(enabled);
+        }
+        if (this.label != null) {
+            this.label.setEnabled(enabled);
+        }
     }
 }

@@ -15,11 +15,13 @@ public class ResourceResolver {
     private static final String STRING_RESOURCE_TYPE = "string";
 
     public static String getStringByResourceId(String resourceName, Resources resources, String packageName) {
-        return resources.getString(resources.getIdentifier(resourceName, STRING_RESOURCE_TYPE, packageName));
+        int resourceId = resolveResourceId(resourceName, STRING_RESOURCE_TYPE, resources, packageName);
+        return resourceId != 0 ? resources.getString(resourceId) : "";
     }
 
     public static CharSequence getTextByResourceId(String resourceName, Resources resources, String packageName) {
-        return resources.getText(resources.getIdentifier(resourceName, STRING_RESOURCE_TYPE, packageName));
+        int resourceId = resolveResourceId(resourceName, STRING_RESOURCE_TYPE, resources, packageName);
+        return resourceId != 0 ? resources.getText(resourceId) : "";
     }
 
     public static Drawable getDrawableByResourceId(String resourceName, Context context) {
@@ -40,5 +42,31 @@ public class ResourceResolver {
 
     public static float getDimensionByResourceId(String resourceName, Context context) {
         return context.getResources().getDimension(context.getResources().getIdentifier(resourceName, DIMEN_RESOURCE_TYPE, context.getPackageName()));
+    }
+
+    private static int resolveResourceId(String resourceName, String resourceType, Resources resources, String packageName) {
+        if (resourceName == null) {
+            Grove.e("Trying to resolve a null %s resource for package %s", resourceType, packageName);
+            return 0;
+        }
+        String normalizedResourceName = resourceName.trim();
+        int resourceId = resources.getIdentifier(normalizedResourceName, resourceType, packageName);
+        if (resourceId == 0) {
+            resourceId = resolveResourceIdFromRClass(normalizedResourceName, resourceType, packageName);
+        }
+        if (resourceId == 0) {
+            Grove.e("Could not resolve %s resource '%s' for package %s", resourceType, resourceName, packageName);
+        }
+        return resourceId;
+    }
+
+    private static int resolveResourceIdFromRClass(String resourceName, String resourceType, String packageName) {
+        try {
+            Class<?> resourceClass = Class.forName(packageName + ".R$" + resourceType);
+            return resourceClass.getField(resourceName).getInt(null);
+        } catch (Exception e) {
+            Grove.d(e, "Could not resolve %s '%s' from generated R class", resourceType, resourceName);
+            return 0;
+        }
     }
 }

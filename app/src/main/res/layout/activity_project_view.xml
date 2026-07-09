@@ -64,6 +64,8 @@
                     android:paddingLeft="@dimen/progress_bar_paddding_left"
                     android:paddingRight="@dimen/progress_bar_paddding_right"
                     android:indeterminate="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     style="@style/ProgressBarStyle"/>
                 <ImageView

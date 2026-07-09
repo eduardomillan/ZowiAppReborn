@@ -12,7 +12,7 @@ public class SessionControllerImpl implements SessionController {
     private SharedPreferences sharedPreferences;
 
     public SessionControllerImpl(String defaultZowiName, SharedPreferences sharedPreferences) {
-        this.defaultZowiName = defaultZowiName;
+        this.defaultZowiName = sanitizeZowiName(defaultZowiName, "Zowi");
         this.sharedPreferences = sharedPreferences;
     }
 
@@ -32,7 +32,7 @@ public class SessionControllerImpl implements SessionController {
     @Override // com.bq.zowi.controllers.SessionController
     public void saveActiveZowiName(String name) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString("activeZowiName", name);
+        editor.putString("activeZowiName", sanitizeZowiName(name, this.defaultZowiName));
         editor.commit();
     }
 
@@ -45,12 +45,12 @@ public class SessionControllerImpl implements SessionController {
 
     @Override // com.bq.zowi.controllers.SessionController
     public String loadActiveZowiName() {
-        return this.sharedPreferences.getString("activeZowiName", this.defaultZowiName);
+        return sanitizeZowiName(this.sharedPreferences.getString("activeZowiName", this.defaultZowiName), this.defaultZowiName);
     }
 
     @Override // com.bq.zowi.controllers.SessionController
     public String loadDefaultZowiName() {
-        return this.defaultZowiName;
+        return sanitizeZowiName(this.defaultZowiName, "Zowi");
     }
 
     @Override // com.bq.zowi.controllers.SessionController
@@ -64,5 +64,26 @@ public class SessionControllerImpl implements SessionController {
     @Override // com.bq.zowi.controllers.SessionController
     public boolean hasDismissedWizard() {
         return this.sharedPreferences.getBoolean("wizardDismissed", false);
+    }
+
+    private String sanitizeZowiName(String candidateName, String fallbackName) {
+        String resolvedFallback = normalizeZowiName(fallbackName);
+        if (resolvedFallback == null) {
+            resolvedFallback = "Zowi";
+        }
+        String normalizedCandidate = normalizeZowiName(candidateName);
+        return normalizedCandidate != null ? normalizedCandidate : resolvedFallback;
+    }
+
+    @Nullable
+    private String normalizeZowiName(String name) {
+        if (name == null) {
+            return null;
+        }
+        String normalizedName = name.trim();
+        if (normalizedName.length() == 0 || "false".equalsIgnoreCase(normalizedName) || "true".equalsIgnoreCase(normalizedName)) {
+            return null;
+        }
+        return normalizedName;
     }
 }

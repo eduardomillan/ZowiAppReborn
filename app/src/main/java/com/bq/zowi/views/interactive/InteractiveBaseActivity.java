@@ -479,7 +479,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
     protected void updateStatusBar() {
         if (this.isDemoMode) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_demo_icon", this));
-            this.zowiStatusTextView.setText(resolveDisplayText("status_demo", R.string.status_demo));
+            this.zowiStatusTextView.setText(resolveDisplayText("status_demo", R.string.status_demo, "Demo"));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(0);
@@ -489,7 +489,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isInstallingFw) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_altered_icon", this));
-            this.zowiStatusTextView.setText(resolveDisplayText("status_installing_firmware", R.string.status_installing_firmware));
+            this.zowiStatusTextView.setText(resolveDisplayText("status_installing_firmware", R.string.status_installing_firmware, "Reprogramming..."));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -499,7 +499,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isAltered) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_altered_icon", this));
-            this.zowiStatusTextView.setText(resolveDisplayText("status_altered", R.string.status_altered));
+            this.zowiStatusTextView.setText(resolveDisplayText("status_altered", R.string.status_altered, "Modified"));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(0);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -509,7 +509,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isLowBattery) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_low_battery_icon", this));
-            this.zowiStatusTextView.setText(resolveDisplayText("status_low_battery", R.string.status_low_battery));
+            this.zowiStatusTextView.setText(resolveDisplayText("status_low_battery", R.string.status_low_battery, "Low battery!"));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -519,7 +519,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (this.isConnected) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_connected_icon", this));
-            this.zowiStatusTextView.setText(resolveDisplayText("status_connected", R.string.status_connected));
+            this.zowiStatusTextView.setText(resolveDisplayText("status_connected", R.string.status_connected, "Connected"));
             this.zowiConnectButton.setVisibility(8);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -531,14 +531,14 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
             if (this.shouldShowConnectingSpinner) {
                 this.shouldShowConnectingSpinner = false;
                 this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_disconnected_icon", this));
-                this.zowiStatusTextView.setText(resolveDisplayText("status_connecting", R.string.status_connecting));
+                this.zowiStatusTextView.setText(resolveDisplayText("status_connecting", R.string.status_connecting, "Connecting..."));
                 this.zowiConnectButton.setVisibility(8);
                 this.zowiFactoryResetButton.setVisibility(8);
                 this.zowiLaunchWizardButton.setVisibility(8);
                 this.connectingProgressBar.setVisibility(0);
             } else {
                 this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_disconnected_icon", this));
-                this.zowiStatusTextView.setText(resolveDisplayText("status_disconnected", R.string.status_disconnected));
+                this.zowiStatusTextView.setText(resolveDisplayText("status_disconnected", R.string.status_disconnected, "Disconnected"));
                 this.zowiConnectButton.setVisibility(0);
                 this.zowiFactoryResetButton.setVisibility(8);
                 this.zowiLaunchWizardButton.setVisibility(8);
@@ -549,7 +549,7 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
         }
         if (!this.isConnected) {
             this.zowiStatusImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("zowi_disconnected_icon", this));
-            this.zowiStatusTextView.setText(resolveDisplayText("status_disconnected", R.string.status_disconnected));
+            this.zowiStatusTextView.setText(resolveDisplayText("status_disconnected", R.string.status_disconnected, "Disconnected"));
             this.zowiConnectButton.setVisibility(0);
             this.zowiFactoryResetButton.setVisibility(8);
             this.zowiLaunchWizardButton.setVisibility(8);
@@ -564,15 +564,30 @@ public abstract class InteractiveBaseActivity<T extends InteractiveBasePresenter
     }
 
     protected CharSequence resolveDisplayText(String resourceName, int fallbackStringResId) {
+        return resolveDisplayText(resourceName, fallbackStringResId, null);
+    }
+
+    protected CharSequence resolveDisplayText(String resourceName, int fallbackStringResId, String hardcodedFallbackText) {
         CharSequence resolvedText = resolveStringText(resourceName, fallbackStringResId);
         if (resolvedText == null) {
-            return getText(fallbackStringResId);
+            return resolveFallbackText(fallbackStringResId, hardcodedFallbackText);
         }
         String normalizedText = resolvedText.toString().trim();
         if (normalizedText.length() == 0 || "false".equalsIgnoreCase(normalizedText) || "true".equalsIgnoreCase(normalizedText)) {
-            return getText(fallbackStringResId);
+            return resolveFallbackText(fallbackStringResId, hardcodedFallbackText);
         }
         return resolvedText;
+    }
+
+    private CharSequence resolveFallbackText(int fallbackStringResId, String hardcodedFallbackText) {
+        CharSequence fallbackText = getText(fallbackStringResId);
+        if (fallbackText != null) {
+            String normalizedText = fallbackText.toString().trim();
+            if (normalizedText.length() > 0 && !"false".equalsIgnoreCase(normalizedText) && !"true".equalsIgnoreCase(normalizedText)) {
+                return fallbackText;
+            }
+        }
+        return hardcodedFallbackText != null ? hardcodedFallbackText : "";
     }
 
     private void enabledZowiConnexionDependantViews() {

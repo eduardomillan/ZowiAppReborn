@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,7 +26,9 @@ import com.bq.zowi.views.interactive.InteractiveBaseActivity;
 import com.bq.zowi.wireframes.projects.ProjectWireframe;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /* JADX INFO: loaded from: classes.dex */
 public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresenter> implements ProjectView {
@@ -43,6 +45,10 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
     private ImageView projectCompletedImageView;
     private String projectId;
     private ImageView projectImageView;
+    private View projectDescriptionLayout;
+    private View projectImageLayout;
+    private View projectReprogramLayout;
+    private View projectRunTestLayout;
     private MakerBoxButton runTestButton;
     private TextView titleTextView;
     private ViewPager viewPager;
@@ -53,7 +59,7 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
         setResolvedContentView("activity_project_view", R.layout.activity_project_view);
         this.projectId = getIntent().getStringExtra(PROJECT_ID_EXTRA);
         this.viewPager = (ViewPager) findResolvedView("activity_project_view_pager", R.id.activity_project_view_pager);
-        int margin = (int) (getResources().getDimension(R.dimen.sections_pager_horizontal_margin) * 2.0f);
+        int margin = (int) (ResourceResolver.getDimensionByResourceId("sections_pager_horizontal_margin", this) * 2.0f);
         if (this.viewPager != null) {
             this.viewPager.setPageMargin(-margin);
         }
@@ -64,6 +70,10 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
         this.descriptionTextView = (TextView) findResolvedView("activity_project_description_textview", R.id.activity_project_description_textview);
         this.linkTextView = (TextView) findResolvedView("activity_project_link_textview", R.id.activity_project_link_textview);
         this.projectImageView = (ImageView) findResolvedView("activity_project_image", R.id.activity_project_image);
+        this.projectDescriptionLayout = findResolvedView("activity_project_description_layout", R.id.activity_project_description_layout);
+        this.projectImageLayout = findResolvedView("activity_project_image_layout", R.id.activity_project_image_layout);
+        this.projectReprogramLayout = findResolvedView("activity_project_reprogram_layout", R.id.activity_project_reprogram_layout);
+        this.projectRunTestLayout = findResolvedView("activity_project_run_test_layout", R.id.activity_project_run_test_layout);
         this.installHexDescriptionTextView = (TextView) findResolvedView("activity_project_install_hex_description", R.id.activity_project_install_hex_description);
         this.installHexButtonTextView = (TextView) findResolvedView("activity_project_install_hex_button_textview", R.id.activity_project_install_hex_button_textview);
         this.installingHexDescriptionTextView = (TextView) findResolvedView("activity_project_installing_hex_description_textview", R.id.activity_project_installing_hex_description_textview);
@@ -123,10 +133,12 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
     @Override // com.bq.zowi.views.interactive.projects.ProjectView
     public void paintProject(final ProjectViewModel project, String zowiName) {
         ProjectPagerAdapter projectPagerAdapter;
+        String resolvedTitle = ResourceResolver.getStringByResourceId(project.titleResourceId, getResources(), getPackageName());
+        String resolvedDescription = ResourceResolver.getStringByResourceId(project.learningDescriptionResourceId, getResources(), getPackageName());
         paintProjectCompleteness(project.isComplete);
         this.installHexDescriptionTextView.setText(getString(R.string.projects_reprogram_description, new Object[]{zowiName}));
-        this.titleTextView.setText(ResourceResolver.getStringByResourceId(project.titleResourceId, getResources(), getPackageName()));
-        this.descriptionTextView.setText(ResourceResolver.getTextByResourceId(project.learningDescriptionResourceId, getResources(), getPackageName()));
+        this.titleTextView.setText(resolvedTitle);
+        this.descriptionTextView.setText(resolvedDescription);
         this.linkTextView.setOnClickListener(new View.OnClickListener() { // from class: com.bq.zowi.views.interactive.projects.ProjectViewActivity.3
             @Override // android.view.View.OnClickListener
             public void onClick(View view) {
@@ -161,9 +173,9 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
     @Override // com.bq.zowi.views.interactive.projects.ProjectView
     public void paintProjectCompleteness(boolean isComplete) {
         if (isComplete) {
-            this.projectCompletedImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.project_done_icon));
+            this.projectCompletedImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("project_done_icon", this));
         } else {
-            this.projectCompletedImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.project_not_done_icon));
+            this.projectCompletedImageView.setImageDrawable(ResourceResolver.getDrawableByResourceId("project_not_done_icon", this));
         }
     }
 
@@ -275,57 +287,37 @@ public class ProjectViewActivity extends InteractiveBaseActivity<ProjectPresente
     }
 
     private class ProjectPagerAdapter extends PagerAdapter {
-        private int numPages;
-        private boolean showReprogramPage;
-
-        private class ProjectPages {
-            public static final int DESCRIPTION = 0;
-            public static final int IMAGE = 1;
-            public static final int REPROGRAM_OR_RUN_TEST = 2;
-            public static final int RUN_TEST = 3;
-
-            private ProjectPages() {
-            }
-        }
+        private final List<View> pages = new ArrayList<>();
 
         public ProjectPagerAdapter(boolean showReprogramPage) {
-            this.numPages = 2;
-            this.showReprogramPage = false;
-            this.showReprogramPage = showReprogramPage;
+            addPage(ProjectViewActivity.this.projectDescriptionLayout);
+            addPage(ProjectViewActivity.this.projectImageLayout);
             if (showReprogramPage) {
-                this.numPages = ProjectViewActivity.this.viewPager.getChildCount();
-            } else {
-                this.numPages = ProjectViewActivity.this.viewPager.getChildCount() - 1;
+                addPage(ProjectViewActivity.this.projectReprogramLayout);
+            }
+            addPage(ProjectViewActivity.this.projectRunTestLayout);
+        }
+
+        private void addPage(View page) {
+            if (page != null) {
+                this.pages.add(page);
             }
         }
 
         @Override // androidx.viewpager.widget.PagerAdapter
         public Object instantiateItem(ViewGroup collection, int position) {
-            int resId = 0;
-            switch (position) {
-                case 0:
-                    resId = R.id.activity_project_description_layout;
-                    break;
-                case 1:
-                    resId = R.id.activity_project_image_layout;
-                    break;
-                case 2:
-                    if (this.showReprogramPage) {
-                        resId = R.id.activity_project_reprogram_layout;
-                    } else {
-                        resId = R.id.activity_project_run_test_layout;
-                    }
-                    break;
-                case 3:
-                    resId = R.id.activity_project_run_test_layout;
-                    break;
+            View page = this.pages.get(position);
+            ViewParent parent = page.getParent();
+            if (parent instanceof ViewGroup) {
+                ((ViewGroup) parent).removeView(page);
             }
-            return collection.findViewById(resId);
+            collection.addView(page);
+            return page;
         }
 
         @Override // androidx.viewpager.widget.PagerAdapter
         public int getCount() {
-            return this.numPages;
+            return this.pages.size();
         }
 
         @Override // androidx.viewpager.widget.PagerAdapter
