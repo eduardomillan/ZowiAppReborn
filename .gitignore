@@ -1,5 +1,11 @@
 /.idea/
 /.gradle/
+/.gradle-local/
 /.git/
 /app/build/
 /build/
+.project
+/bin/
+local.properties
+.classpath
+.settings/org.eclipse.jdt.core.prefs
