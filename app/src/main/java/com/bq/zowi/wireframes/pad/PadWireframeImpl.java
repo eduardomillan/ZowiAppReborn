@@ -16,5 +16,6 @@ public class PadWireframeImpl extends InteractiveWireframeImpl implements PadWir
         Intent i = new Intent(this.activity, (Class<?>) HomeViewActivity.class);
         i.setFlags(603979776);
         this.activity.startActivity(i);
+        this.activity.finish();
     }
 }

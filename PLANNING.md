@@ -10,7 +10,7 @@ Recover and stabilize the Zowi Android app so that it:
 - Build: OK (`assembleDebug` succeeded in recent validations).
 - Install: OK (`adb install -r` succeeded).
 - Runtime navigation: OK on main interactive routes under current smoke checks.
-- Release management: version `1.9.2.0` published (`master` + tag `1.9.2.0`).
+- Release management: version `1.9.2.1` published (`master` + tag `1.9.2.1`).
 - Original startup crash: mitigated.
 - Residual risk: broad route coverage is improved but still incomplete across all features/device variants.
 - Dead code cleanup: analytics SDKs, decompiled libraries, and redundant source files removed (~20,200+ lines).
@@ -121,7 +121,7 @@ This phase is considered complete when:
 - Foreground activity in latest physical-device check: interactive Home flow stable.
 - AndroidRuntime fatal in latest run: none.
 - Black-screen symptom on Huawei tablet after latest transition fix: not reproduced in current validation.
-- Release state: `master` updated and tag `1.9.2.0` published.
+- Release state: `master` updated and tag `1.9.2.1` published.
 
 ## 11) Version history
 
@@ -133,6 +133,7 @@ This phase is considered complete when:
 | `1.9.1.6` | 2026-07-09 | `1.9.1.6` | Fix Discover project rendering, local run tooling, emulator launch script |
 | — | 2026-07-12 | `removed_analytics_bis` | Remove all analytics and decompiled SDK dead code (Adobe, comScore, BQ Analytics, Google Ads, Gson sources). ~20,200 lines deleted |
 | `1.9.2.0` | 2026-07-12 | `1.9.2.0` | Remove decompiled Bugsnag, Retrofit, JetBrains/IntelliJ annotations, duplicate R.java files. Clean up build.gradle excludes |
+| `1.9.2.1` | 2026-07-12 | `1.9.2.1` | Fix ZowiRunnerMinigameActivity null wireframe crash, add missing finish() in PadWireframe and MouthsEditorWireframe for correct back stack behavior |
 
 ---
 This document is intended for fast collaborator onboarding and coordination of next iterations.

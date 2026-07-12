@@ -16,6 +16,7 @@ import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.models.commands.Command;
 import com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter;
 import com.bq.zowi.views.interactive.InteractiveBaseActivity;
+import com.bq.zowi.wireframes.zowiapps.minigames.MinigameBaseWireframe;
 
 /* JADX INFO: loaded from: classes.dex */
 public class ZowiRunnerMinigameActivity extends InteractiveBaseActivity<ZowiRunnerMinigamePresenter> implements ZowiRunnerMinigameView, SensorEventListener {
@@ -104,7 +105,8 @@ public class ZowiRunnerMinigameActivity extends InteractiveBaseActivity<ZowiRunn
     @Override // com.bq.zowi.views.BaseActivity
     public ZowiRunnerMinigamePresenter resolvePresenter() {
         ZowiRunnerMinigamePresenter presenter = AndroidDependencyInjector.getInstance().provideZowiRunnerMinigamePresenter();
-        presenter.bindViewAndWireframe(this, null);
+        MinigameBaseWireframe wireframe = AndroidDependencyInjector.getInstance().provideMinigameWireframe(this);
+        presenter.bindViewAndWireframe(this, wireframe);
         return presenter;
     }
 

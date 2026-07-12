@@ -16,5 +16,6 @@ public class MouthsEditorWireframeImpl extends InteractiveWireframeImpl implemen
         Intent i = new Intent(this.activity, (Class<?>) HomeViewActivity.class);
         i.setFlags(603979776);
         this.activity.startActivity(i);
+        this.activity.finish();
     }
 }
