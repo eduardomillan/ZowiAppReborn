@@ -231,3 +231,130 @@ Shared component layouts:
 | `component_wizard_*.xml` | Wizard steps (welcome, searching, found, connected) |
 | `component_calibration_*.xml` | Calibration steps (check, legs, feet) |
 | `component_notification.xml` | Notification bar content |
+
+---
+
+## Navigation Structure
+
+### Launcher Entry Point
+
+`SplashViewActivity` is the launcher activity. After a 1.5s timer:
+
+- **Active session exists** (device address saved or wizard dismissed) → `HomeViewActivity`
+- **No active session** → `WelcomeViewActivity`
+
+### Navigation Tree
+
+```
+SplashViewActivity
+  │
+  ├── (active session) ──────────────────────────────────┐
+  │                                                       │
+  └── (no session) ──► WelcomeViewActivity                │
+                         │                                │
+                         └── [Start Wizard] ──► WizardViewActivity
+                                                    │
+                                                    └── [Wizard complete] ──► HomeViewActivity ◄──────┘
+                                                            │
+                        ┌───────────────────────────────────┤
+                        │                                   │
+                        ├── [Settings] ──────────► SettingsViewActivity
+                        │                              │
+                        │                              ├── [Home] ──────────────────┐
+                        │                              └── [Calibrate] ──► CalibrationViewActivity
+                        │                                                           │
+                        │                                                           └── [Home] ─────┐
+                        │                                                                           │
+                        ├── [Achievements] ──► AchievementsViewActivity                             │
+                        │                           │                                                │
+                        │                           └── [Home] ──────────────────────────────────────┤
+                        │                                                                           │
+                        ├── [Pad] ──► PadViewActivity                                                │
+                        │                │                                                           │
+                        │                └── [Home] ─────────────────────────────────────────────────┤
+                        │                                                                           │
+                        ├── [Timeline] ──► TimelineActivity                                        │
+                        │                    │                                                       │
+                        │                    └── [Home] ─────────────────────────────────────────────┤
+                        │                                                                           │
+                        ├── [Zowi Says] ──► ZowiSaysMinigameActivity                                │
+                        │                     │                                                      │
+                        │                     └── [Home] ────────────────────────────────────────────┤
+                        │                                                                           │
+                        ├── [Mouths Minigame] ──► MouthsMinigameActivity                            │
+                        │                           │                                                │
+                        │                           └── [Home] ──────────────────────────────────────┤
+                        │                                                                           │
+                        ├── [Mouths Editor] ──► MouthsEditorActivity (unlock required)               │
+                        │                         │                                                  │
+                        │                         └── [Home] ────────────────────────────────────────┤
+                        │                                                                           │
+                        ├── [Project x10] ──► ProjectViewActivity                                   │
+                        │      (with project_id_extra) │                                             │
+                        │                               ├── [Home] ──────────────────────────────────┤
+                        │                               ├── [Run Test] ──► ProjectQuizViewActivity   │
+                        │                               │                        │                   │
+                        │                               │                        ├── [Home] ─────────┤
+                        │                               │                        └── [Back] ─────────┘
+                        │                               └── [Link] ──► External Browser
+                        │
+                        └── [Launch Wizard] (from any InteractiveBaseActivity status bar)
+                                                    │
+                                                    └──► WizardViewActivity
+```
+
+### Intent Flags
+
+| Flag Value | Constant | Used When |
+|---|---|---|
+| `603979776` | `FLAG_ACTIVITY_NEW_TASK \| FLAG_ACTIVITY_CLEAR_TASK` | All "return to Home" and "Launch Wizard" navigation. Clears the entire back stack. |
+| _(none)_ | Default | Home → sub-screens (Settings, Pad, Timeline, etc.). Pushes onto back stack normally. |
+
+### Navigation Routes (All Paths)
+
+| # | From | To | Trigger | Clears Back Stack |
+|---|---|---|---|---|
+| 1 | `SplashViewActivity` | `HomeViewActivity` | 1.5s timer (active session) | Yes |
+| 2 | `SplashViewActivity` | `WelcomeViewActivity` | 1.5s timer (no session) | Yes |
+| 3 | `WelcomeViewActivity` | `WizardViewActivity` | "Start Wizard" button | Yes |
+| 4 | `WizardViewActivity` | `HomeViewActivity` | Wizard completion | Yes |
+| 5 | `HomeViewActivity` | `SettingsViewActivity` | Settings button | No |
+| 6 | `HomeViewActivity` | `AchievementsViewActivity` | Achievements button | No |
+| 7 | `HomeViewActivity` | `PadViewActivity` | Gamepad button | No |
+| 8 | `HomeViewActivity` | `TimelineActivity` | Timeline button | No |
+| 9 | `HomeViewActivity` | `ZowiSaysMinigameActivity` | Zowi Says button | No |
+| 10 | `HomeViewActivity` | `MouthsMinigameActivity` | Mouths Minigame button | No |
+| 11 | `HomeViewActivity` | `MouthsEditorActivity` | Mouths Editor button (unlock required) | No |
+| 12 | `HomeViewActivity` | `ProjectViewActivity` | Project button (x10 variants) | No |
+| 13 | `SettingsViewActivity` | `HomeViewActivity` | Home button | Yes |
+| 14 | `SettingsViewActivity` | `CalibrationViewActivity` | Calibrate option | Yes |
+| 15 | `CalibrationViewActivity` | `HomeViewActivity` | Home button | Yes |
+| 16 | `TimelineActivity` | `HomeViewActivity` | Home button | Yes |
+| 17 | `AchievementsViewActivity` | `HomeViewActivity` | Home button | Yes |
+| 18 | `PadViewActivity` | `HomeViewActivity` | Home button | Yes |
+| 19 | `MouthsEditorActivity` | `HomeViewActivity` | Home button | Yes |
+| 20 | `MouthsMinigameActivity` | `HomeViewActivity` | Home button | Yes |
+| 21 | `ZowiSaysMinigameActivity` | `HomeViewActivity` | Home button | Yes |
+| 22 | `ProjectViewActivity` | `HomeViewActivity` | Home button | Yes |
+| 23 | `ProjectViewActivity` | `ProjectQuizViewActivity` | "Run Test" button | No |
+| 24 | `ProjectViewActivity` | External Browser | Link button | No |
+| 25 | `ProjectQuizViewActivity` | `HomeViewActivity` | Home button | Yes |
+| 26 | `ProjectQuizViewActivity` | `ProjectViewActivity` | Back button (on failure) | No |
+| 27 | Any `InteractiveBaseActivity` | `WizardViewActivity` | "Launch Wizard" status bar button | Yes |
+
+### Project Variants
+
+`ProjectViewActivity` is reused for 10 different projects, differentiated by the `project_id_extra` string extra:
+
+| Extra Value | Project |
+|---|---|
+| `01_project_mueve` | Move |
+| `02_project_choreography` | Choreography |
+| `03_project_forma` | Shape |
+| `04_project_bio1` | Bio 1 |
+| `05_project_bio3` | Bio 3 |
+| `06_project_reprogram` | Reprogram |
+| `07_project_helloworld` | Hello World |
+| `08_project_bitbloq2` | BitBloq 2 |
+| `09_project_adivinawi` | Guess |
+| `10_project_gravity` | Gravity |
