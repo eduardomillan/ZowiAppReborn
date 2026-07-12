@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.bq.robotic.droid2ino.BluetoothConnection;
 import com.bq.robotic.droid2ino.DeviceListDialog;
 import com.bq.robotic.droid2ino.DialogListener;
-import com.bq.robotic.droid2ino.R;
+import com.bq.zowi.R;
 import com.bq.robotic.droid2ino.utils.DeviceListDialogStyle;
 import com.bq.robotic.droid2ino.utils.Droid2InoConstants;
 

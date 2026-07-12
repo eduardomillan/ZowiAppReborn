@@ -1,4 +1,4 @@
-# ZowiAppReborn - Project Plan and Progress Tracking (Status as of 2026-06-29)
+# ZowiAppReborn - Project Plan and Progress Tracking (Status as of 2026-07-12)
 
 ## 1) Project goal
 Recover and stabilize the Zowi Android app so that it:
@@ -10,9 +10,10 @@ Recover and stabilize the Zowi Android app so that it:
 - Build: OK (`assembleDebug` succeeded in recent validations).
 - Install: OK (`adb install -r` succeeded).
 - Runtime navigation: OK on main interactive routes under current smoke checks.
-- Release management: version `1.9.1.4` published (`master` + tag `1.9.1.4`).
+- Release management: version `1.9.2.0` published (`master` + tag `1.9.2.0`).
 - Original startup crash: mitigated.
 - Residual risk: broad route coverage is improved but still incomplete across all features/device variants.
+- Dead code cleanup: analytics SDKs, decompiled libraries, and redundant source files removed (~20,200+ lines).
 
 ## 3) Main technical issue identified
 In a large part of legacy/decompiled code, there are direct references to resource IDs (`R.layout`, `R.id`, `R.color`, `R.integer`, `R.dimen`, `R.drawable`, etc.) that do not always match the actual runtime resource table.
@@ -120,7 +121,18 @@ This phase is considered complete when:
 - Foreground activity in latest physical-device check: interactive Home flow stable.
 - AndroidRuntime fatal in latest run: none.
 - Black-screen symptom on Huawei tablet after latest transition fix: not reproduced in current validation.
-- Release state: `master` updated and tag `1.9.1.4` published.
+- Release state: `master` updated and tag `1.9.2.0` published.
+
+## 11) Version history
+
+| Version | Date | Tag | Description |
+|---|---|---|---|
+| `1.9.1.3` | 2026-06-29 | `1.9.1.3` | Stabilize no-Zowi flow, config URLs, Home/Wizard startup, resource resolution refactor, Gradle/AGP compatibility fix |
+| `1.9.1.4` | 2026-06-29 | `1.9.1.4` | Bluetooth stability, UI text fixes, global version display, Huawei black-screen transition hardening |
+| `1.9.1.5` | 2026-06-30 | `1.9.1.5` | Restore original robot functions, achievements unlocking conditions and documentation |
+| `1.9.1.6` | 2026-07-09 | `1.9.1.6` | Fix Discover project rendering, local run tooling, emulator launch script |
+| — | 2026-07-12 | `removed_analytics_bis` | Remove all analytics and decompiled SDK dead code (Adobe, comScore, BQ Analytics, Google Ads, Gson sources). ~20,200 lines deleted |
+| `1.9.2.0` | 2026-07-12 | `1.9.2.0` | Remove decompiled Bugsnag, Retrofit, JetBrains/IntelliJ annotations, duplicate R.java files. Clean up build.gradle excludes |
 
 ---
 This document is intended for fast collaborator onboarding and coordination of next iterations.

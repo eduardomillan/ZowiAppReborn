@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import com.bq.zowi.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;

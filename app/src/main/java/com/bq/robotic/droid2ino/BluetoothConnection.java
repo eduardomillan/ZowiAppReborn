@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import com.bq.robotic.droid2ino.utils.Droid2InoConstants;
+import com.bq.zowi.R;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
