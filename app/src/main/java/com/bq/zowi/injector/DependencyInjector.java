@@ -1,6 +1,5 @@
 package com.bq.zowi.injector;
 
-import com.bq.analytics.core.AnalyticsController;
 import com.bq.zowi.controllers.AchievementsController;
 import com.bq.zowi.controllers.AppController;
 import com.bq.zowi.controllers.AssetController;
@@ -70,8 +69,6 @@ public abstract class DependencyInjector {
     public abstract void init();
 
     public abstract AchievementsController provideAchievementsController();
-
-    public abstract AnalyticsController provideAnalyticsController();
 
     protected abstract AppController provideAppController();
 
@@ -145,7 +142,7 @@ public abstract class DependencyInjector {
     }
 
     public WizardPresenter provideWizardPresenter() {
-        return new WizardPresenterImpl(provideFindZowisInteractor(), provideConnectToZowiInteractor(), provideChangeZowiNameInteractor(), provideSessionController(), provideUiScheduler(), provideAnalyticsController());
+        return new WizardPresenterImpl(provideFindZowisInteractor(), provideConnectToZowiInteractor(), provideChangeZowiNameInteractor(), provideSessionController(), provideUiScheduler());
     }
 
     public HomePresenter provideHomePresenter() {
@@ -173,11 +170,11 @@ public abstract class DependencyInjector {
     }
 
     public PadPresenter providePadPresenter() {
-        return new PadPresenterImpl(provideSessionController(), provideGameController(), provideCheckAchievementAndUnlockItInteractor(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideSendCommandToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideSendAppToZowiInteractor(), provideAchievementsController(), provideFactoryFirmwarePath(), provideUiScheduler(), provideAnalyticsController());
+        return new PadPresenterImpl(provideSessionController(), provideGameController(), provideCheckAchievementAndUnlockItInteractor(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideSendCommandToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideSendAppToZowiInteractor(), provideAchievementsController(), provideFactoryFirmwarePath(), provideUiScheduler());
     }
 
     public TimelinePresenter provideTimelinePresenter() {
-        return new TimelinePresenterImpl(provideSessionController(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideTimelineGameController(), provideSendCommandToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideSendAppToZowiInteractor(), provideFactoryFirmwarePath(), provideCheckAchievementAndUnlockItInteractor(), provideAchievementsController(), provideUiScheduler(), provideAnalyticsController());
+        return new TimelinePresenterImpl(provideSessionController(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideTimelineGameController(), provideSendCommandToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideSendAppToZowiInteractor(), provideFactoryFirmwarePath(), provideCheckAchievementAndUnlockItInteractor(), provideAchievementsController(), provideUiScheduler());
     }
 
     public ZowiSaysMinigamePresenter provideZowiSaysMinigamePresenter() {

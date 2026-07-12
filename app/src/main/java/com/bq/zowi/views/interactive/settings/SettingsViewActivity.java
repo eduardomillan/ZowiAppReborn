@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxButton;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialog;
 import com.bq.zowi.injector.AndroidDependencyInjector;
@@ -299,7 +297,6 @@ public class SettingsViewActivity extends InteractiveBaseActivity<SettingsPresen
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_SETTINGS));
     }
 
     /* JADX INFO: Access modifiers changed from: protected */

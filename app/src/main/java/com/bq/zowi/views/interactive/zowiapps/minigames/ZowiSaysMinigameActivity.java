@@ -6,8 +6,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialog;
 import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiSaysMinigamePresenter;
@@ -67,7 +65,6 @@ public class ZowiSaysMinigameActivity extends MinigameBaseActivity<ZowiSaysMinig
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_ZOWI_SAYS));
     }
 
     @Override // com.bq.zowi.views.interactive.zowiapps.minigames.MinigameBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, android.app.Activity

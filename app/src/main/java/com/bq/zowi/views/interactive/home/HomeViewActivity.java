@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.home.ZowiAppView;
 import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.presenters.interactive.home.HomePresenter;
@@ -196,7 +194,6 @@ public class HomeViewActivity extends InteractiveBaseActivity<HomePresenter> imp
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_HOME));
     }
 
     /* JADX INFO: Access modifiers changed from: protected */

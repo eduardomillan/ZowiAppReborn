@@ -3,8 +3,6 @@ package com.bq.zowi.views.interactive.zowiapps;
 import android.os.Bundle;
 import android.view.View;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.games.MouthGridItemView;
 import com.bq.zowi.components.games.MouthGridLayout;
 import com.bq.zowi.injector.AndroidDependencyInjector;
@@ -51,7 +49,6 @@ public class MouthsEditorActivity extends InteractiveBaseActivity<MouthsEditorPr
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_MOUTHS_EDITOR));
     }
 
     /* JADX INFO: Access modifiers changed from: protected */

@@ -2,9 +2,6 @@ package com.bq.zowi.controllers;
 
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import com.bq.analytics.core.AnalyticsController;
-import com.bq.analytics.hit.Event;
-import com.bq.zowi.analytics.AnalyticsUtils;
 import com.bq.zowi.models.Achievement;
 import com.bq.zowi.utils.FileReader;
 import com.google.gson.Gson;
@@ -16,7 +13,6 @@ import rx.SingleSubscriber;
 
 /* JADX INFO: loaded from: classes.dex */
 public class AchievementsControllerImpl implements AchievementsController {
-    private AnalyticsController analyticsController;
     private AssetManager assetManager;
     private SharedPreferences sharedPreferences;
     private final String SP_ACHIEVEMENTS_LIST = "achievementsList";
@@ -24,10 +20,9 @@ public class AchievementsControllerImpl implements AchievementsController {
     private final int ACHIEVEMENTS_LIST_VERSION = 2;
     private final String INITIAL_ACHIEVEMENTS_JSON_FILE_PATH = "achievements/initial_list.json";
 
-    public AchievementsControllerImpl(SharedPreferences sharedPreferences, AssetManager assetManager, AnalyticsController analyticsController) {
+    public AchievementsControllerImpl(SharedPreferences sharedPreferences, AssetManager assetManager) {
         this.sharedPreferences = sharedPreferences;
         this.assetManager = assetManager;
-        this.analyticsController = analyticsController;
         bootstrapAchievements();
     }
 
@@ -74,7 +69,6 @@ public class AchievementsControllerImpl implements AchievementsController {
                 editor.putString("achievementsList", serializedList);
                 editor.commit();
                 if (unlockedAchievement != null) {
-                    AchievementsControllerImpl.this.analyticsController.send(new Event(AnalyticsUtils.EVENT_ACHIEVEMENT, unlockedAchievement.type.equals(Achievement.Type.movement.toString()) ? "move" : "animation", AnalyticsUtils.EVENT_ACHIEVEMENT_UNLOCK_PREFIX + unlockedAchievement.id, 0L));
                     singleSubscriber.onSuccess(unlockedAchievement);
                 } else {
                     singleSubscriber.onError(new IllegalStateException("The achievement ID could not be found in achievement list retrievedfrom Shared Preferences."));

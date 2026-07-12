@@ -3,13 +3,10 @@ package com.bq.zowi.views;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.View;
-import com.bq.analytics.core.AnalyticsController;
-import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.presenters.BasePresenter;
 
 /* JADX INFO: loaded from: classes.dex */
 public abstract class BaseFragment<T extends BasePresenter<?, ?>> extends Fragment {
-    private AnalyticsController analyticsController;
     private T presenter;
 
     protected abstract T resolvePresenter();
@@ -19,7 +16,6 @@ public abstract class BaseFragment<T extends BasePresenter<?, ?>> extends Fragme
         super.onViewCreated(view, bundle);
         this.presenter = (T) resolvePresenter();
         this.presenter.onCreateView();
-        this.analyticsController = AndroidDependencyInjector.getInstance().provideAnalyticsController();
     }
 
     @Override // androidx.fragment.app.Fragment
@@ -39,9 +35,5 @@ public abstract class BaseFragment<T extends BasePresenter<?, ?>> extends Fragme
             throw new IllegalArgumentException("Not Binded!");
         }
         return this.presenter;
-    }
-
-    protected AnalyticsController getAnalyticsController() {
-        return this.analyticsController;
     }
 }

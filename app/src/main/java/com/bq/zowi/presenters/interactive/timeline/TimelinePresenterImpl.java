@@ -1,8 +1,5 @@
 package com.bq.zowi.presenters.interactive.timeline;
 
-import com.bq.analytics.core.AnalyticsController;
-import com.bq.analytics.hit.Event;
-import com.bq.zowi.analytics.AnalyticsUtils;
 import com.bq.zowi.controllers.AchievementsController;
 import com.bq.zowi.controllers.BTConnectionController;
 import com.bq.zowi.controllers.GameController;
@@ -51,14 +48,13 @@ public class TimelinePresenterImpl extends InteractiveBasePresenterImpl<Timeline
     private static final int TIMELINE_ACHIEVEMENT_MIN_COMMANDS = 15;
     private AchievementsController achievementsController;
     private final CheckAchievementAndUnlockItInteractor achievementsInteractor;
-    private final AnalyticsController analyticsController;
     private final BTConnectionController connectionController;
     private final GameController gameController;
     private final SendCommandToZowiInteractor sendCommandToZowiInteractor;
     private TimelineCommandSubscriber subscriber;
     private final Scheduler uiScheduler;
 
-    public TimelinePresenterImpl(SessionController sessionController, BTConnectionController connectionController, ConnectToZowiInteractor connectToZowiInteractor, GameController gameController, SendCommandToZowiInteractor sendCommandToZowiInteractor, MeasureZowiBatteryLevelInteractor measureZowiBatteryLevelInteractor, CheckInstalledZowiAppInteractor checkInstalledZowiAppInteractor, SendAppToZowiInteractor sendAppToZowiInteractor, String factoryFirmwarePath, CheckAchievementAndUnlockItInteractor achievementsInteractor, AchievementsController achievementsController, Scheduler uiScheduler, AnalyticsController analyticsController) {
+    public TimelinePresenterImpl(SessionController sessionController, BTConnectionController connectionController, ConnectToZowiInteractor connectToZowiInteractor, GameController gameController, SendCommandToZowiInteractor sendCommandToZowiInteractor, MeasureZowiBatteryLevelInteractor measureZowiBatteryLevelInteractor, CheckInstalledZowiAppInteractor checkInstalledZowiAppInteractor, SendAppToZowiInteractor sendAppToZowiInteractor, String factoryFirmwarePath, CheckAchievementAndUnlockItInteractor achievementsInteractor, AchievementsController achievementsController, Scheduler uiScheduler) {
         super(sessionController, connectionController, connectToZowiInteractor, measureZowiBatteryLevelInteractor, checkInstalledZowiAppInteractor, sendAppToZowiInteractor, factoryFirmwarePath, uiScheduler);
         this.connectionController = connectionController;
         this.gameController = gameController;
@@ -66,7 +62,6 @@ public class TimelinePresenterImpl extends InteractiveBasePresenterImpl<Timeline
         this.achievementsInteractor = achievementsInteractor;
         this.achievementsController = achievementsController;
         this.uiScheduler = uiScheduler;
-        this.analyticsController = analyticsController;
     }
 
     @Override // com.bq.zowi.presenters.interactive.timeline.TimelinePresenter
@@ -107,7 +102,6 @@ public class TimelinePresenterImpl extends InteractiveBasePresenterImpl<Timeline
 
     @Override // com.bq.zowi.presenters.interactive.timeline.TimelinePresenter
     public void playTimelineButtonPressed(List<TimelineCommand> timelineCommandList) {
-        this.analyticsController.send(new Event(AnalyticsUtils.EVENT_TIMELINE, AnalyticsUtils.EVENT_TIMELINE_ACTIONS_SEQUENCE_COUNT, String.valueOf(timelineCommandList.size()), 0L));
         this.subscriber = new TimelineCommandSubscriber(timelineCommandList);
         this.subscriptions.add(this.connectionController.getReceivedMessageObservable().subscribeOn(Schedulers.io()).filter(new Func1<String, Boolean>() { // from class: com.bq.zowi.presenters.interactive.timeline.TimelinePresenterImpl.4
             @Override // rx.functions.Func1
@@ -202,16 +196,9 @@ public class TimelinePresenterImpl extends InteractiveBasePresenterImpl<Timeline
 
     @Override // com.bq.zowi.presenters.interactive.timeline.TimelinePresenter
     public void timelineCommandSelected(GridCommand gridCommand) {
-        String commandType;
         ((TimelineView) getView()).hideCommandsSelector();
         Command command = gridCommand.getCommand();
         ((TimelineView) getView()).addTimelineCommandToTimeline(new TimelineCommand(command, 1));
-        if (command instanceof MouthCommand) {
-            commandType = "mouth";
-        } else {
-            commandType = command instanceof AnimationCommand ? "animation" : "move";
-        }
-        this.analyticsController.send(new Event(AnalyticsUtils.EVENT_TIMELINE, commandType, gridCommand.getCommandId(), 0L));
     }
 
     @Override // com.bq.zowi.presenters.interactive.timeline.TimelinePresenter

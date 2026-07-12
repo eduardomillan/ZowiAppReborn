@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.recyclerview.RecyclerAdapter;
 import com.bq.zowi.components.recyclerview.WrapContentLinearLayoutManager;
 import com.bq.zowi.injector.AndroidDependencyInjector;
@@ -104,7 +102,6 @@ public class AchievementsViewActivity extends InteractiveBaseActivity<Achievemen
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_ACHIEVEMENTS));
     }
 
     /* JADX INFO: Access modifiers changed from: protected */

@@ -14,13 +14,9 @@ android {
     sourceSets {
         main {
             java {
-                srcDirs += ['src/main/java', 'src/main/stubs']
-                exclude 'com/google/ads/**'
-                exclude 'com/google/gson/**'
+                srcDirs += ['src/main/java']
                 exclude 'com/bugsnag/**'
-                exclude 'com/comscore/**'
                 exclude 'retrofit/**'
-                exclude 'com/comscore/instrumentation/InstrumentedMapActivity.java'
                 exclude 'retrofit/appengine/**'
             }
         }

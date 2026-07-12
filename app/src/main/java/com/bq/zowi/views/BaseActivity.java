@@ -10,16 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import com.adobe.mobile.Config;
-import com.bq.analytics.core.AnalyticsController;
 import com.bq.zowi.BuildConfig;
-import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.presenters.BasePresenter;
 
 /* JADX INFO: loaded from: classes.dex */
 public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCompatActivity {
     private static final String VERSION_BADGE_TAG = "app_version_badge";
-    private AnalyticsController analyticsController;
     private T presenter;
 
     protected abstract T resolvePresenter();
@@ -28,7 +24,6 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         this.presenter = (T) resolvePresenter();
-        this.analyticsController = AndroidDependencyInjector.getInstance().provideAnalyticsController();
     }
 
     @Override // androidx.appcompat.app.AppCompatActivity, android.app.Activity
@@ -42,13 +37,11 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        Config.collectLifecycleData(this);
     }
 
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onPause() {
         super.onPause();
-        Config.pauseCollectingLifecycleData();
     }
 
     @Override // androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
@@ -64,10 +57,6 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
             throw new IllegalArgumentException("Not Binded!");
         }
         return this.presenter;
-    }
-
-    protected AnalyticsController getAnalyticsController() {
-        return this.analyticsController;
     }
 
     protected final void setResolvedContentView(String layoutName, int fallbackLayoutId) {

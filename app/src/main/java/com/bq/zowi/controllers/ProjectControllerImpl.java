@@ -2,7 +2,6 @@ package com.bq.zowi.controllers;
 
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import com.bq.zowi.analytics.AnalyticsUtils;
 import com.bq.zowi.models.Project;
 import com.bq.zowi.utils.FileReader;
 import com.google.gson.Gson;
@@ -149,7 +148,7 @@ public class ProjectControllerImpl implements ProjectController {
             String imageResourceId = jsonObject.get("image").getAsString();
             String projectUrlResourceId = jsonObject.get("project_url").getAsString();
             ArrayList<Project.TestQuestion> testQuestions = getTestQuestionsByJsonArray(jsonObject.get("test").getAsJsonArray());
-            String achievementId = jsonObject.get(AnalyticsUtils.EVENT_ACHIEVEMENT).getAsString();
+            String achievementId = jsonObject.get("achievement").getAsString();
             String projectHex = (jsonObject.get("project_hex") == null || jsonObject.get("project_hex").getAsString().length() <= 0) ? null : jsonObject.get("project_hex").getAsString();
             return new Project(id, titleResourceId, learningDescriptionResourceId, imageResourceId, projectUrlResourceId, testQuestions, achievementId, projectHex);
         }

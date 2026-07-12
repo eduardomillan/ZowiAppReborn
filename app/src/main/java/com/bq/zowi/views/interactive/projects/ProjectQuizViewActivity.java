@@ -7,9 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.bq.analytics.hit.Event;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
 import com.bq.zowi.components.QuizView;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialogAchievement;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialogFailure;
@@ -143,13 +141,11 @@ public class ProjectQuizViewActivity extends InteractiveBaseActivity<ProjectQuiz
     public void onSuccess(int successQuestionIndex, int totalQuestions) {
         AnimationUtils.animateProgressBarToProgress(this.progressBar, (successQuestionIndex * 100) / totalQuestions);
         this.progressTextView.setText(successQuestionIndex + " / " + totalQuestions);
-        getAnalyticsController().send(new Event("Project" + this.projectId, AnalyticsUtils.EVENT_PROJECT_QUIZ_QUESTION_PREFIX + successQuestionIndex, AnalyticsUtils.EVENT_PROJECT_QUIZ_QUESTION_RIGHT, 0L));
     }
 
     @Override // com.bq.zowi.components.QuizView.QuizEventListener
     public void onError(int errorQuestionIndex, int totalQuestions) {
         ((ProjectQuizPresenter) getPresenter()).quizFailure(this.projectId);
-        getAnalyticsController().send(new Event("Project" + this.projectId, AnalyticsUtils.EVENT_PROJECT_QUIZ_QUESTION_PREFIX + errorQuestionIndex, AnalyticsUtils.EVENT_PROJECT_QUIZ_QUESTION_WRONG, 0L));
     }
 
     @Override // com.bq.zowi.components.QuizView.QuizEventListener

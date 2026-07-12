@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.EduBar;
 import com.bq.zowi.components.NonSwipeableViewPager;
 import com.bq.zowi.injector.AndroidDependencyInjector;
@@ -47,7 +45,6 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
         this.noZowisFoundWizardLayout = findResolvedView("no_zowis_found_wizard_layout", R.id.no_zowis_found_wizard_layout);
         this.nameEditText = (EditText) findResolvedView("wizard_name_edit_text", R.id.wizard_name_edit_text);
         this.eduBar = (EduBar) findResolvedView("wizard_edubar", R.id.wizard_edubar);
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_WELCOME));
         if (this.nameEditText != null) {
             this.nameEditText.addTextChangedListener(new TextWatcher() { // from class: com.bq.zowi.views.wizard.WizardViewActivity.1
                 private String textBeforeLastChange = "";
@@ -186,7 +183,6 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
         if (this.noZowisFoundWizardLayout != null) {
             this.noZowisFoundWizardLayout.setVisibility(0);
         }
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_ZOWI_NOT_FOUND));
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
@@ -195,7 +191,6 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
         if (this.viewPager != null) {
             this.viewPager.setCurrentItem(2);
         }
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_ZOWI_FOUND));
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView
@@ -204,7 +199,6 @@ public class WizardViewActivity extends BaseActivity<WizardPresenter> implements
         if (this.viewPager != null) {
             this.viewPager.setCurrentItem(3);
         }
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_WIZARD_SET_NAME));
     }
 
     @Override // com.bq.zowi.views.wizard.WizardView

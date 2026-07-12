@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialog;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialogScrollable;
 import com.bq.zowi.components.recyclerview.RecyclerAdapter;
@@ -169,7 +167,6 @@ public class TimelineActivity extends InteractiveBaseActivity<TimelinePresenter>
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_TIMELINE));
     }
 
     @Override // com.bq.zowi.views.interactive.InteractiveBaseActivity, com.bq.zowi.views.interactive.InteractiveBaseView

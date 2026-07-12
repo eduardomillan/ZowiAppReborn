@@ -1,9 +1,6 @@
 package com.bq.zowi.presenters.wizard;
 
 import android.bluetooth.BluetoothDevice;
-import com.bq.analytics.core.AnalyticsController;
-import com.bq.analytics.hit.UserTiming;
-import com.bq.zowi.analytics.AnalyticsUtils;
 import com.bq.zowi.controllers.SessionController;
 import com.bq.zowi.interactors.ChangeZowiNameInteractor;
 import com.bq.zowi.interactors.ConnectToZowiInteractor;
@@ -15,22 +12,19 @@ import com.bq.zowi.utils.Grove;
 import com.bq.zowi.utils.NameValidator;
 import com.bq.zowi.views.wizard.WizardView;
 import com.bq.zowi.wireframes.wizard.WizardWireframe;
-import java.util.Date;
 import rx.Scheduler;
 import rx.SingleSubscriber;
 import rx.schedulers.Schedulers;
 
 /* JADX INFO: loaded from: classes.dex */
 public class WizardPresenterImpl extends BasePresenterImpl<WizardView, WizardWireframe> implements WizardPresenter {
-    private AnalyticsController analyticsController;
     private ChangeZowiNameInteractor changeZowiNameInteractor;
     private ConnectToZowiInteractor connectToZowiInteractor;
     private FindZowisInteractor findZowisInteractor;
     private SessionController sessionController;
     private Scheduler uiScheduler;
-    private long wizardStartTimeMillis = -1;
 
-    public WizardPresenterImpl(FindZowisInteractor findZowisInteractor, ConnectToZowiInteractor connectToZowiInteractor, ChangeZowiNameInteractor changeZowiNameInteractor, SessionController sessionController, Scheduler uiScheduler, AnalyticsController analyticsController) {
+    public WizardPresenterImpl(FindZowisInteractor findZowisInteractor, ConnectToZowiInteractor connectToZowiInteractor, ChangeZowiNameInteractor changeZowiNameInteractor, SessionController sessionController, Scheduler uiScheduler) {
         this.findZowisInteractor = findZowisInteractor;
         this.connectToZowiInteractor = connectToZowiInteractor;
         this.changeZowiNameInteractor = changeZowiNameInteractor;
@@ -38,13 +32,6 @@ public class WizardPresenterImpl extends BasePresenterImpl<WizardView, WizardWir
         this.findZowisInteractor = findZowisInteractor;
         this.connectToZowiInteractor = connectToZowiInteractor;
         this.sessionController = sessionController;
-        this.analyticsController = analyticsController;
-    }
-
-    @Override // com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
-    public void onCreateView() {
-        super.onCreateView();
-        this.wizardStartTimeMillis = new Date().getTime();
     }
 
     @Override // com.bq.zowi.presenters.wizard.WizardPresenter
@@ -111,9 +98,6 @@ public class WizardPresenterImpl extends BasePresenterImpl<WizardView, WizardWir
 
     @Override // com.bq.zowi.presenters.wizard.WizardPresenter
     public void wizardComplete(String deviceAddress) {
-        if (this.wizardStartTimeMillis != -1) {
-            this.analyticsController.send(new UserTiming(AnalyticsUtils.EVENT_WIZARD_DURATION, Long.valueOf(new Date().getTime() - this.wizardStartTimeMillis), AnalyticsUtils.EVENT_WIZARD_DURATION_FINISH, null));
-        }
         this.sessionController.saveActiveZowiDeviceAddress(deviceAddress);
         getWireframe().presentWizardCompleteView();
     }

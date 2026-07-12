@@ -3,8 +3,6 @@ package com.bq.zowi.views.welcome;
 import android.os.Bundle;
 import android.view.View;
 import com.bq.zowi.R;
-import com.bq.zowi.analytics.AnalyticsUtils;
-import com.bq.zowi.analytics.ZowiScreen;
 import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.presenters.welcome.WelcomePresenter;
 import com.bq.zowi.views.BaseActivity;
@@ -51,6 +49,5 @@ public class WelcomeViewActivity extends BaseActivity<WelcomePresenter> implemen
     @Override // com.bq.zowi.views.BaseActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     protected void onResume() {
         super.onResume();
-        getAnalyticsController().send(new ZowiScreen(this, AnalyticsUtils.SCREEN_HELLO));
     }
 }

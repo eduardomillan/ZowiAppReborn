@@ -1,8 +1,5 @@
 package com.bq.zowi.presenters.interactive.pad;
 
-import com.bq.analytics.core.AnalyticsController;
-import com.bq.analytics.hit.Event;
-import com.bq.zowi.analytics.AnalyticsUtils;
 import com.bq.zowi.controllers.AchievementsController;
 import com.bq.zowi.controllers.BTConnectionController;
 import com.bq.zowi.controllers.GameController;
@@ -46,7 +43,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     private static final Achievement.Id FIRST_TIME_ACHIEVEMENT = Achievement.Id.shake_leg;
     private AchievementsController achievementsController;
     private CheckAchievementAndUnlockItInteractor achievementsInteractor;
-    private AnalyticsController analyticsController;
     private long configuredDuration;
     private GameController gameController;
     private final Achievement.Id[] gamepadAchievements;
@@ -54,7 +50,7 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     private SendCommandToZowiInteractor sendCommandToZowiInteractor;
     private Scheduler uiScheduler;
 
-    public PadPresenterImpl(SessionController sessionController, GameController gameController, CheckAchievementAndUnlockItInteractor achievementsInteractor, BTConnectionController connectionController, ConnectToZowiInteractor connectToZowiInteractor, SendCommandToZowiInteractor sendCommandToZowiInteractor, MeasureZowiBatteryLevelInteractor measureZowiBatteryLevelInteractor, CheckInstalledZowiAppInteractor checkInstalledZowiAppInteractor, SendAppToZowiInteractor sendAppToZowiInteractor, AchievementsController achievementsController, String factoryFirmwarePath, Scheduler uiScheduler, AnalyticsController analyticsController) {
+    public PadPresenterImpl(SessionController sessionController, GameController gameController, CheckAchievementAndUnlockItInteractor achievementsInteractor, BTConnectionController connectionController, ConnectToZowiInteractor connectToZowiInteractor, SendCommandToZowiInteractor sendCommandToZowiInteractor, MeasureZowiBatteryLevelInteractor measureZowiBatteryLevelInteractor, CheckInstalledZowiAppInteractor checkInstalledZowiAppInteractor, SendAppToZowiInteractor sendAppToZowiInteractor, AchievementsController achievementsController, String factoryFirmwarePath, Scheduler uiScheduler) {
         super(sessionController, connectionController, connectToZowiInteractor, measureZowiBatteryLevelInteractor, checkInstalledZowiAppInteractor, sendAppToZowiInteractor, factoryFirmwarePath, uiScheduler);
         this.configuredDuration = 1000L;
         this.isCommandSendingBlocked = false;
@@ -64,7 +60,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
         this.achievementsInteractor = achievementsInteractor;
         this.achievementsController = achievementsController;
         this.uiScheduler = uiScheduler;
-        this.analyticsController = analyticsController;
     }
 
     @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl, com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
@@ -135,7 +130,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void upArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.WALK, Command.Direction.FORWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.WALK.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_FORWARD_SUFFIX, 0L));
         }
     }
 
@@ -143,7 +137,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void downArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.WALK, Command.Direction.BACKWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.WALK.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_BACKWARD_SUFFIX, 0L));
         }
     }
 
@@ -151,7 +144,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void rightArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.TURN, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.TURN.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_RIGHT_SUFFIX, 0L));
         }
     }
 
@@ -159,7 +151,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void leftArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.TURN, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.TURN.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_LEFT_SUFFIX, 0L));
         }
     }
 
@@ -167,7 +158,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void crusaitoLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.CRUSAITO, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.CRUSAITO.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_LEFT_SUFFIX, 0L));
         }
     }
 
@@ -175,7 +165,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void crusaitoRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.CRUSAITO, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.CRUSAITO.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_RIGHT_SUFFIX, 0L));
         }
     }
 
@@ -183,7 +172,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void moonwalkerLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.MOONWALKER, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.MOONWALKER.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_LEFT_SUFFIX, 0L));
         }
     }
 
@@ -191,7 +179,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void moonwalkerRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.MOONWALKER, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.MOONWALKER.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_RIGHT_SUFFIX, 0L));
         }
     }
 
@@ -199,7 +186,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void flappingForward() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.FLAPPING, Command.Direction.FORWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.FLAPPING.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_FORWARD_SUFFIX, 0L));
         }
     }
 
@@ -207,7 +193,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void flappingBackward() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.FLAPPING, Command.Direction.BACKWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.FLAPPING.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_BACKWARD_SUFFIX, 0L));
         }
     }
 
@@ -215,7 +200,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void bendLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.BEND, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.BEND.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_LEFT_SUFFIX, 0L));
         }
     }
 
@@ -223,7 +207,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void bendRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.BEND, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.BEND.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_RIGHT_SUFFIX, 0L));
         }
     }
 
@@ -231,7 +214,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void shakeLegLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.SHAKE_LEG, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.SHAKE_LEG.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_LEFT_SUFFIX, 0L));
         }
     }
 
@@ -239,7 +221,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void shakeLegRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.SHAKE_LEG, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.SHAKE_LEG.getId() + AnalyticsUtils.EVENT_GAMEPAD_MOVE_RIGHT_SUFFIX, 0L));
         }
     }
 
@@ -247,7 +228,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void updownPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.UPDOWN, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.UPDOWN.getId(), 0L));
         }
     }
 
@@ -255,7 +235,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void jumpPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.JUMP, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.JUMP.getId(), 0L));
         }
     }
 
@@ -263,7 +242,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void tipToeSwingPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.TIP_TOE, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.TIP_TOE.getId(), 0L));
         }
     }
 
@@ -271,7 +249,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void jitterPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.JITTER, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.JITTER.getId(), 0L));
         }
     }
 
@@ -279,7 +256,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void ascendingTurnPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.ASCENDING_TURN, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.ASCENDING_TURN.getId(), 0L));
         }
     }
 
@@ -287,7 +263,6 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     public void swingPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.SWING, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, "move", Command.Action.SWING.getId(), 0L));
         }
     }
 
@@ -326,15 +301,8 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
 
     @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
     public void actionPressed(Command command) {
-        String commandType;
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(command).subscribe(new CommandSingleSubscriber());
-            if (command instanceof MouthCommand) {
-                commandType = "mouth";
-            } else {
-                commandType = command instanceof AnimationCommand ? "animation" : "move";
-            }
-            this.analyticsController.send(new Event(AnalyticsUtils.EVENT_GAMEPAD, commandType, command.getId(), 0L));
         }
     }
 

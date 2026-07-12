@@ -3,8 +3,6 @@ package com.bq.zowi.injector;
 import android.bluetooth.BluetoothAdapter;
 import android.content.SharedPreferences;
 import androidx.fragment.app.FragmentActivity;
-import com.adobe.mobile.Config;
-import com.bq.analytics.core.AnalyticsController;
 import com.bq.zowi.R;
 import com.bq.zowi.ZowiApplication;
 import com.bq.zowi.controllers.AchievementsController;
@@ -110,7 +108,6 @@ public class AndroidDependencyInjector extends DependencyInjector {
         CustomErrorReporter reporter = provideErrorReporter();
         reporter.init();
         reporter.setReleaseStage("RELEASE");
-        Config.setContext(this.application);
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
@@ -266,7 +263,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
             @Override // com.bq.zowi.injector.DependencyCache.Provider
             @NotNull
             public AchievementsControllerImpl get() {
-                return new AchievementsControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences(), AndroidDependencyInjector.this.application.getAssets(), AndroidDependencyInjector.this.provideAnalyticsController());
+                return new AchievementsControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences(), AndroidDependencyInjector.this.application.getAssets());
             }
         });
     }
@@ -413,18 +410,6 @@ public class AndroidDependencyInjector extends DependencyInjector {
             @NotNull
             public BugsnagCustomErrorReporter get() {
                 return new BugsnagCustomErrorReporter(AndroidDependencyInjector.this.provideApplication(), AndroidDependencyInjector.this.provideApplication().getString(R.string.bugsnag_api_key), null);
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public AnalyticsController provideAnalyticsController() {
-        return (AnalyticsController) getCache().get(AnalyticsController.class, new DependencyCache.Provider<AnalyticsController>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.20
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
-            @NotNull
-            public AnalyticsController get() {
-                return new AnalyticsController();
             }
         });
     }
