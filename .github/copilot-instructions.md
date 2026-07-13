@@ -20,7 +20,7 @@ For local app runs, prefer the repository scripts:
 - `./run_emulator.sh [AVD_NAME]` starts an emulator in Spanish, landscape, with compact UI density.
 - `./run_app.sh [AVD_NAME]` builds, installs, and launches the app, starting the emulator first if needed.
 
-For Bluetooth-focused changes, use `docs/bluetooth-regression-checklist.md` as the repository's validation checklist.
+For Bluetooth-focused changes, use `docs/project/bluetooth-regression-checklist.md` as the repository's validation checklist.
 
 ## High-level architecture
 

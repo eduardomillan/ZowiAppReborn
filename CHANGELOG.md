@@ -30,7 +30,7 @@
 - Removed decompiled Google Gson sources (59 files).
 - Cleaned analytics references from all activities, presenters, controllers, and dependency injection.
 - Removed orphaned resource `rtve_comscore_autoupdate_period`.
-- Documented all removals in `docs/NO_ANALYTICS.md`.
+- Documented all removals in `docs/project/NO_ANALYTICS.md`.
 
 ## 1.9.1.6 - 2026-07-09
 
@@ -52,7 +52,7 @@
 ## 1.9.1.5 - 2026-06-30
 
 ### Added
-- Added a Bluetooth connection regression checklist in `docs/bluetooth-regression-checklist.md`.
+- Added a Bluetooth connection regression checklist in `docs/project/bluetooth-regression-checklist.md`.
 
 ### Changed
 - App version updated to `1.9.1.5` (`versionCode` 582).
