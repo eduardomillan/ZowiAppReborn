@@ -1,11 +1,10 @@
 package com.bq.zowi.presenters.splash;
 
-import com.bq.zowi.controllers.SessionController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.presenters.BasePresenterImpl;
 import com.bq.zowi.views.splash.SplashView;
 import com.bq.zowi.wireframes.splash.SplashWireframe;
 
-/* JADX INFO: loaded from: classes.dex */
 public class SplashPresenterImpl extends BasePresenterImpl<SplashView, SplashWireframe> implements SplashPresenter {
     private SessionController sessionController;
 
@@ -13,11 +12,11 @@ public class SplashPresenterImpl extends BasePresenterImpl<SplashView, SplashWir
         this.sessionController = sessionController;
     }
 
-    @Override // com.bq.zowi.presenters.splash.SplashPresenter
+    @Override
     public void initialize() {
     }
 
-    @Override // com.bq.zowi.presenters.splash.SplashPresenter
+    @Override
     public void onContinueClicked() {
         boolean isActiveSession = this.sessionController.loadActiveZowiDeviceAddress() != null || this.sessionController.hasDismissedWizard();
         getWireframe().dismissSplash(isActiveSession);

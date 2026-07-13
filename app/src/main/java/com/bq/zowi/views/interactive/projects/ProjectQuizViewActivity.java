@@ -12,7 +12,7 @@ import com.bq.zowi.components.QuizView;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialogAchievement;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialogFailure;
 import com.bq.zowi.components.makerboxdialogs.MakerBoxDialogSuccess;
-import com.bq.zowi.controllers.ProjectController;
+import com.bq.zowi.api.ProjectController;
 import com.bq.zowi.injector.AndroidDependencyInjector;
 import com.bq.zowi.models.viewmodels.AchievementViewModel;
 import com.bq.zowi.models.viewmodels.ProjectViewModel;

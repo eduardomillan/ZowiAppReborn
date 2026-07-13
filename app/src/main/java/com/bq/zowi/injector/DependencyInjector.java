@@ -1,32 +1,13 @@
 package com.bq.zowi.injector;
 
-import com.bq.zowi.controllers.AchievementsController;
-import com.bq.zowi.controllers.AppController;
-import com.bq.zowi.controllers.AssetController;
-import com.bq.zowi.controllers.BTAdapterController;
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.GameController;
-import com.bq.zowi.controllers.KitonNetworkController;
-import com.bq.zowi.controllers.ProjectController;
-import com.bq.zowi.controllers.RankingController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.controllers.ZowiDataController;
-import com.bq.zowi.controllers.ZowiDataControllerImpl;
+import com.bq.zowi.api.AchievementsController;
+import com.bq.zowi.api.AppController;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.GameController;
+import com.bq.zowi.api.ProjectController;
+import com.bq.zowi.api.RankingController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.crashreporting.CustomErrorReporter;
-import com.bq.zowi.injector.DependencyCache;
-import com.bq.zowi.interactors.ChangeZowiNameInteractor;
-import com.bq.zowi.interactors.ChangeZowiNameInteractorImpl;
-import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractor;
-import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractorImpl;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.FindZowisInteractor;
-import com.bq.zowi.interactors.ForgetPlayingHistoryInteractor;
-import com.bq.zowi.interactors.ForgetZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractorImpl;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractor;
 import com.bq.zowi.presenters.interactive.achievements.AchievementsPresenter;
 import com.bq.zowi.presenters.interactive.achievements.AchievementsPresenterImpl;
 import com.bq.zowi.presenters.interactive.home.HomePresenter;
@@ -57,30 +38,22 @@ import com.bq.zowi.presenters.welcome.WelcomePresenter;
 import com.bq.zowi.presenters.welcome.WelcomePresenterImpl;
 import com.bq.zowi.presenters.wizard.WizardPresenter;
 import com.bq.zowi.presenters.wizard.WizardPresenterImpl;
-import org.jetbrains.annotations.NotNull;
-import rx.Scheduler;
+import com.bq.zowi.usecases.ChangeZowiNameInteractor;
+import com.bq.zowi.usecases.CheckAchievementAndUnlockItInteractor;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.FindZowisInteractor;
+import com.bq.zowi.usecases.ForgetPlayingHistoryInteractor;
+import com.bq.zowi.usecases.ForgetZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
+import com.bq.zowi.usecases.SendCommandToZowiInteractor;
+import io.reactivex.Scheduler;
 
-/* JADX INFO: loaded from: classes.dex */
 public abstract class DependencyInjector {
-    private final DependencyCache cache = new DependencyCache();
-
-    public abstract CheckAchievementAndUnlockItInteractor checkAchievementAndUnlockItInteractor();
-
     public abstract void init();
 
-    public abstract AchievementsController provideAchievementsController();
-
-    protected abstract AppController provideAppController();
-
-    public abstract AssetController provideAssetController();
-
-    public abstract BTAdapterController provideBTAdapterController();
-
-    public abstract BTConnectionController provideBTConnectionController();
-
-    public abstract CheckInstalledZowiAppInteractor provideCheckInstalledZowiAppInteractor();
-
-    public abstract ConnectToZowiInteractor provideConnectToZowiInteractor();
+    public abstract void shutdown();
 
     public abstract CustomErrorReporter provideErrorReporter();
 
@@ -88,50 +61,43 @@ public abstract class DependencyInjector {
 
     public abstract int provideFactoryFirmwareVersion();
 
-    public abstract FindZowisInteractor provideFindZowisInteractor();
+    public abstract Scheduler provideUiScheduler();
 
-    public abstract ForgetPlayingHistoryInteractor provideForgetPlayingHistoryInteractor();
+    public abstract SessionController provideSessionController();
 
-    public abstract ForgetZowiInteractor provideForgetZowiInteractor();
+    public abstract BTConnectionController provideBTConnectionController();
 
     public abstract GameController provideGameController();
 
-    public abstract KitonNetworkController provideKitonNetworkController();
+    public abstract GameController provideTimelineGameController();
+
+    public abstract AchievementsController provideAchievementsController();
+
+    public abstract AppController provideAppController();
 
     public abstract ProjectController provideProjectController();
 
     public abstract RankingController provideRankingController();
 
-    public abstract SendAppToZowiInteractor provideSendAppToZowiInteractor();
+    public abstract FindZowisInteractor provideFindZowisInteractor();
+
+    public abstract ConnectToZowiInteractor provideConnectToZowiInteractor();
 
     public abstract SendCommandToZowiInteractor provideSendCommandToZowiInteractor();
 
-    public abstract SessionController provideSessionController();
+    public abstract SendAppToZowiInteractor provideSendAppToZowiInteractor();
 
-    public abstract GameController provideTimelineGameController();
+    public abstract CheckInstalledZowiAppInteractor provideCheckInstalledZowiAppInteractor();
 
-    public abstract Scheduler provideUiScheduler();
+    public abstract CheckAchievementAndUnlockItInteractor provideCheckAchievementAndUnlockItInteractor();
 
-    public abstract void shutdown();
+    public abstract ChangeZowiNameInteractor provideChangeZowiNameInteractor();
 
-    protected DependencyCache getCache() {
-        return this.cache;
-    }
+    public abstract MeasureZowiBatteryLevelInteractor provideMeasureZowiBatteryLevelInteractor();
 
-    public ZowiDataController provideZowiDataController() {
-        return (ZowiDataController) getCache().get(ZowiDataControllerImpl.class, new DependencyCache.Provider<ZowiDataControllerImpl>() { // from class: com.bq.zowi.injector.DependencyInjector.1
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
-            @NotNull
-            public ZowiDataControllerImpl get() {
-                return new ZowiDataControllerImpl(DependencyInjector.this.provideBTConnectionController(), DependencyInjector.this.provideSendCommandToZowiInteractor(), DependencyInjector.this.provideUiScheduler());
-            }
-        });
-    }
+    public abstract ForgetZowiInteractor provideForgetZowiInteractor();
 
-    public MeasureZowiBatteryLevelInteractor provideMeasureZowiBatteryLevelInteractor() {
-        return new MeasureZowiBatteryLevelInteractorImpl(provideSendCommandToZowiInteractor(), provideZowiDataController());
-    }
+    public abstract ForgetPlayingHistoryInteractor provideForgetPlayingHistoryInteractor();
 
     public SplashPresenter provideSplashPresenter() {
         return new SplashPresenterImpl(provideSessionController());
@@ -153,20 +119,12 @@ public abstract class DependencyInjector {
         return new SettingsPresenterImpl(provideFactoryFirmwarePath(), provideSendAppToZowiInteractor(), provideChangeZowiNameInteractor(), provideForgetZowiInteractor(), provideForgetPlayingHistoryInteractor(), provideSessionController(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideUiScheduler());
     }
 
-    public ChangeZowiNameInteractor provideChangeZowiNameInteractor() {
-        return new ChangeZowiNameInteractorImpl(provideSendCommandToZowiInteractor());
-    }
-
     public CalibrationPresenter provideCalibrationPresenter() {
         return new CalibrationPresenterImpl(provideSessionController(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideSendAppToZowiInteractor(), provideFactoryFirmwarePath(), provideUiScheduler(), provideSendCommandToZowiInteractor());
     }
 
     public AchievementsPresenter provideAchievementsPresenter() {
         return new AchievementsPresenterImpl(provideSessionController(), provideBTConnectionController(), provideConnectToZowiInteractor(), provideMeasureZowiBatteryLevelInteractor(), provideCheckInstalledZowiAppInteractor(), provideSendAppToZowiInteractor(), provideSendCommandToZowiInteractor(), provideFactoryFirmwarePath(), provideUiScheduler(), provideAchievementsController());
-    }
-
-    public CheckAchievementAndUnlockItInteractor provideCheckAchievementAndUnlockItInteractor() {
-        return new CheckAchievementAndUnlockItInteractorImpl(provideAchievementsController(), provideSendCommandToZowiInteractor());
     }
 
     public PadPresenter providePadPresenter() {

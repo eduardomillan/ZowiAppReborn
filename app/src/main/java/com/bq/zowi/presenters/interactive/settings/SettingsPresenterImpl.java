@@ -1,24 +1,22 @@
 package com.bq.zowi.presenters.interactive.settings;
 
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.ChangeZowiNameInteractor;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.ForgetPlayingHistoryInteractor;
-import com.bq.zowi.interactors.ForgetZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl;
+import com.bq.zowi.usecases.ChangeZowiNameInteractor;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.ForgetPlayingHistoryInteractor;
+import com.bq.zowi.usecases.ForgetZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
 import com.bq.zowi.utils.Grove;
 import com.bq.zowi.utils.NameValidator;
 import com.bq.zowi.views.interactive.settings.SettingsView;
 import com.bq.zowi.wireframes.settings.SettingsWireframe;
-import rx.Scheduler;
-import rx.SingleSubscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
-/* JADX INFO: loaded from: classes.dex */
 public class SettingsPresenterImpl extends InteractiveBasePresenterImpl<SettingsView, SettingsWireframe> implements SettingsPresenter {
     private final ChangeZowiNameInteractor changeZowiNameInteractor;
     private final String factoryFirmwarePath;
@@ -39,12 +37,12 @@ public class SettingsPresenterImpl extends InteractiveBasePresenterImpl<Settings
         this.uiScheduler = uiScheduler;
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void homeButtonPressed() {
         ((SettingsWireframe) getWireframe()).presentHome();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void changeZowiName(String newZowiName) {
         final String nameToSave;
         if (newZowiName.length() == 0) {
@@ -56,72 +54,52 @@ public class SettingsPresenterImpl extends InteractiveBasePresenterImpl<Settings
             }
             nameToSave = newZowiName;
         }
-        this.subscriptions.add(this.changeZowiNameInteractor.changeZowiName(nameToSave).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Void>() { // from class: com.bq.zowi.presenters.interactive.settings.SettingsPresenterImpl.1
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Void value) {
+        this.disposables.add(this.changeZowiNameInteractor.changeZowiName(nameToSave).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            () -> {
                 SettingsPresenterImpl.this.sessionController.saveActiveZowiName(nameToSave);
                 ((SettingsView) SettingsPresenterImpl.this.getView()).showNameChangeSuccess();
                 ((SettingsView) SettingsPresenterImpl.this.getView()).showZowiName(nameToSave);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                ((SettingsView) SettingsPresenterImpl.this.getView()).showNameChangeError();
-            }
-        }));
+            },
+            error -> ((SettingsView) SettingsPresenterImpl.this.getView()).showNameChangeError()
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void lookForAppUpdates() {
         ((SettingsWireframe) getWireframe()).openGooglePlayToCheckUpdates();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void forgetPlayingHistory() {
-        this.subscriptions.add(this.forgetPlayingHistoryInteractor.forgetPlayingHistory().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Void>() { // from class: com.bq.zowi.presenters.interactive.settings.SettingsPresenterImpl.2
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Void value) {
-                ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetPlayingHistorySuccess();
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetPlayingHistoryError();
-            }
-        }));
+        this.disposables.add(this.forgetPlayingHistoryInteractor.forgetPlayingHistory().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            () -> ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetPlayingHistorySuccess(),
+            error -> ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetPlayingHistoryError()
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void forgetZowi() {
-        this.subscriptions.add(this.forgetZowiInteractor.forgetZowi().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Void>() { // from class: com.bq.zowi.presenters.interactive.settings.SettingsPresenterImpl.3
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Void value) {
-                ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetZowiSuccess();
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetZowiError();
-            }
-        }));
+        this.disposables.add(this.forgetZowiInteractor.forgetZowi().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            () -> ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetZowiSuccess(),
+            error -> ((SettingsView) SettingsPresenterImpl.this.getView()).showForgetZowiError()
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void calibrateZowi() {
         ((SettingsWireframe) getWireframe()).presentCalibrationView();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void visitHospital() {
         ((SettingsWireframe) getWireframe()).openHospitalWeb();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.SettingsPresenter
+    @Override
     public void manageLowBatteryWhenCalibratingForInstallingFirmware() {
         if (this.connectionController.isConnected()) {
-            this.measureZowiBatteryLevelInteractor.measureAndManageZowiBatteryLevel().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Boolean>() { // from class: com.bq.zowi.presenters.interactive.settings.SettingsPresenterImpl.4
-                @Override // rx.SingleSubscriber
-                public void onSuccess(Boolean isBatteryLevelOverThreshold) {
+            this.disposables.add(this.measureZowiBatteryLevelInteractor.measureAndManageZowiBatteryLevel().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+                isBatteryLevelOverThreshold -> {
                     if (isBatteryLevelOverThreshold.booleanValue()) {
                         Grove.d("Battery level is OK", new Object[0]);
                         ((SettingsView) SettingsPresenterImpl.this.getView()).showRestoringInfoWhenCalibratingAlteredZowi();
@@ -129,13 +107,9 @@ public class SettingsPresenterImpl extends InteractiveBasePresenterImpl<Settings
                         Grove.d("Battery level is too low!", new Object[0]);
                         ((SettingsView) SettingsPresenterImpl.this.getView()).showLowBatteryForInstallingFirmwareDialog(SettingsPresenterImpl.this.sessionController.loadActiveZowiName(), false);
                     }
-                }
-
-                @Override // rx.SingleSubscriber
-                public void onError(Throwable error) {
-                    Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0]);
-                }
-            });
+                },
+                error -> Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0])
+            ));
         }
     }
 }

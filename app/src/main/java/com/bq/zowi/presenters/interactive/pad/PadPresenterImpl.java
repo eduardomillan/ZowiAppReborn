@@ -1,15 +1,9 @@
 package com.bq.zowi.presenters.interactive.pad;
 
-import com.bq.zowi.controllers.AchievementsController;
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.GameController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractor;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractor;
+import com.bq.zowi.api.AchievementsController;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.GameController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.models.Achievement;
 import com.bq.zowi.models.commands.AnimationCommand;
 import com.bq.zowi.models.commands.Command;
@@ -22,22 +16,25 @@ import com.bq.zowi.models.commands.StopCommand;
 import com.bq.zowi.models.viewmodels.AchievementViewModel;
 import com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl;
 import com.bq.zowi.subscribers.CommandSingleSubscriber;
+import com.bq.zowi.usecases.CheckAchievementAndUnlockItInteractor;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
+import com.bq.zowi.usecases.SendCommandToZowiInteractor;
 import com.bq.zowi.utils.Grove;
 import com.bq.zowi.views.interactive.pad.PadView;
 import com.bq.zowi.wireframes.pad.PadWireframe;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import rx.Scheduler;
-import rx.Single;
-import rx.SingleSubscriber;
-import rx.Subscriber;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
 
-/* JADX INFO: loaded from: classes.dex */
 public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadWireframe> implements PadPresenter {
     private static final String COMMAND_FINISHED_ACK = "F";
     private static final Achievement.Id FIRST_TIME_ACHIEVEMENT = Achievement.Id.shake_leg;
@@ -62,31 +59,31 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
         this.uiScheduler = uiScheduler;
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl, com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onCreateView() {
         super.onCreateView();
         configureEnabledActions();
         startListeningCommandFinishedAck();
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void gameReady() {
-        this.subscriptions.add(Single.zip(this.gameController.isFirstPlay(GameController.GAME_ID.GAMEPAD_GAME_ID, true), this.gameController.isFirstPlay(GameController.GAME_ID.TIMELINE_GAME_ID, false), new Func2<Boolean, Boolean, HashMap<GameController.GAME_ID, Boolean>>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.3
-            @Override // rx.functions.Func2
-            public HashMap<GameController.GAME_ID, Boolean> call(Boolean isGamePadFirstTimePlayed, Boolean isTimelineFirstTimePlayed) {
+        this.disposables.add(Single.zip(this.gameController.isFirstPlay(GameController.GAME_ID.GAMEPAD_GAME_ID, true), this.gameController.isFirstPlay(GameController.GAME_ID.TIMELINE_GAME_ID, false), new BiFunction<Boolean, Boolean, HashMap<GameController.GAME_ID, Boolean>>() {
+            @Override
+            public HashMap<GameController.GAME_ID, Boolean> apply(Boolean isGamePadFirstTimePlayed, Boolean isTimelineFirstTimePlayed) {
                 HashMap<GameController.GAME_ID, Boolean> gamesStatus = new HashMap<>();
                 gamesStatus.put(GameController.GAME_ID.GAMEPAD_GAME_ID, isGamePadFirstTimePlayed);
                 gamesStatus.put(GameController.GAME_ID.TIMELINE_GAME_ID, isTimelineFirstTimePlayed);
                 return gamesStatus;
             }
-        }).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).flatMap(new Func1<HashMap<GameController.GAME_ID, Boolean>, Single<Achievement>>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.2
-            @Override // rx.functions.Func1
-            public Single<Achievement> call(HashMap<GameController.GAME_ID, Boolean> gamesStatus) {
+        }).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).flatMap(new Function<HashMap<GameController.GAME_ID, Boolean>, Single<Achievement>>() {
+            @Override
+            public Single<Achievement> apply(HashMap<GameController.GAME_ID, Boolean> gamesStatus) {
                 if (gamesStatus.get(GameController.GAME_ID.GAMEPAD_GAME_ID).booleanValue()) {
                     ((PadView) PadPresenterImpl.this.getView()).showHelp();
                     if (!gamesStatus.get(GameController.GAME_ID.TIMELINE_GAME_ID).booleanValue()) {
@@ -95,188 +92,182 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
                 }
                 return Single.just(null);
             }
-        }).subscribe(new SingleSubscriber<Achievement>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.1
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Achievement achievement) {
+        }).subscribe(
+            achievement -> {
                 if (achievement != null) {
                     PadPresenterImpl.this.configureEnabledActions();
                     ((PadView) PadPresenterImpl.this.getView()).showAchievementUnlock(new AchievementViewModel(achievement.id, achievement.unlocked));
                 }
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.d(error.getMessage(), new Object[0]);
-            }
-        }));
+            },
+            error -> Grove.d(error.getMessage(), new Object[0])
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void homeButtonPressed() {
         ((PadWireframe) getWireframe()).presentHome();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void helpButtonPressed() {
         ((PadView) getView()).showHelp();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void configureDuration(String duration) {
         this.configuredDuration = Long.valueOf(duration).longValue();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void upArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.WALK, Command.Direction.FORWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void downArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.WALK, Command.Direction.BACKWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void rightArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.TURN, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void leftArrowPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.TURN, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void crusaitoLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.CRUSAITO, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void crusaitoRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.CRUSAITO, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void moonwalkerLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.MOONWALKER, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void moonwalkerRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.MOONWALKER, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void flappingForward() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.FLAPPING, Command.Direction.FORWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void flappingBackward() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new ForwardBackwardCommand(Command.Action.FLAPPING, Command.Direction.BACKWARD, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void bendLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.BEND, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void bendRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.BEND, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void shakeLegLeft() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.SHAKE_LEG, Command.Direction.LEFT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void shakeLegRight() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new LeftRightCommand(Command.Action.SHAKE_LEG, Command.Direction.RIGHT, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void updownPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.UPDOWN, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void jumpPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.JUMP, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void tipToeSwingPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.TIP_TOE, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void jitterPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.JITTER, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void ascendingTurnPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.ASCENDING_TURN, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void swingPressed() {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new StaticCommand(Command.Action.SWING, this.configuredDuration)).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void actionButtonReleased() {
         this.sendCommandToZowiInteractor.sendCommandToZowi(new StopCommand()).subscribe(new CommandSingleSubscriber());
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void animationsPressed() {
         final List<GridCommand> animationCommands = Arrays.asList(new GridCommand(new AnimationCommand(Command.Action.HAPPY)), new GridCommand(new AnimationCommand(Command.Action.SUPER_HAPPY)), new GridCommand(new AnimationCommand(Command.Action.SAD)), new GridCommand(new AnimationCommand(Command.Action.SLEEPY)), new GridCommand(new AnimationCommand(Command.Action.FART)), new GridCommand(new AnimationCommand(Command.Action.CONFUSED)), new GridCommand(new AnimationCommand(Command.Action.IN_LOVE)), new GridCommand(new AnimationCommand(Command.Action.ANGRY)), new GridCommand(new AnimationCommand(Command.Action.ANXIOUS)), new GridCommand(new AnimationCommand(Command.Action.MAGIC)), new GridCommand(new AnimationCommand(Command.Action.WAVE)));
-        this.subscriptions.add(this.achievementsController.getAchievementsList().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<ArrayList<Achievement>>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.4
-            @Override // rx.SingleSubscriber
-            public void onSuccess(ArrayList<Achievement> achievementsList) {
+        this.disposables.add(this.achievementsController.getAchievementsList().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            achievementsList -> {
                 for (Achievement achievement : achievementsList) {
                     for (GridCommand gridCommand : animationCommands) {
                         if (achievement.id.equals(gridCommand.getCommandId())) {
@@ -285,32 +276,27 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
                     }
                 }
                 ((PadView) PadPresenterImpl.this.getView()).showActionsGrid(animationCommands);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-            }
-        }));
+            },
+            error -> { }
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void mouthsPressed() {
         List<GridCommand> mouthCommands = Arrays.asList(new GridCommand(new MouthCommand(Command.Action.MOUTH_SMILE)), new GridCommand(new MouthCommand(Command.Action.MOUTH_SAD)), new GridCommand(new MouthCommand(Command.Action.MOUTH_CONFUSED)), new GridCommand(new MouthCommand(Command.Action.MOUTH_BIG_SURPRISE)), new GridCommand(new MouthCommand(Command.Action.MOUTH_SMALL_SURPRISE)), new GridCommand(new MouthCommand(Command.Action.MOUTH_HAPPY_OPEN)), new GridCommand(new MouthCommand(Command.Action.MOUTH_SAD_OPEN)), new GridCommand(new MouthCommand(Command.Action.MOUTH_SAD_CLOSED)), new GridCommand(new MouthCommand(Command.Action.MOUTH_HEART)), new GridCommand(new MouthCommand(Command.Action.MOUTH_THUNDER)), new GridCommand(new MouthCommand(Command.Action.MOUTH_X)), new GridCommand(new MouthCommand(Command.Action.MOUTH_INTERROGATION)), new GridCommand(new MouthCommand(Command.Action.MOUTH_TONGUE_OUT)), new GridCommand(new MouthCommand(Command.Action.MOUTH_DIAGONAL)), new GridCommand(new MouthCommand(Command.Action.MOUTH_ANGRY)), new GridCommand(new MouthCommand(Command.Action.MOUTH_CULITO)), new GridCommand(new MouthCommand(Command.Action.MOUTH_OK)), new GridCommand(new MouthCommand(Command.Action.MOUTH_LINE)), new GridCommand(new MouthCommand(Command.Action.MOUTH_VAMP1)), new GridCommand(new MouthCommand(Command.Action.MOUTH_VAMP2)));
         ((PadView) getView()).showActionsGrid(mouthCommands);
     }
 
-    @Override // com.bq.zowi.presenters.interactive.pad.PadPresenter
+    @Override
     public void actionPressed(Command command) {
         if (!isCommandSendingBlocked()) {
             this.sendCommandToZowiInteractor.sendCommandToZowi(command).subscribe(new CommandSingleSubscriber());
         }
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
     public void configureEnabledActions() {
-        this.subscriptions.add(this.achievementsController.getAchievementsList().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<ArrayList<Achievement>>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.5
-            @Override // rx.SingleSubscriber
-            public void onSuccess(ArrayList<Achievement> achievementsList) {
+        this.disposables.add(this.achievementsController.getAchievementsList().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            achievementsList -> {
                 for (int i = 0; i < PadPresenterImpl.this.gamepadAchievements.length; i++) {
                     for (Achievement achievement : achievementsList) {
                         if (achievement.id.equals(PadPresenterImpl.this.gamepadAchievements[i].toString())) {
@@ -334,18 +320,13 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
                         }
                     }
                 }
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.e(error, "CONFIGURE ENABLED ACTIONS ERROR!!!", new Object[0]);
-            }
-        }));
+            },
+            error -> Grove.e(error, "CONFIGURE ENABLED ACTIONS ERROR!!!", new Object[0])
+        ));
     }
 
-    /* JADX INFO: renamed from: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl$8, reason: invalid class name */
-    static /* synthetic */ class AnonymousClass8 {
-        static final /* synthetic */ int[] $SwitchMap$com$bq$zowi$models$Achievement$Id = new int[Achievement.Id.values().length];
+    static class AnonymousClass8 {
+        static final int[] $SwitchMap$com$bq$zowi$models$Achievement$Id = new int[Achievement.Id.values().length];
 
         static {
             try {
@@ -380,24 +361,9 @@ public class PadPresenterImpl extends InteractiveBasePresenterImpl<PadView, PadW
     }
 
     private void startListeningCommandFinishedAck() {
-        this.subscriptions.add(this.connectionController.getReceivedMessageObservable().subscribeOn(Schedulers.io()).filter(new Func1<String, Boolean>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.7
-            @Override // rx.functions.Func1
-            public Boolean call(String s) {
-                return Boolean.valueOf(s.equals(PadPresenterImpl.COMMAND_FINISHED_ACK));
-            }
-        }).subscribe((Subscriber<? super String>) new Subscriber<String>() { // from class: com.bq.zowi.presenters.interactive.pad.PadPresenterImpl.6
-            @Override // rx.Observer
-            public void onCompleted() {
-            }
-
-            @Override // rx.Observer
-            public void onError(Throwable e) {
-            }
-
-            @Override // rx.Observer
-            public void onNext(String s) {
-                PadPresenterImpl.this.isCommandSendingBlocked = false;
-            }
-        }));
+        this.connectionController.getReceivedMessageObservable().subscribeOn(Schedulers.io()).filter(s -> s.equals(COMMAND_FINISHED_ACK)).subscribe(
+            s -> PadPresenterImpl.this.isCommandSendingBlocked = false,
+            e -> { }
+        );
     }
 }

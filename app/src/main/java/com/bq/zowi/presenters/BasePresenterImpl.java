@@ -1,53 +1,52 @@
 package com.bq.zowi.presenters;
 
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 import org.jetbrains.annotations.NotNull;
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subscriptions.CompositeSubscription;
 
-/* JADX INFO: loaded from: classes.dex */
 public abstract class BasePresenterImpl<V, W> implements BasePresenter<V, W> {
-    protected CompositeSubscription subscriptions;
+    protected CompositeDisposable disposables;
     private V view;
     private final PublishSubject<Void> viewBoundSubject = PublishSubject.create();
     private final PublishSubject<Void> viewUnBoundSubject = PublishSubject.create();
     private W wireframe;
 
     public Observable<Void> getViewBoundObservable() {
-        return this.viewBoundSubject.asObservable();
+        return this.viewBoundSubject;
     }
 
     public Observable<Void> getViewUnboundObservable() {
-        return this.viewUnBoundSubject.asObservable();
+        return this.viewUnBoundSubject;
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onCreateView() {
-        this.subscriptions = new CompositeSubscription();
+        this.disposables = new CompositeDisposable();
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onDestroyView() {
-        if (this.subscriptions != null && !this.subscriptions.isUnsubscribed()) {
-            this.subscriptions.unsubscribe();
+        if (this.disposables != null && !this.disposables.isDisposed()) {
+            this.disposables.dispose();
         }
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenter
+    @Override
     public void bindViewAndWireframe(V view, W wireframe) {
         this.view = view;
         this.wireframe = wireframe;
         this.viewBoundSubject.onNext(null);
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenter
+    @Override
     public void unBindViewAndWireframe() {
         this.view = null;
         this.wireframe = null;
         this.viewUnBoundSubject.onNext(null);
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenter
+    @Override
     @NotNull
     public V getView() {
         if (this.view == null) {
@@ -56,7 +55,7 @@ public abstract class BasePresenterImpl<V, W> implements BasePresenter<V, W> {
         return this.view;
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenter
+    @Override
     @NotNull
     public W getWireframe() {
         if (this.wireframe == null) {

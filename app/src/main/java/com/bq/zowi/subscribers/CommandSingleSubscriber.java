@@ -1,15 +1,19 @@
 package com.bq.zowi.subscribers;
 
 import com.bq.zowi.utils.Grove;
-import rx.SingleSubscriber;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
 
-/* JADX INFO: loaded from: classes.dex */
-public class CommandSingleSubscriber extends SingleSubscriber<Void> {
-    @Override // rx.SingleSubscriber
-    public void onSuccess(Void value) {
+public class CommandSingleSubscriber implements CompletableObserver {
+    @Override
+    public void onSubscribe(Disposable disposable) {
     }
 
-    @Override // rx.SingleSubscriber
+    @Override
+    public void onComplete() {
+    }
+
+    @Override
     public void onError(Throwable error) {
         Grove.d("Send COMMAND to Zowi ERROR! " + error.toString(), new Object[0]);
         error.printStackTrace();

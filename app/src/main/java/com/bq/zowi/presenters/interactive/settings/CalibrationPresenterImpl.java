@@ -1,25 +1,24 @@
 package com.bq.zowi.presenters.interactive.settings;
 
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractor;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.models.commands.AnimationCommand;
 import com.bq.zowi.models.commands.CalibrationCommand;
 import com.bq.zowi.models.commands.Command;
 import com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl;
 import com.bq.zowi.subscribers.CommandSingleSubscriber;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
+import com.bq.zowi.usecases.SendCommandToZowiInteractor;
 import com.bq.zowi.views.interactive.settings.CalibrationView;
 import com.bq.zowi.wireframes.settings.CalibrationWireframe;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
 import java.util.Date;
-import rx.Scheduler;
-import rx.Single;
-import rx.functions.Func1;
 
-/* JADX INFO: loaded from: classes.dex */
 public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<CalibrationView, CalibrationWireframe> implements CalibrationPresenter {
     private static final long MIN_TIME_BETWEEN_CALIBRATION_CHANGES = 200;
     private final int BASE_GRADE;
@@ -45,57 +44,49 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         this.sendCommandToZowiInteractor = sendCommandToZowiInteractor;
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void warningCancelButtonPressed() {
         ((CalibrationWireframe) getWireframe()).presentHome();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void warningContinueButtonPressed() {
-        this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_TRIM, 0, 0, 0, 0)).flatMap(new Func1<Void, Single<Void>>() { // from class: com.bq.zowi.presenters.interactive.settings.CalibrationPresenterImpl.1
-            @Override // rx.functions.Func1
-            public Single<Void> call(Void aVoid) {
-                ((CalibrationView) CalibrationPresenterImpl.this.getView()).showLegsCalibration();
-                return CalibrationPresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_GRADES, 90, 90, 90, 90));
-            }
-        }).subscribe(new CommandSingleSubscriber());
+        this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_TRIM, 0, 0, 0, 0)).andThen(this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_GRADES, 90, 90, 90, 90))).subscribe(
+            () -> ((CalibrationView) CalibrationPresenterImpl.this.getView()).showLegsCalibration(),
+            error -> { }
+        );
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void calibrationParametersChanged() {
         this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_GRADES, this.trimLeftLegYL + 90, this.trimRightLegYR + 90, this.trimLeftFootRL + 90, this.trimRightFootRR + 90)).subscribe(new CommandSingleSubscriber());
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void legsCalibrationContinueButtonPressed() {
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void feetCalibrationContinueButtonPressed() {
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void checkCalibrationTestMovementButtonPressed() {
-        this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_TRIM, this.trimLeftLegYL, this.trimRightLegYR, this.trimLeftFootRL, this.trimRightFootRR)).flatMap(new Func1<Void, Single<Void>>() { // from class: com.bq.zowi.presenters.interactive.settings.CalibrationPresenterImpl.2
-            @Override // rx.functions.Func1
-            public Single<Void> call(Void aVoid) {
-                return CalibrationPresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.VICTORY));
-            }
-        }).subscribe(new CommandSingleSubscriber());
+        this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_TRIM, this.trimLeftLegYL, this.trimRightLegYR, this.trimLeftFootRL, this.trimRightFootRR)).andThen(this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.VICTORY))).subscribe(new CommandSingleSubscriber());
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void calibrationConfirmedButtonPressed() {
-        this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_TRIM, this.trimLeftLegYL, this.trimRightLegYR, this.trimLeftFootRL, this.trimRightFootRR)).flatMap(new Func1<Void, Single<Void>>() { // from class: com.bq.zowi.presenters.interactive.settings.CalibrationPresenterImpl.3
-            @Override // rx.functions.Func1
-            public Single<Void> call(Void aVoid) {
+        this.sendCommandToZowiInteractor.sendCommandToZowi(new CalibrationCommand(CalibrationCommand.CALIBRATE_TRIM, this.trimLeftLegYL, this.trimRightLegYR, this.trimLeftFootRL, this.trimRightFootRR)).subscribe(
+            () -> {
                 ((CalibrationWireframe) CalibrationPresenterImpl.this.getWireframe()).presentHome();
-                return CalibrationPresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.VICTORY));
-            }
-        }).subscribe(new CommandSingleSubscriber());
+                CalibrationPresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.VICTORY)).subscribe(new CommandSingleSubscriber());
+            },
+            error -> { }
+        );
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void legsCalibrationLeftIncreaseButtonPressed() {
         if (this.trimLeftLegYL < 30) {
             this.trimLeftLegYL++;
@@ -106,7 +97,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void legsCalibrationLeftDecreaseButtonPressed() {
         if (this.trimLeftLegYL > -30) {
             this.trimLeftLegYL--;
@@ -117,7 +108,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void legsCalibrationRightIncreaseButtonPressed() {
         if (this.trimRightLegYR < 30) {
             this.trimRightLegYR++;
@@ -128,7 +119,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void legsCalibrationRightDecreaseButtonPressed() {
         if (this.trimRightLegYR > -30) {
             this.trimRightLegYR--;
@@ -139,7 +130,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void feetCalibrationLeftIncreaseButtonPressed() {
         if (this.trimLeftFootRL < 30) {
             this.trimLeftFootRL++;
@@ -150,7 +141,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void feetCalibrationLeftDecreaseButtonPressed() {
         if (this.trimLeftFootRL > -30) {
             this.trimLeftFootRL--;
@@ -161,7 +152,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void feetCalibrationRightIncreaseButtonPressed() {
         if (this.trimRightFootRR < 30) {
             this.trimRightFootRR++;
@@ -172,7 +163,7 @@ public class CalibrationPresenterImpl extends InteractiveBasePresenterImpl<Calib
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.settings.CalibrationPresenter
+    @Override
     public void feetCalibrationRightDecreaseButtonPressed() {
         if (this.trimRightFootRR > -30) {
             this.trimRightFootRR--;

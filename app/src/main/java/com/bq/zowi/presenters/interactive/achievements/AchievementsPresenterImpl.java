@@ -1,28 +1,26 @@
 package com.bq.zowi.presenters.interactive.achievements;
 
-import com.bq.zowi.controllers.AchievementsController;
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractor;
+import com.bq.zowi.api.AchievementsController;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.models.Achievement;
 import com.bq.zowi.models.commands.AnimationCommand;
 import com.bq.zowi.models.commands.Command;
 import com.bq.zowi.models.viewmodels.AchievementViewModel;
 import com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl;
 import com.bq.zowi.subscribers.CommandSingleSubscriber;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
+import com.bq.zowi.usecases.SendCommandToZowiInteractor;
 import com.bq.zowi.utils.Grove;
 import com.bq.zowi.views.interactive.achievements.AchievementsView;
 import com.bq.zowi.wireframes.achievements.AchievementsWireframe;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
-import rx.Scheduler;
-import rx.SingleSubscriber;
-import rx.schedulers.Schedulers;
 
-/* JADX INFO: loaded from: classes.dex */
 public class AchievementsPresenterImpl extends InteractiveBasePresenterImpl<AchievementsView, AchievementsWireframe> implements AchievementsPresenter {
     private AchievementsController achievementsController;
     private SendCommandToZowiInteractor sendCommandToZowiInteractor;
@@ -35,11 +33,10 @@ public class AchievementsPresenterImpl extends InteractiveBasePresenterImpl<Achi
         this.sendCommandToZowiInteractor = sendCommandToZowiInteractor;
     }
 
-    @Override // com.bq.zowi.presenters.interactive.achievements.AchievementsPresenter
+    @Override
     public void loadAchievements() {
-        this.subscriptions.add(this.achievementsController.getAchievementsList().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<ArrayList<Achievement>>() { // from class: com.bq.zowi.presenters.interactive.achievements.AchievementsPresenterImpl.1
-            @Override // rx.SingleSubscriber
-            public void onSuccess(ArrayList<Achievement> achievementsList) {
+        this.disposables.add(this.achievementsController.getAchievementsList().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            achievementsList -> {
                 ArrayList<AchievementViewModel> movementsList = new ArrayList<>();
                 ArrayList<AchievementViewModel> animationsList = new ArrayList<>();
                 ArrayList<AchievementViewModel> gamesList = new ArrayList<>();
@@ -55,33 +52,24 @@ public class AchievementsPresenterImpl extends InteractiveBasePresenterImpl<Achi
                     }
                 }
                 ((AchievementsView) AchievementsPresenterImpl.this.getView()).paintAchievements(movementsList, animationsList, gamesList);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.d("GET ACHIEVEMENT LIST ERROR" + error.getMessage(), new Object[0]);
-            }
-        }));
+            },
+            error -> Grove.d("GET ACHIEVEMENT LIST ERROR" + error.getMessage(), new Object[0])
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.achievements.AchievementsPresenter
+    @Override
     public void homeButtonPressed() {
         ((AchievementsWireframe) getWireframe()).presentHome();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.achievements.AchievementsPresenter
+    @Override
     public void easterEggCombinationPressed() {
-        this.subscriptions.add(this.achievementsController.unlockAllAchievements().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Void>() { // from class: com.bq.zowi.presenters.interactive.achievements.AchievementsPresenterImpl.2
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Void value) {
+        this.disposables.add(this.achievementsController.unlockAllAchievements().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            v -> {
                 AchievementsPresenterImpl.this.loadAchievements();
                 AchievementsPresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.VICTORY)).subscribe(new CommandSingleSubscriber());
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.d("UNLOCK ALL ACHIEVEMENTS ERROR" + error.getMessage(), new Object[0]);
-            }
-        }));
+            },
+            error -> Grove.d("UNLOCK ALL ACHIEVEMENTS ERROR" + error.getMessage(), new Object[0])
+        ));
     }
 }

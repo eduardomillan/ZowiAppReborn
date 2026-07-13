@@ -1,26 +1,25 @@
 package com.bq.zowi.presenters.interactive.zowiapps.minigames;
 
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractor;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.models.commands.Command;
 import com.bq.zowi.models.commands.ForwardRunnerCommand;
 import com.bq.zowi.models.commands.LeftRightRunnerCommand;
 import com.bq.zowi.models.commands.StopCommand;
 import com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl;
 import com.bq.zowi.subscribers.CommandSingleSubscriber;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
+import com.bq.zowi.usecases.SendCommandToZowiInteractor;
 import com.bq.zowi.views.interactive.zowiapps.minigames.ZowiRunnerMinigameView;
 import com.bq.zowi.wireframes.interactive.InteractiveWireframe;
+import io.reactivex.Scheduler;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import rx.Scheduler;
 
-/* JADX INFO: loaded from: classes.dex */
 public class ZowiRunnerMinigamePresenterImpl extends InteractiveBasePresenterImpl<ZowiRunnerMinigameView, InteractiveWireframe> implements ZowiRunnerMinigamePresenter {
     private final long DEFAULT_DURATION;
     private final double LINEAR_FUNCTION_SLOPE;
@@ -50,11 +49,11 @@ public class ZowiRunnerMinigamePresenterImpl extends InteractiveBasePresenterImp
         this.sendCommandToZowiInteractor = sendCommandToZowiInteractor;
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter
+    @Override
     public void playButtonPressed() {
         this.timer = new Timer(true);
-        this.timer.schedule(new TimerTask() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenterImpl.1
-            @Override // java.util.TimerTask, java.lang.Runnable
+        this.timer.schedule(new TimerTask() {
+            @Override
             public void run() {
                 long currentTime = Calendar.getInstance().getTimeInMillis();
                 if ((currentTime - ZowiRunnerMinigamePresenterImpl.this.leftButtonPressedTimestamp > 2000 || currentTime - ZowiRunnerMinigamePresenterImpl.this.rightButtonPressedTimestamp > 2000) && !ZowiRunnerMinigamePresenterImpl.this.isStopped) {
@@ -65,26 +64,26 @@ public class ZowiRunnerMinigamePresenterImpl extends InteractiveBasePresenterImp
         }, 2000L, 2000L);
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter
+    @Override
     public void stopButtonPressed() {
         this.sendCommandToZowiInteractor.sendCommandToZowi(new StopCommand()).subscribe(new CommandSingleSubscriber());
         this.isStopped = true;
         this.timer.cancel();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter
+    @Override
     public void leftButtonPressed() {
         this.leftButtonPressedTimestamp = Calendar.getInstance().getTimeInMillis();
         updateDuration();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter
+    @Override
     public void rightButtonPressed() {
         this.rightButtonPressedTimestamp = Calendar.getInstance().getTimeInMillis();
         updateDuration();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter
+    @Override
     public void tilt(Command.Direction direction) {
         if (this.currentMovementDuration != 0 && !this.isStopped) {
             this.isTilt = true;
@@ -93,7 +92,7 @@ public class ZowiRunnerMinigamePresenterImpl extends InteractiveBasePresenterImp
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.ZowiRunnerMinigamePresenter
+    @Override
     public void noTilt() {
         this.isTilt = false;
     }

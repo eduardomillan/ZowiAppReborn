@@ -1,16 +1,10 @@
 package com.bq.zowi.presenters.interactive.zowiapps.minigames;
 
 import android.os.CountDownTimer;
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.GameController;
-import com.bq.zowi.controllers.RankingController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractor;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractor;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.GameController;
+import com.bq.zowi.api.RankingController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.models.Achievement;
 import com.bq.zowi.models.RankingEntry;
 import com.bq.zowi.models.commands.AnimationCommand;
@@ -21,19 +15,25 @@ import com.bq.zowi.models.viewmodels.AchievementViewModel;
 import com.bq.zowi.models.viewmodels.RankingEntryViewModel;
 import com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl;
 import com.bq.zowi.subscribers.CommandSingleSubscriber;
+import com.bq.zowi.usecases.CheckAchievementAndUnlockItInteractor;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
+import com.bq.zowi.usecases.SendCommandToZowiInteractor;
 import com.bq.zowi.utils.Grove;
 import com.bq.zowi.views.interactive.zowiapps.minigames.MouthsMiniGameView;
 import com.bq.zowi.wireframes.zowiapps.minigames.MinigameBaseWireframe;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
-import rx.Scheduler;
-import rx.SingleSubscriber;
-import rx.Subscriber;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
-/* JADX INFO: loaded from: classes.dex */
 public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<MouthsMiniGameView, MinigameBaseWireframe> implements MouthsMinigamePresenter {
     private static final String COMMAND_ACK = "A";
     private final int MIN_SCORE_TO_RANK;
@@ -76,12 +76,12 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         initMouthsTypes();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl, com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onCreateView() {
         super.onCreateView();
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (this.countDownTimer != null) {
@@ -89,24 +89,19 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void gameReady() {
-        this.subscriptions.add(this.gameController.isFirstPlay(GameController.GAME_ID.MOUTHS_GAME_ID, true).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Boolean>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.1
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Boolean isFirstTimePlayed) {
+        this.disposables.add(this.gameController.isFirstPlay(GameController.GAME_ID.MOUTHS_GAME_ID, true).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            isFirstTimePlayed -> {
                 if (isFirstTimePlayed.booleanValue()) {
                     ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showHelp();
                 }
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.d(error.getMessage(), new Object[0]);
-            }
-        }));
+            },
+            error -> Grove.d(error.getMessage(), new Object[0])
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenter, com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void playButtonPressed() {
         this.isPlaying = true;
         ((MouthsMiniGameView) getView()).showProgress();
@@ -120,7 +115,7 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         ((MouthsMiniGameView) getView()).isMouthGridTouchable(true);
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenter
+    @Override
     public void checkLedMouth(String mouthDrawnByUser) {
         if (this.isPlaying && mouthDrawnByUser.equals(this.mouthInGame.getLedMatrix())) {
             this.isPlaying = false;
@@ -131,31 +126,26 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
             commandsToExecute.add(new AnimationCommand(Command.Action.VICTORY));
             commandsToExecute.add(new StopCommand());
             SequentialCommandSubscriber sequentialCommandSubscriber = new SequentialCommandSubscriber(commandsToExecute);
-            this.connectionController.getReceivedMessageObservable().subscribeOn(Schedulers.io()).filter(new Func1<String, Boolean>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.2
-                @Override // rx.functions.Func1
-                public Boolean call(String s) {
-                    return Boolean.valueOf(s.equals(MouthsMinigamePresenterImpl.COMMAND_ACK));
-                }
-            }).subscribe((Subscriber<? super String>) sequentialCommandSubscriber);
+            this.connectionController.getReceivedMessageObservable().subscribeOn(Schedulers.io()).filter(s -> s.equals(COMMAND_ACK)).subscribe(sequentialCommandSubscriber);
             sequentialCommandSubscriber.initialize();
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void homeButtonPressed() {
         ((MinigameBaseWireframe) getWireframe()).presentHome();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void helpButtonPressed() {
         ((MouthsMiniGameView) getView()).showHelp();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void rankingButtonPressed() {
-        this.subscriptions.add(this.rankingController.getRanking(GameController.GAME_ID.MOUTHS_GAME_ID).subscribeOn(Schedulers.io()).map(new Func1<ArrayList<RankingEntry>, ArrayList<RankingEntryViewModel>>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.4
-            @Override // rx.functions.Func1
-            public ArrayList<RankingEntryViewModel> call(ArrayList<RankingEntry> rankingEntries) {
+        this.disposables.add(this.rankingController.getRanking(GameController.GAME_ID.MOUTHS_GAME_ID).subscribeOn(Schedulers.io()).map(new Function<ArrayList<RankingEntry>, ArrayList<RankingEntryViewModel>>() {
+            @Override
+            public ArrayList<RankingEntryViewModel> apply(ArrayList<RankingEntry> rankingEntries) {
                 ArrayList<RankingEntryViewModel> viewModelsRanking = new ArrayList<>();
                 int position = 1;
                 for (RankingEntry rankingEntry : rankingEntries) {
@@ -166,40 +156,26 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
                 }
                 return viewModelsRanking;
             }
-        }).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<ArrayList<RankingEntryViewModel>>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.3
-            @Override // rx.SingleSubscriber
-            public void onSuccess(ArrayList<RankingEntryViewModel> rankingEntryViewModels) {
-                ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showRanking(rankingEntryViewModels);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.e(error, "RETRIEVING RANKING ERROR!!!", new Object[0]);
-            }
-        }));
+        }).observeOn(this.uiScheduler).subscribe(
+            rankingEntryViewModels -> ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showRanking(rankingEntryViewModels),
+            error -> Grove.e(error, "RETRIEVING RANKING ERROR!!!", new Object[0])
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void achievementContinueButtonClicked() {
-        this.subscriptions.add(this.rankingController.isScoreInTop10(GameController.GAME_ID.MOUTHS_GAME_ID, this.level).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Boolean>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.5
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Boolean isScoreInTop10) {
-                ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showPoinsEarned(MouthsMinigamePresenterImpl.this.level - 1, MouthsMinigamePresenterImpl.this.level > 2 && isScoreInTop10.booleanValue());
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.e(error, "CHECKING RANKING TOP 10 ERROR!!!", new Object[0]);
-            }
-        }));
+        this.disposables.add(this.rankingController.isScoreInTop10(GameController.GAME_ID.MOUTHS_GAME_ID, this.level).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            isScoreInTop10 -> ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showPoinsEarned(MouthsMinigamePresenterImpl.this.level - 1, MouthsMinigamePresenterImpl.this.level > 2 && isScoreInTop10.booleanValue()),
+            error -> Grove.e(error, "CHECKING RANKING TOP 10 ERROR!!!", new Object[0])
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void playerNameEnteredForRanking(String playerName) {
         RankingEntry newRankingEntry = new RankingEntry(this.level - 1, playerName);
-        this.subscriptions.add(this.rankingController.saveRankingEntry(GameController.GAME_ID.MOUTHS_GAME_ID, newRankingEntry).subscribeOn(Schedulers.io()).map(new Func1<ArrayList<RankingEntry>, ArrayList<RankingEntryViewModel>>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.7
-            @Override // rx.functions.Func1
-            public ArrayList<RankingEntryViewModel> call(ArrayList<RankingEntry> rankingEntries) {
+        this.disposables.add(this.rankingController.saveRankingEntry(GameController.GAME_ID.MOUTHS_GAME_ID, newRankingEntry).subscribeOn(Schedulers.io()).map(new Function<ArrayList<RankingEntry>, ArrayList<RankingEntryViewModel>>() {
+            @Override
+            public ArrayList<RankingEntryViewModel> apply(ArrayList<RankingEntry> rankingEntries) {
                 ArrayList<RankingEntryViewModel> viewModelsRanking = new ArrayList<>();
                 int position = 1;
                 long latestRankingEntryTimeStamp = -1;
@@ -220,20 +196,13 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
                 }
                 return viewModelsRanking;
             }
-        }).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<ArrayList<RankingEntryViewModel>>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.6
-            @Override // rx.SingleSubscriber
-            public void onSuccess(ArrayList<RankingEntryViewModel> rankingEntryViewModels) {
-                ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showRanking(rankingEntryViewModels);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.e(error, "SAVING RANKING ENTRY ERROR!!!", new Object[0]);
-            }
-        }));
+        }).observeOn(this.uiScheduler).subscribe(
+            rankingEntryViewModels -> ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showRanking(rankingEntryViewModels),
+            error -> Grove.e(error, "SAVING RANKING ENTRY ERROR!!!", new Object[0])
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.zowiapps.minigames.MinigameBasePresenter
+    @Override
     public void gameOver(int score) {
         this.isPlaying = false;
         ((MouthsMiniGameView) getView()).updateProgress(0);
@@ -241,21 +210,17 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         ((MouthsMiniGameView) getView()).resetMouthGrid();
         ((MouthsMiniGameView) getView()).isMouthGridTouchable(false);
         if (score >= 8) {
-            this.subscriptions.add(this.checkAchievementAndUnlockItInteractor.checkAchievementAndUnlockIt(this.gameAchievement).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Achievement>() { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.8
-                @Override // rx.SingleSubscriber
-                public void onSuccess(Achievement achievement) {
+            this.disposables.add(this.checkAchievementAndUnlockItInteractor.checkAchievementAndUnlockIt(this.gameAchievement).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+                achievement -> {
                     if (achievement == null) {
                         MouthsMinigamePresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.ANGRY)).subscribe(new CommandSingleSubscriber());
                         MouthsMinigamePresenterImpl.this.achievementContinueButtonClicked();
                     } else {
                         ((MouthsMiniGameView) MouthsMinigamePresenterImpl.this.getView()).showAchievementUnlock(new AchievementViewModel(achievement.id, achievement.unlocked));
                     }
-                }
-
-                @Override // rx.SingleSubscriber
-                public void onError(Throwable error) {
-                }
-            }));
+                },
+                error -> { }
+            ));
         } else {
             this.sendCommandToZowiInteractor.sendCommandToZowi(new AnimationCommand(Command.Action.ANGRY)).subscribe(new CommandSingleSubscriber());
             achievementContinueButtonClicked();
@@ -313,8 +278,8 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         if (level % 4 == 0) {
             this.countdownTimeInMillis -= 1000;
         }
-        this.countDownTimer = new CountDownTimer(this.countdownTimeInMillis, 100L) { // from class: com.bq.zowi.presenters.interactive.zowiapps.minigames.MouthsMinigamePresenterImpl.9
-            @Override // android.os.CountDownTimer
+        this.countDownTimer = new CountDownTimer(this.countdownTimeInMillis, 100L) {
+            @Override
             public void onTick(long millisUntilFinished) {
                 if (MouthsMinigamePresenterImpl.this.isPlaying) {
                     long progress = ((millisUntilFinished - MouthsMinigamePresenterImpl.this.countdownTimeInMillis) * (-100)) / MouthsMinigamePresenterImpl.this.countdownTimeInMillis;
@@ -322,7 +287,7 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
                 }
             }
 
-            @Override // android.os.CountDownTimer
+            @Override
             public void onFinish() {
                 if (MouthsMinigamePresenterImpl.this.isPlaying) {
                     MouthsMinigamePresenterImpl.this.gameOver(level);
@@ -336,7 +301,6 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         return rand.nextInt((max - min) + 1) + min;
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
     public void startNextLevel() {
         this.isPlaying = true;
         ((MouthsMiniGameView) getView()).resetMouthGrid();
@@ -353,7 +317,7 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
         ((MouthsMiniGameView) getView()).isMouthGridTouchable(true);
     }
 
-    private class SequentialCommandSubscriber extends Subscriber<String> {
+    private class SequentialCommandSubscriber extends DisposableObserver<String> {
         private ArrayList<Command> timeline;
 
         public SequentialCommandSubscriber(ArrayList<Command> timeline) {
@@ -366,19 +330,19 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
             MouthsMinigamePresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(initialCommand).subscribeOn(Schedulers.io()).subscribe();
         }
 
-        @Override // rx.Observer
-        public void onCompleted() {
-            unsubscribe();
+        @Override
+        public void onComplete() {
+            dispose();
             MouthsMinigamePresenterImpl.this.startNextLevel();
         }
 
-        @Override // rx.Observer
+        @Override
         public void onError(Throwable error) {
             Grove.d("Send COMMAND to Zowi ERROR! " + error.toString(), new Object[0]);
             error.printStackTrace();
         }
 
-        @Override // rx.Observer
+        @Override
         public void onNext(String s) {
             if (this.timeline.size() > 0) {
                 Command nextCommand = this.timeline.get(0);
@@ -386,7 +350,7 @@ public class MouthsMinigamePresenterImpl extends InteractiveBasePresenterImpl<Mo
                 MouthsMinigamePresenterImpl.this.sendCommandToZowiInteractor.sendCommandToZowi(nextCommand).subscribeOn(Schedulers.io()).subscribe();
                 return;
             }
-            onCompleted();
+            onComplete();
         }
     }
 }

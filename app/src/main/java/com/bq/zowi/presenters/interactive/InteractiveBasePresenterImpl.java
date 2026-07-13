@@ -1,25 +1,22 @@
 package com.bq.zowi.presenters.interactive;
 
-import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractor;
+import com.bq.zowi.api.BTConnectionController;
+import com.bq.zowi.api.SessionController;
 import com.bq.zowi.models.ConnectionSuccessData;
 import com.bq.zowi.models.ZowiName;
 import com.bq.zowi.presenters.BasePresenterImpl;
+import com.bq.zowi.usecases.CheckInstalledZowiAppInteractor;
+import com.bq.zowi.usecases.ConnectToZowiInteractor;
+import com.bq.zowi.usecases.MeasureZowiBatteryLevelInteractor;
+import com.bq.zowi.usecases.SendAppToZowiInteractor;
 import com.bq.zowi.utils.Grove;
 import com.bq.zowi.views.interactive.InteractiveBaseView;
 import com.bq.zowi.wireframes.interactive.InteractiveWireframe;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.TimeUnit;
-import rx.Scheduler;
-import rx.Single;
-import rx.SingleSubscriber;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
 
-/* JADX INFO: loaded from: classes.dex */
 public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView, W extends InteractiveWireframe> extends BasePresenterImpl<V, W> implements InteractiveBasePresenter<V, W> {
     protected final CheckInstalledZowiAppInteractor checkInstalledZowiAppInteractor;
     protected final ConnectToZowiInteractor connectToZowiInteractor;
@@ -41,20 +38,20 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
         this.uiScheduler = uiScheduler;
     }
 
-    @Override // com.bq.zowi.presenters.BasePresenterImpl, com.bq.zowi.presenters.BasePresenter
+    @Override
     public void onCreateView() {
         super.onCreateView();
         addZowiConnectionStatusListener();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void manageConnection() {
         if (!this.connectionController.isSendingHexToZowi() && !this.connectionController.isConnected()) {
             connectToZowi();
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void manageZowiName() {
         if (!this.connectionController.isSendingHexToZowi()) {
             if (this.connectionController.isConnected()) {
@@ -70,42 +67,27 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void measureAndManageBatteryLevel() {
         if (!this.connectionController.isSendingHexToZowi() && this.connectionController.isConnected()) {
             measureBatteryLevel();
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void checkAndManageZowiAppInstalled() {
         if (!this.connectionController.isSendingHexToZowi() && this.connectionController.isConnected()) {
             checkZowiAppInstalled();
         }
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void installFactoryFirmware(final boolean isAutoUpdate) {
         getView().showIsInstallingFw();
         getView().hideRestoreFirmwareDialog();
         getView().showFirmwareUpdatingDialog(this.sessionController.loadActiveZowiName(), isAutoUpdate);
-        this.subscriptions.add(this.sendAppToZowiInteractor.sendAppToZowi(this.factoryFirmwarePath).sample(100L, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe((Subscriber<? super Integer>) new Subscriber<Integer>() { // from class: com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl.1
-            @Override // rx.Observer
-            public void onCompleted() {
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).updateNotificationOnFwInstallationSuccess();
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showInstallingFwSuccessDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName(), isAutoUpdate);
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).hideFirmwareUpdatingDialog();
-            }
-
-            @Override // rx.Observer
-            public void onError(Throwable e) {
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).updateNotificationOnFwInstallationError();
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showInstallingFwErrorDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName(), isAutoUpdate, InteractiveBasePresenterImpl.this.connectionController.isConnected());
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).hideFirmwareUpdatingDialog();
-            }
-
-            @Override // rx.Observer
-            public void onNext(Integer progress) {
+        this.disposables.add(this.sendAppToZowiInteractor.sendAppToZowi(this.factoryFirmwarePath).sample(100L, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            progress -> {
                 ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showIsInstallingFw();
                 if (progress != null) {
                     ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).updateFirmwareUpdatingProgressBar(progress.intValue());
@@ -113,26 +95,36 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
                     ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showInstallingFwErrorDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName(), isAutoUpdate, InteractiveBasePresenterImpl.this.connectionController.isConnected());
                     ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).hideFirmwareUpdatingDialog();
                 }
+            },
+            e -> {
+                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).updateNotificationOnFwInstallationError();
+                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showInstallingFwErrorDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName(), isAutoUpdate, InteractiveBasePresenterImpl.this.connectionController.isConnected());
+                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).hideFirmwareUpdatingDialog();
+            },
+            () -> {
+                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).updateNotificationOnFwInstallationSuccess();
+                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showInstallingFwSuccessDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName(), isAutoUpdate);
+                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).hideFirmwareUpdatingDialog();
             }
-        }));
+        ));
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void launchWizard() {
         getWireframe().presentWizard();
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void manageLowBatteryForInstallingFirmware(boolean isAutoUpdate) {
         manageLowBatteryForInstallingFirmware(isAutoUpdate, false);
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void manageLowBatteryForInstallingFirmware(boolean isAutoUpdate, boolean installIfEnoughBattery) {
         manageLowBatteryForInstallingFirmware(isAutoUpdate, installIfEnoughBattery, -1.0f);
     }
 
-    @Override // com.bq.zowi.presenters.interactive.InteractiveBasePresenter
+    @Override
     public void manageLowBatteryForInstallingFirmware(final boolean isAutoUpdate, final boolean installIfEnoughBattery, float batteryLevel) {
         Single<Boolean> measureBattery;
         if (batteryLevel == -1.0f) {
@@ -140,9 +132,8 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
         } else {
             measureBattery = this.measureZowiBatteryLevelInteractor.manageZowiBatteryLevel(batteryLevel);
         }
-        measureBattery.subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<Boolean>() { // from class: com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl.2
-            @Override // rx.SingleSubscriber
-            public void onSuccess(Boolean isBatteryLevelOverThreshold) {
+        this.disposables.add(measureBattery.subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            isBatteryLevelOverThreshold -> {
                 if (isBatteryLevelOverThreshold.booleanValue()) {
                     Grove.d("Battery level is OK.", new Object[0]);
                     if (installIfEnoughBattery) {
@@ -155,28 +146,14 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
                 }
                 Grove.d("Battery level is too low!", new Object[0]);
                 ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showLowBatteryForInstallingFirmwareDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName(), isAutoUpdate);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0]);
-            }
-        });
+            },
+            error -> Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0])
+        ));
     }
 
     private void addZowiConnectionStatusListener() {
-        this.subscriptions.add(this.connectionController.getConnectionStatusObservable().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe((Subscriber<? super Integer>) new Subscriber<Integer>() { // from class: com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl.3
-            @Override // rx.Observer
-            public void onCompleted() {
-            }
-
-            @Override // rx.Observer
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override // rx.Observer
-            public void onNext(Integer integer) {
+        this.disposables.add(this.connectionController.getConnectionStatusObservable().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            integer -> {
                 switch (integer.intValue()) {
                     case 0:
                         if (InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiDeviceAddress() != null) {
@@ -194,16 +171,16 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
                         ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showZowiConnected();
                         break;
                 }
-            }
-        }));
+            },
+            e -> e.printStackTrace()
+        ));
     }
 
     private void connectToZowi() {
         String activeZowiAddress = this.sessionController.loadActiveZowiDeviceAddress();
         if (activeZowiAddress != null) {
-            this.subscriptions.add(this.connectToZowiInteractor.connectToZowiAndRetrieveData(activeZowiAddress).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<ConnectionSuccessData>() { // from class: com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl.4
-                @Override // rx.SingleSubscriber
-                public void onSuccess(ConnectionSuccessData connectionSuccessData) {
+            this.disposables.add(this.connectToZowiInteractor.connectToZowiAndRetrieveData(activeZowiAddress).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+                connectionSuccessData -> {
                     if (connectionSuccessData != null) {
                         if (connectionSuccessData.getZowiName() != null && !ZowiName.isFactoryName(connectionSuccessData.getZowiName())) {
                             InteractiveBasePresenterImpl.this.sessionController.saveActiveZowiName(connectionSuccessData.getZowiName());
@@ -219,70 +196,59 @@ public abstract class InteractiveBasePresenterImpl<V extends InteractiveBaseView
                         return;
                     }
                     ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showCorruptedZowiDialog(InteractiveBasePresenterImpl.this.sessionController.loadActiveZowiName());
-                }
-
-                @Override // rx.SingleSubscriber
-                public void onError(Throwable error) {
+                },
+                error -> {
                     ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showZowiDisconnected();
                     Grove.d(error, "Error connecting to Zowi", new Object[0]);
                 }
-            }));
+            ));
         } else {
             getView().showDemoMode();
         }
     }
 
     private void measureBatteryLevel() {
-        this.subscriptions.add(this.measureZowiBatteryLevelInteractor.measureAndManageZowiBatteryLevel().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new BatteryLevelManagementSingleSubscriber()));
+        this.disposables.add(this.measureZowiBatteryLevelInteractor.measureAndManageZowiBatteryLevel().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            isBatteryLevelOverThreshold -> {
+                if (isBatteryLevelOverThreshold.booleanValue()) {
+                    Grove.d("Battery level is OK.", new Object[0]);
+                    ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showGoodBatteryLevel();
+                } else {
+                    Grove.d("Battery level is too low!.", new Object[0]);
+                    ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showLowBatteryLevel();
+                }
+            },
+            error -> Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0])
+        ));
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
     public void manageBatteryLevel(float batteryLevel) {
-        this.subscriptions.add(this.measureZowiBatteryLevelInteractor.manageZowiBatteryLevel(batteryLevel).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new BatteryLevelManagementSingleSubscriber()));
-    }
-
-    private class BatteryLevelManagementSingleSubscriber extends SingleSubscriber<Boolean> {
-        private BatteryLevelManagementSingleSubscriber() {
-        }
-
-        @Override // rx.SingleSubscriber
-        public void onSuccess(Boolean isBatteryLevelOverThreshold) {
-            if (isBatteryLevelOverThreshold.booleanValue()) {
-                Grove.d("Battery level is OK.", new Object[0]);
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showGoodBatteryLevel();
-            } else {
-                Grove.d("Battery level is too low!.", new Object[0]);
-                ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showLowBatteryLevel();
-            }
-        }
-
-        @Override // rx.SingleSubscriber
-        public void onError(Throwable error) {
-            Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0]);
-        }
+        this.disposables.add(this.measureZowiBatteryLevelInteractor.manageZowiBatteryLevel(batteryLevel).subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            isBatteryLevelOverThreshold -> {
+                if (isBatteryLevelOverThreshold.booleanValue()) {
+                    Grove.d("Battery level is OK.", new Object[0]);
+                    ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showGoodBatteryLevel();
+                } else {
+                    Grove.d("Battery level is too low!.", new Object[0]);
+                    ((InteractiveBaseView) InteractiveBasePresenterImpl.this.getView()).showLowBatteryLevel();
+                }
+            },
+            error -> Grove.d("BATTERY_LEVEL RETRIEVAL ERROR!!! " + error.getMessage(), new Object[0])
+        ));
     }
 
     private void checkZowiAppInstalled() {
-        this.subscriptions.add(this.checkInstalledZowiAppInteractor.checkAndManageInstalledZowiApp().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(new SingleSubscriber<CheckInstalledZowiAppInteractor.InstalledZowiAppStatus>() { // from class: com.bq.zowi.presenters.interactive.InteractiveBasePresenterImpl.5
-            @Override // rx.SingleSubscriber
-            public void onSuccess(CheckInstalledZowiAppInteractor.InstalledZowiAppStatus installedZowiAppStatus) {
-                InteractiveBasePresenterImpl.this.manageZowiAppInstalledFeedback(installedZowiAppStatus, -1.0f);
-            }
-
-            @Override // rx.SingleSubscriber
-            public void onError(Throwable error) {
-                Grove.d("CHECK INSTALLED APP ERROR!!! " + error.getMessage(), new Object[0]);
-            }
-        }));
+        this.disposables.add(this.checkInstalledZowiAppInteractor.checkAndManageInstalledZowiApp().subscribeOn(Schedulers.io()).observeOn(this.uiScheduler).subscribe(
+            installedZowiAppStatus -> InteractiveBasePresenterImpl.this.manageZowiAppInstalledFeedback(installedZowiAppStatus, -1.0f),
+            error -> Grove.d("CHECK INSTALLED APP ERROR!!! " + error.getMessage(), new Object[0])
+        ));
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
     public void manageZowiAppInstalled(String zowiAppInstalledId, float batteryLevel) {
         CheckInstalledZowiAppInteractor.InstalledZowiAppStatus installedZowiAppStatus = this.checkInstalledZowiAppInteractor.manageInstalledZowiApp(zowiAppInstalledId);
         manageZowiAppInstalledFeedback(installedZowiAppStatus, batteryLevel);
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
     public void manageZowiAppInstalledFeedback(CheckInstalledZowiAppInteractor.InstalledZowiAppStatus installedZowiAppStatus, float batteryLevel) {
         switch (installedZowiAppStatus) {
             case UPDATE_NEEDED:
