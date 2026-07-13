@@ -5,6 +5,18 @@ import android.content.SharedPreferences;
 import androidx.fragment.app.FragmentActivity;
 import com.bq.zowi.R;
 import com.bq.zowi.ZowiApplication;
+import com.bq.zowi.adapters.CoreAdapterProvider;
+import com.bq.zowi.adapters.CoreInteractorProvider;
+import com.bq.zowi.bridge.ChangeZowiNameInteractorBridge;
+import com.bq.zowi.bridge.CheckAchievementAndUnlockItInteractorBridge;
+import com.bq.zowi.bridge.CheckInstalledZowiAppInteractorBridge;
+import com.bq.zowi.bridge.ConnectToZowiInteractorBridge;
+import com.bq.zowi.bridge.FindZowisInteractorBridge;
+import com.bq.zowi.bridge.ForgetPlayingHistoryInteractorBridge;
+import com.bq.zowi.bridge.ForgetZowiInteractorBridge;
+import com.bq.zowi.bridge.MeasureZowiBatteryLevelInteractorBridge;
+import com.bq.zowi.bridge.SendAppToZowiInteractorBridge;
+import com.bq.zowi.bridge.SendCommandToZowiInteractorBridge;
 import com.bq.zowi.controllers.AchievementsController;
 import com.bq.zowi.controllers.AchievementsControllerImpl;
 import com.bq.zowi.controllers.AppController;
@@ -27,26 +39,18 @@ import com.bq.zowi.controllers.RankingControllerImpl;
 import com.bq.zowi.controllers.SessionController;
 import com.bq.zowi.controllers.SessionControllerImpl;
 import com.bq.zowi.controllers.TimelineGameControllerImpl;
-import com.bq.zowi.adapters.CoreAdapterProvider;
 import com.bq.zowi.crashreporting.BugsnagCustomErrorReporter;
 import com.bq.zowi.crashreporting.CustomErrorReporter;
-import com.bq.zowi.injector.DependencyCache;
 import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractor;
-import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractorImpl;
 import com.bq.zowi.interactors.CheckInstalledZowiAppInteractor;
-import com.bq.zowi.interactors.CheckInstalledZowiAppInteractorImpl;
+import com.bq.zowi.interactors.ChangeZowiNameInteractor;
 import com.bq.zowi.interactors.ConnectToZowiInteractor;
-import com.bq.zowi.interactors.ConnectToZowiInteractorImpl;
 import com.bq.zowi.interactors.FindZowisInteractor;
-import com.bq.zowi.interactors.FindZowisInteractorImpl;
 import com.bq.zowi.interactors.ForgetPlayingHistoryInteractor;
-import com.bq.zowi.interactors.ForgetPlayingHistoryInteractorImpl;
 import com.bq.zowi.interactors.ForgetZowiInteractor;
-import com.bq.zowi.interactors.ForgetZowiInteractorImpl;
+import com.bq.zowi.interactors.MeasureZowiBatteryLevelInteractor;
 import com.bq.zowi.interactors.SendAppToZowiInteractor;
-import com.bq.zowi.interactors.SendAppToZowiInteractorImpl;
 import com.bq.zowi.interactors.SendCommandToZowiInteractor;
-import com.bq.zowi.interactors.SendCommandToZowiInteractorImpl;
 import com.bq.zowi.wireframes.achievements.AchievementsWireframe;
 import com.bq.zowi.wireframes.achievements.AchievementsWireframeImpl;
 import com.bq.zowi.wireframes.home.HomeWireframe;
@@ -85,6 +89,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
     private final String BUILD_CONFIG_RELEASE = "RELEASE";
     private ZowiApplication application;
     private CoreAdapterProvider coreProvider;
+    private CoreInteractorProvider coreInteractorProvider;
 
     protected AndroidDependencyInjector() {
     }
@@ -118,6 +123,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
             BluetoothAdapter.getDefaultAdapter(),
             application.getString(R.string.zowi_default_name)
         );
+
+        coreInteractorProvider = new CoreInteractorProvider(coreProvider, provideFactoryFirmwareVersion());
     }
 
     public CoreAdapterProvider provideCoreProvider() {
@@ -135,105 +142,126 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public FindZowisInteractor provideFindZowisInteractor() {
-        return (FindZowisInteractor) getCache().get(FindZowisInteractorImpl.class, new DependencyCache.Provider<FindZowisInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.1
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (FindZowisInteractor) getCache().get(FindZowisInteractorBridge.class, new DependencyCache.Provider<FindZowisInteractorBridge>() {
+            @Override
             @NotNull
-            public FindZowisInteractorImpl get() {
-                return new FindZowisInteractorImpl(AndroidDependencyInjector.this.provideBTAdapterController());
+            public FindZowisInteractorBridge get() {
+                return new FindZowisInteractorBridge(
+                    coreInteractorProvider.getFindZowisInteractor(),
+                    BluetoothAdapter.getDefaultAdapter()
+                );
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public ConnectToZowiInteractor provideConnectToZowiInteractor() {
-        return (ConnectToZowiInteractor) getCache().get(ConnectToZowiInteractorImpl.class, new DependencyCache.Provider<ConnectToZowiInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.2
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (ConnectToZowiInteractor) getCache().get(ConnectToZowiInteractorBridge.class, new DependencyCache.Provider<ConnectToZowiInteractorBridge>() {
+            @Override
             @NotNull
-            public ConnectToZowiInteractorImpl get() {
-                return new ConnectToZowiInteractorImpl(AndroidDependencyInjector.this.provideBTConnectionController(), AndroidDependencyInjector.this.provideBTAdapterController(), AndroidDependencyInjector.this.provideZowiDataController(), AndroidDependencyInjector.this.provideKitonNetworkController());
+            public ConnectToZowiInteractorBridge get() {
+                return new ConnectToZowiInteractorBridge(coreInteractorProvider.getConnectToZowiInteractor());
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public SendAppToZowiInteractor provideSendAppToZowiInteractor() {
-        return (SendAppToZowiInteractor) getCache().get(SendAppToZowiInteractorImpl.class, new DependencyCache.Provider<SendAppToZowiInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.3
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (SendAppToZowiInteractor) getCache().get(SendAppToZowiInteractorBridge.class, new DependencyCache.Provider<SendAppToZowiInteractorBridge>() {
+            @Override
             @NotNull
-            public SendAppToZowiInteractorImpl get() {
-                return new SendAppToZowiInteractorImpl(AndroidDependencyInjector.this.provideConnectToZowiInteractor(), AndroidDependencyInjector.this.provideBTConnectionController(), AndroidDependencyInjector.this.provideAssetController(), AndroidDependencyInjector.this.provideSessionController(), AndroidDependencyInjector.this.provideZowiDataController(), AndroidDependencyInjector.this.provideKitonNetworkController());
+            public SendAppToZowiInteractorBridge get() {
+                return new SendAppToZowiInteractorBridge(coreInteractorProvider.getSendAppToZowiInteractor());
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public SendCommandToZowiInteractor provideSendCommandToZowiInteractor() {
-        return (SendCommandToZowiInteractor) getCache().get(SendCommandToZowiInteractorImpl.class, new DependencyCache.Provider<SendCommandToZowiInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.4
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (SendCommandToZowiInteractor) getCache().get(SendCommandToZowiInteractorBridge.class, new DependencyCache.Provider<SendCommandToZowiInteractorBridge>() {
+            @Override
             @NotNull
-            public SendCommandToZowiInteractorImpl get() {
-                return new SendCommandToZowiInteractorImpl(AndroidDependencyInjector.this.provideBTConnectionController());
+            public SendCommandToZowiInteractorBridge get() {
+                return new SendCommandToZowiInteractorBridge(coreInteractorProvider.getSendCommandToZowiInteractor());
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public CheckAchievementAndUnlockItInteractor checkAchievementAndUnlockItInteractor() {
-        return (CheckAchievementAndUnlockItInteractor) getCache().get(CheckAchievementAndUnlockItInteractorImpl.class, new DependencyCache.Provider<CheckAchievementAndUnlockItInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.5
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (CheckAchievementAndUnlockItInteractor) getCache().get(CheckAchievementAndUnlockItInteractorBridge.class, new DependencyCache.Provider<CheckAchievementAndUnlockItInteractorBridge>() {
+            @Override
             @NotNull
-            public CheckAchievementAndUnlockItInteractorImpl get() {
-                return new CheckAchievementAndUnlockItInteractorImpl(AndroidDependencyInjector.this.provideAchievementsController(), AndroidDependencyInjector.this.provideSendCommandToZowiInteractor());
+            public CheckAchievementAndUnlockItInteractorBridge get() {
+                return new CheckAchievementAndUnlockItInteractorBridge(coreInteractorProvider.getCheckAchievementAndUnlockItInteractor());
             }
         });
     }
 
+    @Override
+    public CheckAchievementAndUnlockItInteractor provideCheckAchievementAndUnlockItInteractor() {
+        return checkAchievementAndUnlockItInteractor();
+    }
+
     @Override // com.bq.zowi.injector.DependencyInjector
     public CheckInstalledZowiAppInteractor provideCheckInstalledZowiAppInteractor() {
-        return (CheckInstalledZowiAppInteractor) getCache().get(CheckInstalledZowiAppInteractorImpl.class, new DependencyCache.Provider<CheckInstalledZowiAppInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.6
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (CheckInstalledZowiAppInteractor) getCache().get(CheckInstalledZowiAppInteractorBridge.class, new DependencyCache.Provider<CheckInstalledZowiAppInteractorBridge>() {
+            @Override
             @NotNull
-            public CheckInstalledZowiAppInteractorImpl get() {
-                return new CheckInstalledZowiAppInteractorImpl(AndroidDependencyInjector.this.provideFactoryFirmwareVersion(), AndroidDependencyInjector.this.provideZowiDataController());
+            public CheckInstalledZowiAppInteractorBridge get() {
+                return new CheckInstalledZowiAppInteractorBridge(coreInteractorProvider.getCheckInstalledZowiAppInteractor());
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public ForgetZowiInteractor provideForgetZowiInteractor() {
-        return (ForgetZowiInteractor) getCache().get(ForgetZowiInteractorImpl.class, new DependencyCache.Provider<ForgetZowiInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.7
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (ForgetZowiInteractor) getCache().get(ForgetZowiInteractorBridge.class, new DependencyCache.Provider<ForgetZowiInteractorBridge>() {
+            @Override
             @NotNull
-            public ForgetZowiInteractorImpl get() {
-                return new ForgetZowiInteractorImpl(AndroidDependencyInjector.this.provideChangeZowiNameInteractor(), AndroidDependencyInjector.this.provideSessionController(), AndroidDependencyInjector.this.provideBTConnectionController());
+            public ForgetZowiInteractorBridge get() {
+                return new ForgetZowiInteractorBridge(coreInteractorProvider.getForgetZowiInteractor());
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public ForgetPlayingHistoryInteractor provideForgetPlayingHistoryInteractor() {
-        return (ForgetPlayingHistoryInteractor) getCache().get(ForgetPlayingHistoryInteractorImpl.class, new DependencyCache.Provider<ForgetPlayingHistoryInteractorImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.8
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (ForgetPlayingHistoryInteractor) getCache().get(ForgetPlayingHistoryInteractorBridge.class, new DependencyCache.Provider<ForgetPlayingHistoryInteractorBridge>() {
+            @Override
             @NotNull
-            public ForgetPlayingHistoryInteractorImpl get() {
-                return new ForgetPlayingHistoryInteractorImpl(AndroidDependencyInjector.this.provideProjectController(), AndroidDependencyInjector.this.provideAppController(), AndroidDependencyInjector.this.provideGameController(), AndroidDependencyInjector.this.provideRankingController(), AndroidDependencyInjector.this.provideAchievementsController());
+            public ForgetPlayingHistoryInteractorBridge get() {
+                return new ForgetPlayingHistoryInteractorBridge(coreInteractorProvider.getForgetPlayingHistoryInteractor());
+            }
+        });
+    }
+
+    @Override
+    public ChangeZowiNameInteractor provideChangeZowiNameInteractor() {
+        return (ChangeZowiNameInteractor) getCache().get(ChangeZowiNameInteractorBridge.class, new DependencyCache.Provider<ChangeZowiNameInteractorBridge>() {
+            @Override
+            @NotNull
+            public ChangeZowiNameInteractorBridge get() {
+                return new ChangeZowiNameInteractorBridge(coreInteractorProvider.getChangeZowiNameInteractor());
+            }
+        });
+    }
+
+    @Override
+    public MeasureZowiBatteryLevelInteractor provideMeasureZowiBatteryLevelInteractor() {
+        return (MeasureZowiBatteryLevelInteractor) getCache().get(MeasureZowiBatteryLevelInteractorBridge.class, new DependencyCache.Provider<MeasureZowiBatteryLevelInteractorBridge>() {
+            @Override
+            @NotNull
+            public MeasureZowiBatteryLevelInteractorBridge get() {
+                return new MeasureZowiBatteryLevelInteractorBridge(coreInteractorProvider.getMeasureZowiBatteryLevelInteractor());
             }
         });
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public SessionController provideSessionController() {
-        return (SessionController) getCache().get(SessionControllerImpl.class, new DependencyCache.Provider<SessionControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.9
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (SessionController) getCache().get(SessionControllerImpl.class, new DependencyCache.Provider<SessionControllerImpl>() {
+            @Override
             @NotNull
             public SessionControllerImpl get() {
                 return new SessionControllerImpl(AndroidDependencyInjector.this.application.getString(R.string.zowi_default_name), AndroidDependencyInjector.this.provideSharedPreferences());
@@ -243,9 +271,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public ProjectController provideProjectController() {
-        return (ProjectController) getCache().get(ProjectControllerImpl.class, new DependencyCache.Provider<ProjectControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.10
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (ProjectController) getCache().get(ProjectControllerImpl.class, new DependencyCache.Provider<ProjectControllerImpl>() {
+            @Override
             @NotNull
             public ProjectControllerImpl get() {
                 return new ProjectControllerImpl(AndroidDependencyInjector.this.application.getAssets(), AndroidDependencyInjector.this.provideSharedPreferences());
@@ -260,9 +287,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public AssetController provideAssetController() {
-        return (AssetController) getCache().get(AssetControllerImpl.class, new DependencyCache.Provider<AssetControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.11
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (AssetController) getCache().get(AssetControllerImpl.class, new DependencyCache.Provider<AssetControllerImpl>() {
+            @Override
             @NotNull
             public AssetControllerImpl get() {
                 return new AssetControllerImpl(AndroidDependencyInjector.this.application.getAssets());
@@ -272,9 +298,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public AchievementsController provideAchievementsController() {
-        return (AchievementsController) getCache().get(AchievementsControllerImpl.class, new DependencyCache.Provider<AchievementsControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.12
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (AchievementsController) getCache().get(AchievementsControllerImpl.class, new DependencyCache.Provider<AchievementsControllerImpl>() {
+            @Override
             @NotNull
             public AchievementsControllerImpl get() {
                 return new AchievementsControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences(), AndroidDependencyInjector.this.application.getAssets());
@@ -294,9 +319,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public BTConnectionController provideBTConnectionController() {
-        return (BTConnectionController) getCache().get(BTConnectionControllerImpl.class, new DependencyCache.Provider<BTConnectionControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.13
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (BTConnectionController) getCache().get(BTConnectionControllerImpl.class, new DependencyCache.Provider<BTConnectionControllerImpl>() {
+            @Override
             @NotNull
             public BTConnectionControllerImpl get() {
                 return new BTConnectionControllerImpl(AndroidDependencyInjector.this.application.getApplicationContext(), BluetoothAdapter.getDefaultAdapter(), AndroidDependencyInjector.this.provideSessionController(), AndroidDependencyInjector.this.provideUiScheduler());
@@ -306,9 +330,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public BTAdapterController provideBTAdapterController() {
-        return (BTAdapterController) getCache().get(BTAdapterControllerImpl.class, new DependencyCache.Provider<BTAdapterControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.14
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (BTAdapterController) getCache().get(BTAdapterControllerImpl.class, new DependencyCache.Provider<BTAdapterControllerImpl>() {
+            @Override
             @NotNull
             public BTAdapterControllerImpl get() {
                 return new BTAdapterControllerImpl(AndroidDependencyInjector.this.application.getApplicationContext(), BluetoothAdapter.getDefaultAdapter());
@@ -318,9 +341,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     protected AppController provideAppController() {
-        return (AppController) getCache().get(AppControllerImpl.class, new DependencyCache.Provider<AppControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.15
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (AppController) getCache().get(AppControllerImpl.class, new DependencyCache.Provider<AppControllerImpl>() {
+            @Override
             @NotNull
             public AppControllerImpl get() {
                 return new AppControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
@@ -330,9 +352,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public RankingController provideRankingController() {
-        return (RankingController) getCache().get(RankingControllerImpl.class, new DependencyCache.Provider<RankingControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.16
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (RankingController) getCache().get(RankingControllerImpl.class, new DependencyCache.Provider<RankingControllerImpl>() {
+            @Override
             @NotNull
             public RankingControllerImpl get() {
                 return new RankingControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
@@ -342,9 +363,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public GameController provideGameController() {
-        return (GameController) getCache().get(GameControllerImpl.class, new DependencyCache.Provider<GameControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.17
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (GameController) getCache().get(GameControllerImpl.class, new DependencyCache.Provider<GameControllerImpl>() {
+            @Override
             @NotNull
             public GameControllerImpl get() {
                 return new GameControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
@@ -354,9 +374,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public GameController provideTimelineGameController() {
-        return (GameController) getCache().get(TimelineGameControllerImpl.class, new DependencyCache.Provider<TimelineGameControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.18
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (GameController) getCache().get(TimelineGameControllerImpl.class, new DependencyCache.Provider<TimelineGameControllerImpl>() {
+            @Override
             @NotNull
             public TimelineGameControllerImpl get() {
                 return new TimelineGameControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
@@ -418,9 +437,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public CustomErrorReporter provideErrorReporter() {
-        return (CustomErrorReporter) getCache().get(BugsnagCustomErrorReporter.class, new DependencyCache.Provider<BugsnagCustomErrorReporter>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.19
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (CustomErrorReporter) getCache().get(BugsnagCustomErrorReporter.class, new DependencyCache.Provider<BugsnagCustomErrorReporter>() {
+            @Override
             @NotNull
             public BugsnagCustomErrorReporter get() {
                 return new BugsnagCustomErrorReporter(AndroidDependencyInjector.this.provideApplication(), AndroidDependencyInjector.this.provideApplication().getString(R.string.bugsnag_api_key), null);
@@ -430,9 +448,8 @@ public class AndroidDependencyInjector extends DependencyInjector {
 
     @Override // com.bq.zowi.injector.DependencyInjector
     public KitonNetworkController provideKitonNetworkController() {
-        return (KitonNetworkController) getCache().get(KitonNetworkControllerImpl.class, new DependencyCache.Provider<KitonNetworkControllerImpl>() { // from class: com.bq.zowi.injector.AndroidDependencyInjector.21
-            /* JADX WARN: Can't rename method to resolve collision */
-            @Override // com.bq.zowi.injector.DependencyCache.Provider
+        return (KitonNetworkController) getCache().get(KitonNetworkControllerImpl.class, new DependencyCache.Provider<KitonNetworkControllerImpl>() {
+            @Override
             @NotNull
             public KitonNetworkControllerImpl get() {
                 String kitonEndPoint = AndroidDependencyInjector.this.application.getString(R.string.kiton_production_endpoint);
