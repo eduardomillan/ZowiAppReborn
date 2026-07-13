@@ -148,7 +148,32 @@ project or quiz data available in the CLI.
 The Zowi robot communicates over Bluetooth SPP (Serial Port Profile). To
 create a serial connection on Linux:
 
-### 1. Pair the device
+### Automated setup (recommended)
+
+Run the pairing script as root. It scans for the Zowi, pairs it, trusts it,
+and binds the RFCOMM serial port:
+
+```bash
+sudo ./scripts/pair_zowi.sh
+```
+
+The script will:
+1. Ensure Bluetooth is powered on
+2. Scan for nearby devices and let you pick the Zowi
+3. Pair and trust the device
+4. Bind `/dev/rfcomm0` to the Zowi's serial channel
+
+After it completes, connect with:
+
+```bash
+./gradlew :zowi-cli:run --args="connect /dev/rfcomm0"
+```
+
+### Manual setup
+
+If you prefer to do it by hand:
+
+#### 1. Pair the device
 
 ```bash
 bluetoothctl
@@ -162,7 +187,7 @@ bluetoothctl
   [bluetooth]# quit
 ```
 
-### 2. Bind the RFCOMM channel
+#### 2. Bind the RFCOMM channel
 
 ```bash
 sudo rfcomm bind /dev/rfcomm0 AA:BB:CC:DD:EE:FF 1
@@ -174,13 +199,13 @@ This creates `/dev/rfcomm0` on channel 1. Verify with:
 ls -l /dev/rfcomm0
 ```
 
-### 3. Connect with the CLI
+#### 3. Connect with the CLI
 
 ```bash
 ./gradlew :zowi-cli:run --args="connect /dev/rfcomm0"
 ```
 
-### 4. Release when done
+#### 4. Release when done
 
 ```bash
 sudo rfcomm release /dev/rfcomm0
