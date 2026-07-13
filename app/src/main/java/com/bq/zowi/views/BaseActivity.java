@@ -85,7 +85,7 @@ public abstract class BaseActivity<T extends BasePresenter<?, ?>> extends AppCom
         }
         TextView versionBadge = new TextView(this);
         versionBadge.setTag(VERSION_BADGE_TAG);
-        String versionText = "v" + BuildConfig.VERSION_NAME;
+        String versionText = "Build " + BuildConfig.VERSION_CODE;
         versionBadge.setText(versionText);
         versionBadge.setContentDescription(versionText);
         versionBadge.setTextColor(-1);

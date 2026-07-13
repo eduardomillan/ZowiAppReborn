@@ -1,6 +1,7 @@
 package com.bq.zowi.views.splash;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import com.bq.zowi.R;
@@ -11,6 +12,14 @@ import com.bq.zowi.wireframes.splash.SplashWireframe;
 
 /* JADX INFO: loaded from: classes.dex */
 public class SplashViewActivity extends BaseActivity<SplashPresenter> implements SplashView {
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            getPresenter().onContinueClicked();
+        }
+    };
+
     @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +29,7 @@ public class SplashViewActivity extends BaseActivity<SplashPresenter> implements
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacks(runnable);
                 getPresenter().onContinueClicked();
             }
         });
@@ -28,9 +38,18 @@ public class SplashViewActivity extends BaseActivity<SplashPresenter> implements
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacks(runnable);
                 finish();
             }
         });
+
+        handler.postDelayed(runnable, 1500L);
+    }
+
+    @Override // com.bq.zowi.views.BaseActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity, android.app.Activity
+    public void onDestroy() {
+        handler.removeCallbacks(runnable);
+        super.onDestroy();
     }
 
     /* JADX INFO: Access modifiers changed from: protected */
