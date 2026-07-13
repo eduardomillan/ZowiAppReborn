@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s ne fonctionnera pas sans les services Google Play, qui sont en cours de mise à jour.</string>
     <string name="common_google_play_services_updating_title">Mise à jour des services Google Play</string>
     <string name="common_open_on_phone">Ouvrir sur le téléphone</string>
+    <string name="splash_continue_button">Continuer</string>
+    <string name="splash_exit_button">Quitter</string>
 </resources>

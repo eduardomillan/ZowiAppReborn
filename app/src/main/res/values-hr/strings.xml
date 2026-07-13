@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s neće funkcionirati bez Google Play usluga koje se trenutačno ažuriraju.</string>
     <string name="common_google_play_services_updating_title">Ažuriranje Google Play usluga u tijeku</string>
     <string name="common_open_on_phone">Otvaranje na telefonu</string>
+    <string name="splash_continue_button">Nastavi</string>
+    <string name="splash_exit_button">Izlaz</string>
 </resources>

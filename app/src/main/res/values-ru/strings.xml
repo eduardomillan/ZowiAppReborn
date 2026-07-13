@@ -102,6 +102,8 @@
     <string name="achievements_animations">Анимация</string>
     <string name="achievements_movements">Движения</string>
     <string name="app_name">Zowi App</string>
+    <string name="splash_continue_button">Продолжить</string>
+    <string name="splash_exit_button">Выход</string>
     <string name="calibration_check_back_button">НАЗАД</string>
     <string name="calibration_check_confirm_button">ПОДТВЕРДИТЬ</string>
     <string name="calibration_check_description"> Для завершения поставь Zowi на ноги, включи  контрольное движение  для подтверждения правильности калибровки.\n</string>

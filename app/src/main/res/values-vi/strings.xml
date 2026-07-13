@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s sẽ không chạy khi không có Dịch vụ của Google Play đang cập nhật.</string>
     <string name="common_google_play_services_updating_title">Dịch vụ của Google Play đang cập nhật</string>
     <string name="common_open_on_phone">Mở trên điện thoại</string>
+    <string name="splash_continue_button">Tiếp tục</string>
+    <string name="splash_exit_button">Thoát</string>
 </resources>

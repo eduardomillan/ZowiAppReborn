@@ -134,7 +134,7 @@ public abstract class DependencyInjector {
     }
 
     public SplashPresenter provideSplashPresenter() {
-        return new SplashPresenterImpl(provideSessionController(), provideUiScheduler());
+        return new SplashPresenterImpl(provideSessionController());
     }
 
     public WelcomePresenter provideWelcomePresenter() {

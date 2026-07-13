@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Ke spuštění aplikace %1$s jsou potřeba služby Google Play, které jsou právě aktualizovány.</string>
     <string name="common_google_play_services_updating_title">Probíhá aktualizace služeb Google Play</string>
     <string name="common_open_on_phone">Otevřít v telefonu</string>
+    <string name="splash_continue_button">Pokračovat</string>
+    <string name="splash_exit_button">Odejít</string>
 </resources>

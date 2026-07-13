@@ -7,4 +7,5 @@ import com.bq.zowi.wireframes.splash.SplashWireframe;
 /* JADX INFO: loaded from: classes.dex */
 public interface SplashPresenter extends BasePresenter<SplashView, SplashWireframe> {
     void initialize();
+    void onContinueClicked();
 }

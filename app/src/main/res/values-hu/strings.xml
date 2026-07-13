@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">A(z) %1$s alkalmazás nem fut a Google Play-szolgáltatások nélkül, amelyek éppen frissülnek.</string>
     <string name="common_google_play_services_updating_title">A Google Play-szolgáltatások frissülnek</string>
     <string name="common_open_on_phone">Megnyitás a telefonon</string>
+    <string name="splash_continue_button">Folytatás</string>
+    <string name="splash_exit_button">Kilépés</string>
 </resources>

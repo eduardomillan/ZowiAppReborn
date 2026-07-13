@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$sの実行にはGoogle Play開発者サービスが必要ですが、このサービスは現在更新中です。</string>
     <string name="common_google_play_services_updating_title">Google Play開発者サービスの更新中</string>
     <string name="common_open_on_phone">端末で開く</string>
+    <string name="splash_continue_button">続ける</string>
+    <string name="splash_exit_button">終了</string>
 </resources>

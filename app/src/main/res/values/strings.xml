@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zowi App</string>
+    <string name="splash_continue_button">Continue</string>
+    <string name="splash_exit_button">Exit</string>
     <string name="zowi_default_name">Zowi</string>
     <string name="zowi_runner_label">Run, Zowi, run!</string>
     <string name="zowi_says_label">Repeat with Zowi</string>

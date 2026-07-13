@@ -1,5 +1,31 @@
 package com.bq.zowi;
 
+/**
+ * Decompiled from the Android resource compiler (AAPT) class generated from the original APK.
+ *
+ * <p>In a standard Android project, this class is generated automatically during the build
+ * and contains the numeric identifiers for all resources (layouts, drawables,
+ * strings, ids, etc.) defined in {@code res/}.</p>
+ *
+ * <p><b>Why this file exists in the repository:</b></p>
+ * <ul>
+ *   <li>The source code was obtained via decompilation (JADX) of the APK.
+ *       Some classes reference resources (IDs, drawables, strings) that existed
+ *       in the original APK but are no longer defined in the current project
+ *       resource files.</li>
+ *   <li>Removing this file causes the compiler to generate a new {@code R.java} from
+ *       the existing resources, but references to removed resources cause
+ *       compilation errors (\"cannot find symbol\").</li>
+ *   <li>This file acts as a <em>static map</em> of all IDs that the code
+ *       needs, including those that no longer have associated resources.</li>
+ * </ul>
+ *
+ * <p><b>Maintenance:</b> When new resources are added to the project (e.g.,
+ * new {@code android:id} entries in layouts), their corresponding IDs must also
+ * be added here, since the build does not regenerate this file automatically.</p>
+ *
+ * @see <a href="https://developer.android.com/guide/topics/resources/providing-resources">Android Resource System</a>
+ */
 /* JADX INFO: loaded from: classes.dex */
 public final class R {
 
@@ -1751,6 +1777,8 @@ public final class R {
         public static final int zowiapps_load_project_reprogram_button = 0x7f0f0116;
         public static final int zowiapps_load_timeline_button = 0x7f0f010c;
         public static final int zowiapps_load_zowi_says_minigame_button = 0x7f0f010d;
+        public static final int splash_continue_button = 0x7f0f019b;
+        public static final int splash_exit_button = 0x7f0f019c;
     }
 
     public static final class integer {
@@ -2348,6 +2376,8 @@ public final class R {
         public static final int zowi_says_how_to_play_text = 0x7f08002f;
         public static final int zowi_says_label = 0x7f0801a6;
         public static final int zowi_says_look_at_zowi_text = 0x7f0801a7;
+        public static final int splash_continue_button = 0x7f0801a8;
+        public static final int splash_exit_button = 0x7f0801a9;
     }
 
     public static final class style {

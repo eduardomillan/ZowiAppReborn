@@ -42,4 +42,6 @@
     <string name="common_google_play_services_updating_text">%1$s нема да се извршува без услугите на Google Play што се ажурираат во моментов.</string>
     <string name="common_google_play_services_updating_title">Услугите на Google Play се ажурираат</string>
     <string name="common_open_on_phone">Отвори на телефонот</string>
+    <string name="splash_continue_button">Продолжи</string>
+    <string name="splash_exit_button">Излези</string>
 </resources>

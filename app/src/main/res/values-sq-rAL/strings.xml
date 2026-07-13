@@ -30,4 +30,6 @@
     <string name="common_google_play_services_updating_text">%1$s nuk do të funksionojë pa shërbimet e \"Luaj me Google\", të cilat po përditësohen aktualisht.</string>
     <string name="common_google_play_services_updating_title">Shërbimet e \"Luaj\" po përditësohen</string>
     <string name="common_open_on_phone">Hape në telefon</string>
+    <string name="splash_continue_button">Vazhdo</string>
+    <string name="splash_exit_button">Dil</string>
 </resources>

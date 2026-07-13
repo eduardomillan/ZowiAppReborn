@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">ಪ್ರಸ್ತುತ ನವೀಕರಿಸಲಾಗುತ್ತಿರುವ %1$s, Google Play ಸೇವೆಗಳಿಲ್ಲದೆ ರನ್ ಆಗುವುದಿಲ್ಲ.</string>
     <string name="common_google_play_services_updating_title">Google Play ಸೇವೆಗಳನ್ನು ನವೀಕರಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="common_open_on_phone">ಫೋನ್‌ನಲ್ಲಿ ತೆರೆಯಿರಿ</string>
+    <string name="splash_continue_button">ಮುಂದುವರಿಸಿ</string>
+    <string name="splash_exit_button">ಹೊರಗೆ</string>
 </resources>

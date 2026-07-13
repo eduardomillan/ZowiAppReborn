@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">„%1$s“ nebus paleidžiama be „Google Play“ paslaugų, kurios šiuo metu atnaujinamos.</string>
     <string name="common_google_play_services_updating_title">„Google Play“ paslaugos atnaujinamos</string>
     <string name="common_open_on_phone">Atidaryti telefonu</string>
+    <string name="splash_continue_button">Tęsti</string>
+    <string name="splash_exit_button">Išeiti</string>
 </resources>

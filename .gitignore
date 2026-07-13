@@ -4,6 +4,9 @@
 /.git/
 /app/build/
 /build/
+/zowi-core/build/
+/zowi-cli/build/
+**/build/
 .project
 /bin/
 local.properties

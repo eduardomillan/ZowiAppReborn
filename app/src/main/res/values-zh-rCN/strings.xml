@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Google Play 服务当前正在更新，因此您无法运行%1$s。</string>
     <string name="common_google_play_services_updating_title">Google Play 服务正在更新</string>
     <string name="common_open_on_phone">在手机上打开</string>
+    <string name="splash_continue_button">继续</string>
+    <string name="splash_exit_button">退出</string>
 </resources>

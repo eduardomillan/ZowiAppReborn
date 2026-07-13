@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s tidak akan berjalan tanpa layanan Google Play, yang saat ini sedang diperbarui.</string>
     <string name="common_google_play_services_updating_title">Layanan Google Play sedang diperbarui</string>
     <string name="common_open_on_phone">Buka di ponsel</string>
+    <string name="splash_continue_button">Lanjutkan</string>
+    <string name="splash_exit_button">Keluar</string>
 </resources>

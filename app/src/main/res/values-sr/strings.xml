@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s не може да се покрене без Google Play услуга, које се тренутно ажурирају.</string>
     <string name="common_google_play_services_updating_title">Google Play услуге се ажурирају</string>
     <string name="common_open_on_phone">Отвори на телефону</string>
+    <string name="splash_continue_button">Настави</string>
+    <string name="splash_exit_button">Излаз</string>
 </resources>

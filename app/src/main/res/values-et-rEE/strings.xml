@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Rakendus %1$s töötab ainult koos Google Play teenustega, mida praegu värskendatakse.</string>
     <string name="common_google_play_services_updating_title">Google Play teenuseid värskendatakse</string>
     <string name="common_open_on_phone">Ava telefonis</string>
+    <string name="splash_continue_button">Jätka</string>
+    <string name="splash_exit_button">Välju</string>
 </resources>

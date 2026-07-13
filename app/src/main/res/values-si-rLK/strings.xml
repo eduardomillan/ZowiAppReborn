@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">දැනට යාවත්කාලීන වන Google Play සේවා නොමැතිව %1$s ධාවනය නොවේ.</string>
     <string name="common_google_play_services_updating_title">Google Play සේවා යාවත්කාලීන වේ</string>
     <string name="common_open_on_phone">දුරකථනය තුළ විවෘත කරන්න</string>
+    <string name="splash_continue_button">ඉදිරියට</string>
+    <string name="splash_exit_button">පිටවීම</string>
 </resources>

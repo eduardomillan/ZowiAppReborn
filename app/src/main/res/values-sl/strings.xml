@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Aplikacija %1$s ne deluje brez storitev Google Play, ki se trenutno posodabljajo.</string>
     <string name="common_google_play_services_updating_title">Storitve Google Play se posodabljajo</string>
     <string name="common_open_on_phone">Odpiranje v telefonu</string>
+    <string name="splash_continue_button">Nadaljuj</string>
+    <string name="splash_exit_button">Izhod</string>
 </resources>

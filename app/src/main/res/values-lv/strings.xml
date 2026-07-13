@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Lai lietotne %1$s darbotos, ir jāinstalē Google Play pakalpojumi. Pašlaik notiek to atjaunināšana.</string>
     <string name="common_google_play_services_updating_title">Pašlaik notiek Google Play pakalpojumu atjaunināšana</string>
     <string name="common_open_on_phone">Atvērt tālrunī</string>
+    <string name="splash_continue_button">Turpināt</string>
+    <string name="splash_exit_button">Iziet</string>
 </resources>

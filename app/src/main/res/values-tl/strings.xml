@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Hindi gagana ang %1$s nang wala ang mga serbisyo ng Google Play na kasalukuyang ina-update.</string>
     <string name="common_google_play_services_updating_title">Ina-update mga serbisyo ng Google Play</string>
     <string name="common_open_on_phone">Buksan sa telepono</string>
+    <string name="splash_continue_button">Magpatuloy</string>
+    <string name="splash_exit_button">Lumabas</string>
 </resources>

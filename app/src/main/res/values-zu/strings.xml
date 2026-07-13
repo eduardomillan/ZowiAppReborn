@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">I-%1$s ngeke ize iqalise ngaphandle kwamasevisi we-Google Play, okwamanje abuyekezwayo.</string>
     <string name="common_google_play_services_updating_title">Amasevisi we-Google Play ayabuyekeza</string>
     <string name="common_open_on_phone">Vula kufoni</string>
+    <string name="splash_continue_button">Qhubeka</string>
+    <string name="splash_exit_button">Phuma</string>
 </resources>

@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s won\'t run without Google Play services, which are currently updating.</string>
     <string name="common_google_play_services_updating_title">Google Play services are updating</string>
     <string name="common_open_on_phone">Open on phone</string>
+    <string name="splash_continue_button">Continue</string>
+    <string name="splash_exit_button">Exit</string>
 </resources>

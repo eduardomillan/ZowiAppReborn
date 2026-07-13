@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s នឹងមិនដំណើរការទេ បើមិនមានសេវាកម្ម Google Play ដោយសារតែវាកំពុងធ្វើបច្ចុប្បន្នភាព។</string>
     <string name="common_google_play_services_updating_title">សេវាកម្ម Google Play កំពុងធ្វើបច្ចុប្បន្នភាព</string>
     <string name="common_open_on_phone">បើក​តាម​ទូរស័ព្ទ</string>
+    <string name="splash_continue_button">បន្ត</string>
+    <string name="splash_exit_button">ចេញ</string>
 </resources>

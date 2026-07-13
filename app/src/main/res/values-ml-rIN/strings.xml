@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s, നിലവിൽ അപ്‌ഡേറ്റുചെയ്യുന്ന Google Play സേവനങ്ങൾ ഇല്ലാതെ പ്രവർത്തിക്കില്ല.</string>
     <string name="common_google_play_services_updating_title">Google Play സേവനങ്ങൾ അപ്‌ഡേറ്റുചെയ്യുകയാണ്</string>
     <string name="common_open_on_phone">ഫോണിൽ തുറക്കുക</string>
+    <string name="splash_continue_button">തുടരുക</string>
+    <string name="splash_exit_button">പുറത്ത്</string>
 </resources>

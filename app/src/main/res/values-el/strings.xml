@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Η εφαρμογή %1$s δεν θα εκτελεστεί χωρίς τις Υπηρεσίες Google Play, οι οποίες ενημερώνονται αυτήν τη στιγμή.</string>
     <string name="common_google_play_services_updating_title">Ενημέρωση των Υπηρεσιών Google Play</string>
     <string name="common_open_on_phone">Άνοιγμα στο τηλέφωνο</string>
+    <string name="splash_continue_button">Συνέχεια</string>
+    <string name="splash_exit_button">Έξοδος</string>
 </resources>

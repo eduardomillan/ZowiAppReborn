@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Aplikacja %1$s nie będzie działać bez Usług Google Play, które są obecnie aktualizowane.</string>
     <string name="common_google_play_services_updating_title">Trwa aktualizowanie Usług Google Play</string>
     <string name="common_open_on_phone">Otwórz na telefonie</string>
+    <string name="splash_continue_button">Kontynuuj</string>
+    <string name="splash_exit_button">Wyjście</string>
 </resources>

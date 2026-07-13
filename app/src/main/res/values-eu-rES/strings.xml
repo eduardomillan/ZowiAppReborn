@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s ez da exekutatuko Google Play zerbitzurik gabe; zerbitzuok une honetan eguneratzen ari dira.</string>
     <string name="common_google_play_services_updating_title">Google Play zerbitzuak eguneratzen</string>
     <string name="common_open_on_phone">Ireki telefonoan</string>
+    <string name="splash_continue_button">Jarraitu</string>
+    <string name="splash_exit_button">Irten</string>
 </resources>

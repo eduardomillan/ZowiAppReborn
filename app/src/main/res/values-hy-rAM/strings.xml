@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s հավելվածը չի աշխատի առանց Google Play ծառայությունների, որոնք այս պահին թարմացվում են:</string>
     <string name="common_google_play_services_updating_title">Google Play ծառայությունների թարմացում</string>
     <string name="common_open_on_phone">Բացել հեռախոսում</string>
+    <string name="splash_continue_button">Շարունակել</string>
+    <string name="splash_exit_button">Ելք</string>
 </resources>

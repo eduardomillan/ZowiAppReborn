@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s нь одоогоор шинэчлэгдэж буй Google Play үйлчилгээ байхгүй тохиолдолд ажиллахгүй.</string>
     <string name="common_google_play_services_updating_title">Google Play үйлчилгээнүүдийг шинэчилж байна</string>
     <string name="common_open_on_phone">Утсан дээр нээх</string>
+    <string name="splash_continue_button">Үргэлжлүүлэх</string>
+    <string name="splash_exit_button">Гарах</string>
 </resources>

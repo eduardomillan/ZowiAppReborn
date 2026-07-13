@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s ei toimi ilman Google Play Palveluita, joita päivitetään tällä hetkellä.</string>
     <string name="common_google_play_services_updating_title">Google Play Palveluita päivitetään</string>
     <string name="common_open_on_phone">Avaa puhelimessa</string>
+    <string name="splash_continue_button">Jatka</string>
+    <string name="splash_exit_button">Poistu</string>
 </resources>

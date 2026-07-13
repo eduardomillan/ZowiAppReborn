@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s kan niet worden uitgevoerd zonder Google Play-services, die momenteel worden geüpdatet.</string>
     <string name="common_google_play_services_updating_title">Google Play-services worden geüpdatet</string>
     <string name="common_open_on_phone">Openen op telefoon</string>
+    <string name="splash_continue_button">Doorgaan</string>
+    <string name="splash_exit_button">Afsluiten</string>
 </resources>

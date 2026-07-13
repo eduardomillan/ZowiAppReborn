@@ -1,3 +1,5 @@
 rootProject.name = 'Zowi App'
 
 include 'app'
+include 'zowi-core'
+include 'zowi-cli'

@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s ຈະບໍ່ສາມາດເຮັດວຽກໄດ້ໂດຍທີ່ບໍ່ມີການ​ບໍ​ລິ​ການ Google Play, ເຊິ່ງ​ກຳ​ລັງ​ອັບ​ເດດ​ຢູ່​ໃນ​ປະ​ຈຸ​ບັນ.</string>
     <string name="common_google_play_services_updating_title">ການ​ບໍ​ລິ​ການ Google Play ກຳ​ລັງ​ອັບ​ເດດ</string>
     <string name="common_open_on_phone">​ເປີດ​ໃນ​ໂທ​ລະ​ສັບ</string>
+    <string name="splash_continue_button">ປະຕິບັດຕໍ່</string>
+    <string name="splash_exit_button">ອອກ</string>
 </resources>

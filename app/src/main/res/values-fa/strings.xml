@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">‏%1$s بدون سرویس‌های Google Play که در حال حاضر در حال به‌روزرسانی هستند، کار نمی‌کند.</string>
     <string name="common_google_play_services_updating_title">‏سرویس‌‌های Google Play در حال به‌روزرسانی هستند</string>
     <string name="common_open_on_phone">باز کردن در تلفن</string>
+    <string name="splash_continue_button">ادامه</string>
+    <string name="splash_exit_button">خروج</string>
 </resources>

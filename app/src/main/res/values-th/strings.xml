@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s จะไม่ทำงานหากไม่มีบริการ Google Play ซึ่งกำลังอัปเดตอยู่ในขณะนี้</string>
     <string name="common_google_play_services_updating_title">กำลังอัปเดตบริการ Google Play</string>
     <string name="common_open_on_phone">เปิดบนโทรศัพท์</string>
+    <string name="splash_continue_button">ดำเนินการต่อ</string>
+    <string name="splash_exit_button">ออก</string>
 </resources>

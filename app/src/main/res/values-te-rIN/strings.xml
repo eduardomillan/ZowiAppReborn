@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s Google Play సేవలు లేకుండా అమలు కాదు, ఆ సేవలు ప్రస్తుతం నవీకరించబడుతున్నాయి.</string>
     <string name="common_google_play_services_updating_title">Google Play సేవలు నవీకరించబడుతున్నాయి</string>
     <string name="common_open_on_phone">ఫోన్‌లో తెరవండి</string>
+    <string name="splash_continue_button">కొనసాగించు</string>
+    <string name="splash_exit_button">బయటికి</string>
 </resources>

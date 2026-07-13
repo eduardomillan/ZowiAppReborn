@@ -30,4 +30,6 @@
     <string name="common_google_play_services_updating_text">%1$s Hal-hazırda təzələyirik Google Play xidmətləri olmadan çalışmaz.</string>
     <string name="common_google_play_services_updating_title">Google Play xidmətləri təzələyirik</string>
     <string name="common_open_on_phone">Telefonda açın</string>
+    <string name="splash_continue_button">Davam et</string>
+    <string name="splash_exit_button">Çıxış</string>
 </resources>

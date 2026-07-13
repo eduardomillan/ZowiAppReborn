@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s उन Google Play सेवाओं के बिना नहीं चलेगा जो वर्तमान में अपडेट हो रही हैं.</string>
     <string name="common_google_play_services_updating_title">Google Play सेवाएं अपडेट हो रही हैं</string>
     <string name="common_open_on_phone">फ़ोन पर खोलें</string>
+    <string name="splash_continue_button">जारी रखें</string>
+    <string name="splash_exit_button">बाहर निकलें</string>
 </resources>

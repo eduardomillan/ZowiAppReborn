@@ -27,6 +27,7 @@ import com.bq.zowi.controllers.RankingControllerImpl;
 import com.bq.zowi.controllers.SessionController;
 import com.bq.zowi.controllers.SessionControllerImpl;
 import com.bq.zowi.controllers.TimelineGameControllerImpl;
+import com.bq.zowi.adapters.CoreAdapterProvider;
 import com.bq.zowi.crashreporting.BugsnagCustomErrorReporter;
 import com.bq.zowi.crashreporting.CustomErrorReporter;
 import com.bq.zowi.injector.DependencyCache;
@@ -83,6 +84,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
     private final String BUILD_CONFIG_DEBUG = "DEBUG";
     private final String BUILD_CONFIG_RELEASE = "RELEASE";
     private ZowiApplication application;
+    private CoreAdapterProvider coreProvider;
 
     protected AndroidDependencyInjector() {
     }
@@ -108,6 +110,18 @@ public class AndroidDependencyInjector extends DependencyInjector {
         CustomErrorReporter reporter = provideErrorReporter();
         reporter.init();
         reporter.setReleaseStage("RELEASE");
+
+        coreProvider = new CoreAdapterProvider(
+            application.getApplicationContext(),
+            provideSharedPreferences(),
+            application.getAssets(),
+            BluetoothAdapter.getDefaultAdapter(),
+            application.getString(R.string.zowi_default_name)
+        );
+    }
+
+    public CoreAdapterProvider provideCoreProvider() {
+        return coreProvider;
     }
 
     @Override // com.bq.zowi.injector.DependencyInjector

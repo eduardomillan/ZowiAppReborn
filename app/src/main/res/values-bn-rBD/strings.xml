@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Google Play পরিষেবা ছাড়া %1$s চলবে না যা বর্তমানে আপডেট হচ্ছে।</string>
     <string name="common_google_play_services_updating_title">Google Play পরিষেবা আপডেট হচ্ছে</string>
     <string name="common_open_on_phone">ফোনে খুলুন</string>
+    <string name="splash_continue_button">চালিয়েযান</string>
+    <string name="splash_exit_button">বাহির</string>
 </resources>

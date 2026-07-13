@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s ვერ გაეშვება Google Play სერვისების გარეშე, რომელთა განახლებაც ახლა მიმდინარეობს.</string>
     <string name="common_google_play_services_updating_title">ხდება Google Play სერვისების განახლება.</string>
     <string name="common_open_on_phone">ტელეფონზე გახსნა</string>
+    <string name="splash_continue_button">გაგრძელება</string>
+    <string name="splash_exit_button">გასვლა</string>
 </resources>

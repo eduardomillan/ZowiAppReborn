@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">လက်ရှိ အဆင့်မြှင့်မွမ်းမံနေသော၊ Google Play ဝန်ဆောင်မှုများ မရှိပါက %1$s အလုပ်လုပ်မည် မဟုတ်ပါ။</string>
     <string name="common_google_play_services_updating_title">Google Play ဝန်ဆောင်မှုများ မွမ်းမံနေစဉ်</string>
     <string name="common_open_on_phone">ဖုန်းထဲ ဖွင့်ရန်</string>
+    <string name="splash_continue_button">ဆက်လက်</string>
+    <string name="splash_exit_button">ထွက်</string>
 </resources>

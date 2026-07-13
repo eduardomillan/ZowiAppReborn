@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">தற்போது புதுப்பிக்கப்படும், Google Play சேவைகள் இருந்தால் மட்டுமே, %1$s செயல்படும்.</string>
     <string name="common_google_play_services_updating_title">Google Play சேவைகள் புதுப்பிக்கப்படுகின்றன</string>
     <string name="common_open_on_phone">ஃபோனில் திற</string>
+    <string name="splash_continue_button">தொடரு</string>
+    <string name="splash_exit_button">வெளியேறு</string>
 </resources>

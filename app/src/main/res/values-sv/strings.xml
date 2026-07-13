@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s kan inte köras utan Google Play-tjänster, och dessa uppdateras för närvarande.</string>
     <string name="common_google_play_services_updating_title">Google Play-tjänsterna uppdateras</string>
     <string name="common_open_on_phone">Öppna på mobilen</string>
+    <string name="splash_continue_button">Fortsätt</string>
+    <string name="splash_exit_button">Avsluta</string>
 </resources>

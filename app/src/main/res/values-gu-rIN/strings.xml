@@ -30,4 +30,6 @@
     <string name="common_google_play_services_updating_text">%1$s, Google Play સેવાઓ વગર શરૂ થશે નહીં, જે વર્તમાનમાં અપડેટ થઈ રહી છે.</string>
     <string name="common_google_play_services_updating_title">Google Play સેવાઓ અપડેટ થઈ રહી છે</string>
     <string name="common_open_on_phone">ફોન પર ખોલો</string>
+    <string name="splash_continue_button">ચાલુ રાખો</string>
+    <string name="splash_exit_button">બહાર</string>
 </resources>

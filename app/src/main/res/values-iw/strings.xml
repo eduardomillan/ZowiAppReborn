@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">‏%1$s לא יפעל ללא שירותי Google Play, שמתעדכנים כרגע.</string>
     <string name="common_google_play_services_updating_title">‏שירותי Google Play מתעדכנים</string>
     <string name="common_open_on_phone">פתח בטלפון</string>
+    <string name="splash_continue_button">המשך</string>
+    <string name="splash_exit_button">יציאה</string>
 </resources>

@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s sal nie sonder Google Play Dienste werk nie, wat tans opdateer.</string>
     <string name="common_google_play_services_updating_title">Google Play Dienste dateer tans op</string>
     <string name="common_open_on_phone">Maak op foon oop</string>
+    <string name="splash_continue_button">Gaan voort</string>
+    <string name="splash_exit_button">Uit</string>
 </resources>

@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Додаток %1$s не працюватиме без сервісів Google Play, які зараз оновлюються.</string>
     <string name="common_google_play_services_updating_title">Сервіси Google Play оновлюються</string>
     <string name="common_open_on_phone">Відкрити на телефоні</string>
+    <string name="splash_continue_button">Продовжити</string>
+    <string name="splash_exit_button">Вихід</string>
 </resources>

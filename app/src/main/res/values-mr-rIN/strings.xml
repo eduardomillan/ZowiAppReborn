@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">सध्‍या अद्यतनित होत असलेल्‍या, Google Play सेवांशिवाय %1$s चालणार नाही.</string>
     <string name="common_google_play_services_updating_title">Google Play सेवा अद्यतनित होत आहेत</string>
     <string name="common_open_on_phone">फोनवर उघडा</string>
+    <string name="splash_continue_button">सुरू ठेवा</string>
+    <string name="splash_exit_button">बाहेर पडा</string>
 </resources>

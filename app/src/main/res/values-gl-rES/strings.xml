@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s non se executará sen os servizos de Google Play, que se están actualizando neste momento.</string>
     <string name="common_google_play_services_updating_title">Actualizando os servizos de Google Play</string>
     <string name="common_open_on_phone">Abrir no teléfono</string>
+    <string name="splash_continue_button">Continuar</string>
+    <string name="splash_exit_button">Saír</string>
 </resources>

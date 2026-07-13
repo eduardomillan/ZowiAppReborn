@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s nu va rula fără serviciile Google Play, care momentan se actualizează.</string>
     <string name="common_google_play_services_updating_title">Se actualizează serviciile Google Play</string>
     <string name="common_open_on_phone">Deschideți pe telefon</string>
+    <string name="splash_continue_button">Continuă</string>
+    <string name="splash_exit_button">Ieșire</string>
 </resources>

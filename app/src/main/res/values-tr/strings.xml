@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s, şu anda güncellenmekte olan Google Play hizmetleri olmadan çalışmayacak.</string>
     <string name="common_google_play_services_updating_title">Google Play hizmetleri güncelleniyor</string>
     <string name="common_open_on_phone">Telefonda aç</string>
+    <string name="splash_continue_button">Devam et</string>
+    <string name="splash_exit_button">Çıkış</string>
 </resources>

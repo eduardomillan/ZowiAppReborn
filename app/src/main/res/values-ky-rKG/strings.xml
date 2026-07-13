@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">Google Play кызматтарысыз %1$s иштебейт, алар учурда жаңыртылууда.</string>
     <string name="common_google_play_services_updating_title">Google Play кызматтары жаңыртылууда</string>
     <string name="common_open_on_phone">Телефондо ачык</string>
+    <string name="splash_continue_button">Улантуу</string>
+    <string name="splash_exit_button">Чыгуу</string>
 </resources>

@@ -102,6 +102,8 @@
     <string name="achievements_animations">Animações</string>
     <string name="achievements_movements">Movimentos</string>
     <string name="app_name">Zowi App</string>
+    <string name="splash_continue_button">Continuar</string>
+    <string name="splash_exit_button">Sair</string>
     <string name="calibration_check_back_button">VOLTAR</string>
     <string name="calibration_check_confirm_button">CONFIRMAR</string>
     <string name="calibration_check_description"> Para terminar, coloca o Zowi de pé e faz com que efetue o  movimento de teste  para confirmar se está bem calibrado.\n</string>

@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s kan ikke køre uden Google Play-tjenester, som i øjeblikket opdateres:</string>
     <string name="common_google_play_services_updating_title">Google Play-tjenester opdateres</string>
     <string name="common_open_on_phone">Åbn på telefonen</string>
+    <string name="splash_continue_button">Fortsæt</string>
+    <string name="splash_exit_button">Afslut</string>
 </resources>

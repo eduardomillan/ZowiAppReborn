@@ -1,0 +1,36 @@
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+application {
+    mainClass = 'com.bq.zowi.cli.MainKt'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += [
+            '-Xlint=unchecked',
+            '-nowarn'
+        ]
+    }
+}
+
+dependencies {
+    implementation project(':zowi-core')
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.fazecast:jSerialComm:2.10.4'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.11.0'
+}

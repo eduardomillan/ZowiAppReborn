@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">您的「Google Play 服務」目前正在更新，完成後才能執行 %1$s。</string>
     <string name="common_google_play_services_updating_title">「Google Play 服務」正在更新</string>
     <string name="common_open_on_phone">在手機中開啟</string>
+    <string name="splash_continue_button">繼續</string>
+    <string name="splash_exit_button">退出</string>
 </resources>

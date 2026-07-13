@@ -43,4 +43,6 @@
     <string name="common_google_play_services_updating_text">%1$s ያለ Google Play አገልግሎቶች አይሰራም፣ እነሱ ደግሞ በአሁኑ ጊዜ በመዘመን ላይ ናቸው።</string>
     <string name="common_google_play_services_updating_title">የGoogle Play አገልግሎቶች በመዘመን ላይ ናቸው</string>
     <string name="common_open_on_phone">ስልክ ላይ ክፈት</string>
+    <string name="splash_continue_button">ቀጥል</string>
+    <string name="splash_exit_button">ውጣ</string>
 </resources>
