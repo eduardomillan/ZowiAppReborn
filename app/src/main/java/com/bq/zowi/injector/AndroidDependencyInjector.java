@@ -7,6 +7,10 @@ import com.bq.zowi.R;
 import com.bq.zowi.ZowiApplication;
 import com.bq.zowi.adapters.CoreAdapterProvider;
 import com.bq.zowi.adapters.CoreInteractorProvider;
+import com.bq.zowi.bridge.AppControllerBridge;
+import com.bq.zowi.bridge.AchievementsControllerBridge;
+import com.bq.zowi.bridge.AssetControllerBridge;
+import com.bq.zowi.bridge.BTConnectionControllerBridge;
 import com.bq.zowi.bridge.ChangeZowiNameInteractorBridge;
 import com.bq.zowi.bridge.CheckAchievementAndUnlockItInteractorBridge;
 import com.bq.zowi.bridge.CheckInstalledZowiAppInteractorBridge;
@@ -14,31 +18,26 @@ import com.bq.zowi.bridge.ConnectToZowiInteractorBridge;
 import com.bq.zowi.bridge.FindZowisInteractorBridge;
 import com.bq.zowi.bridge.ForgetPlayingHistoryInteractorBridge;
 import com.bq.zowi.bridge.ForgetZowiInteractorBridge;
+import com.bq.zowi.bridge.GameControllerBridge;
 import com.bq.zowi.bridge.MeasureZowiBatteryLevelInteractorBridge;
+import com.bq.zowi.bridge.ProjectControllerBridge;
+import com.bq.zowi.bridge.RankingControllerBridge;
 import com.bq.zowi.bridge.SendAppToZowiInteractorBridge;
 import com.bq.zowi.bridge.SendCommandToZowiInteractorBridge;
+import com.bq.zowi.bridge.SessionControllerBridge;
 import com.bq.zowi.controllers.AchievementsController;
-import com.bq.zowi.controllers.AchievementsControllerImpl;
 import com.bq.zowi.controllers.AppController;
-import com.bq.zowi.controllers.AppControllerImpl;
 import com.bq.zowi.controllers.AssetController;
-import com.bq.zowi.controllers.AssetControllerImpl;
 import com.bq.zowi.controllers.BTAdapterController;
 import com.bq.zowi.controllers.BTAdapterControllerImpl;
 import com.bq.zowi.controllers.BTConnectionController;
-import com.bq.zowi.controllers.BTConnectionControllerImpl;
 import com.bq.zowi.controllers.GameController;
-import com.bq.zowi.controllers.GameControllerImpl;
 import com.bq.zowi.controllers.KitonNetworkController;
 import com.bq.zowi.controllers.KitonNetworkControllerImpl;
 import com.bq.zowi.controllers.KitonNetworkService;
 import com.bq.zowi.controllers.ProjectController;
-import com.bq.zowi.controllers.ProjectControllerImpl;
 import com.bq.zowi.controllers.RankingController;
-import com.bq.zowi.controllers.RankingControllerImpl;
 import com.bq.zowi.controllers.SessionController;
-import com.bq.zowi.controllers.SessionControllerImpl;
-import com.bq.zowi.controllers.TimelineGameControllerImpl;
 import com.bq.zowi.crashreporting.BugsnagCustomErrorReporter;
 import com.bq.zowi.crashreporting.CustomErrorReporter;
 import com.bq.zowi.interactors.CheckAchievementAndUnlockItInteractor;
@@ -81,7 +80,6 @@ import retrofit.RestAdapter;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 
-/* JADX INFO: loaded from: classes.dex */
 public class AndroidDependencyInjector extends DependencyInjector {
     private static final String ZOWI_SHARED_PREFS_NAME = "zowiSharedPrefsName";
     protected static AndroidDependencyInjector instance;
@@ -110,7 +108,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
         return instance;
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public void init() {
         CustomErrorReporter reporter = provideErrorReporter();
         reporter.init();
@@ -131,67 +129,61 @@ public class AndroidDependencyInjector extends DependencyInjector {
         return coreProvider;
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public void shutdown() {
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public Scheduler provideUiScheduler() {
         return AndroidSchedulers.mainThread();
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    // ---- Interactor bridges ----
+
+    @Override
     public FindZowisInteractor provideFindZowisInteractor() {
         return (FindZowisInteractor) getCache().get(FindZowisInteractorBridge.class, new DependencyCache.Provider<FindZowisInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public FindZowisInteractorBridge get() {
-                return new FindZowisInteractorBridge(
-                    coreInteractorProvider.getFindZowisInteractor(),
-                    BluetoothAdapter.getDefaultAdapter()
-                );
+                return new FindZowisInteractorBridge(coreInteractorProvider.getFindZowisInteractor(), BluetoothAdapter.getDefaultAdapter());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public ConnectToZowiInteractor provideConnectToZowiInteractor() {
         return (ConnectToZowiInteractor) getCache().get(ConnectToZowiInteractorBridge.class, new DependencyCache.Provider<ConnectToZowiInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public ConnectToZowiInteractorBridge get() {
                 return new ConnectToZowiInteractorBridge(coreInteractorProvider.getConnectToZowiInteractor());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public SendAppToZowiInteractor provideSendAppToZowiInteractor() {
         return (SendAppToZowiInteractor) getCache().get(SendAppToZowiInteractorBridge.class, new DependencyCache.Provider<SendAppToZowiInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public SendAppToZowiInteractorBridge get() {
                 return new SendAppToZowiInteractorBridge(coreInteractorProvider.getSendAppToZowiInteractor());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public SendCommandToZowiInteractor provideSendCommandToZowiInteractor() {
         return (SendCommandToZowiInteractor) getCache().get(SendCommandToZowiInteractorBridge.class, new DependencyCache.Provider<SendCommandToZowiInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public SendCommandToZowiInteractorBridge get() {
                 return new SendCommandToZowiInteractorBridge(coreInteractorProvider.getSendCommandToZowiInteractor());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public CheckAchievementAndUnlockItInteractor checkAchievementAndUnlockItInteractor() {
         return (CheckAchievementAndUnlockItInteractor) getCache().get(CheckAchievementAndUnlockItInteractorBridge.class, new DependencyCache.Provider<CheckAchievementAndUnlockItInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public CheckAchievementAndUnlockItInteractorBridge get() {
                 return new CheckAchievementAndUnlockItInteractorBridge(coreInteractorProvider.getCheckAchievementAndUnlockItInteractor());
             }
@@ -203,33 +195,30 @@ public class AndroidDependencyInjector extends DependencyInjector {
         return checkAchievementAndUnlockItInteractor();
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public CheckInstalledZowiAppInteractor provideCheckInstalledZowiAppInteractor() {
         return (CheckInstalledZowiAppInteractor) getCache().get(CheckInstalledZowiAppInteractorBridge.class, new DependencyCache.Provider<CheckInstalledZowiAppInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public CheckInstalledZowiAppInteractorBridge get() {
                 return new CheckInstalledZowiAppInteractorBridge(coreInteractorProvider.getCheckInstalledZowiAppInteractor());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public ForgetZowiInteractor provideForgetZowiInteractor() {
         return (ForgetZowiInteractor) getCache().get(ForgetZowiInteractorBridge.class, new DependencyCache.Provider<ForgetZowiInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public ForgetZowiInteractorBridge get() {
                 return new ForgetZowiInteractorBridge(coreInteractorProvider.getForgetZowiInteractor());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public ForgetPlayingHistoryInteractor provideForgetPlayingHistoryInteractor() {
         return (ForgetPlayingHistoryInteractor) getCache().get(ForgetPlayingHistoryInteractorBridge.class, new DependencyCache.Provider<ForgetPlayingHistoryInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public ForgetPlayingHistoryInteractorBridge get() {
                 return new ForgetPlayingHistoryInteractorBridge(coreInteractorProvider.getForgetPlayingHistoryInteractor());
             }
@@ -239,8 +228,7 @@ public class AndroidDependencyInjector extends DependencyInjector {
     @Override
     public ChangeZowiNameInteractor provideChangeZowiNameInteractor() {
         return (ChangeZowiNameInteractor) getCache().get(ChangeZowiNameInteractorBridge.class, new DependencyCache.Provider<ChangeZowiNameInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public ChangeZowiNameInteractorBridge get() {
                 return new ChangeZowiNameInteractorBridge(coreInteractorProvider.getChangeZowiNameInteractor());
             }
@@ -250,138 +238,127 @@ public class AndroidDependencyInjector extends DependencyInjector {
     @Override
     public MeasureZowiBatteryLevelInteractor provideMeasureZowiBatteryLevelInteractor() {
         return (MeasureZowiBatteryLevelInteractor) getCache().get(MeasureZowiBatteryLevelInteractorBridge.class, new DependencyCache.Provider<MeasureZowiBatteryLevelInteractorBridge>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public MeasureZowiBatteryLevelInteractorBridge get() {
                 return new MeasureZowiBatteryLevelInteractorBridge(coreInteractorProvider.getMeasureZowiBatteryLevelInteractor());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    // ---- Controller bridges ----
+
+    @Override
     public SessionController provideSessionController() {
-        return (SessionController) getCache().get(SessionControllerImpl.class, new DependencyCache.Provider<SessionControllerImpl>() {
-            @Override
-            @NotNull
-            public SessionControllerImpl get() {
-                return new SessionControllerImpl(AndroidDependencyInjector.this.application.getString(R.string.zowi_default_name), AndroidDependencyInjector.this.provideSharedPreferences());
+        return (SessionController) getCache().get(SessionControllerBridge.class, new DependencyCache.Provider<SessionControllerBridge>() {
+            @Override @NotNull
+            public SessionControllerBridge get() {
+                return new SessionControllerBridge(coreProvider.getSessionController());
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
+    public BTConnectionController provideBTConnectionController() {
+        return (BTConnectionController) getCache().get(BTConnectionControllerBridge.class, new DependencyCache.Provider<BTConnectionControllerBridge>() {
+            @Override @NotNull
+            public BTConnectionControllerBridge get() {
+                return new BTConnectionControllerBridge(coreProvider.getBtConnectionController());
+            }
+        });
+    }
+
+    @Override
+    public BTAdapterController provideBTAdapterController() {
+        return (BTAdapterController) getCache().get(BTAdapterControllerImpl.class, new DependencyCache.Provider<BTAdapterControllerImpl>() {
+            @Override @NotNull
+            public BTAdapterControllerImpl get() {
+                return new BTAdapterControllerImpl(application.getApplicationContext(), BluetoothAdapter.getDefaultAdapter());
+            }
+        });
+    }
+
+    @Override
+    public AchievementsController provideAchievementsController() {
+        return (AchievementsController) getCache().get(AchievementsControllerBridge.class, new DependencyCache.Provider<AchievementsControllerBridge>() {
+            @Override @NotNull
+            public AchievementsControllerBridge get() {
+                return new AchievementsControllerBridge(coreProvider.getAchievementsController());
+            }
+        });
+    }
+
+    @Override
+    protected AppController provideAppController() {
+        return (AppController) getCache().get(AppControllerBridge.class, new DependencyCache.Provider<AppControllerBridge>() {
+            @Override @NotNull
+            public AppControllerBridge get() {
+                return new AppControllerBridge(coreProvider.getAppController());
+            }
+        });
+    }
+
+    @Override
+    public GameController provideGameController() {
+        return (GameController) getCache().get(GameControllerBridge.class, new DependencyCache.Provider<GameControllerBridge>() {
+            @Override @NotNull
+            public GameControllerBridge get() {
+                return new GameControllerBridge(coreProvider.getGameController());
+            }
+        });
+    }
+
+    @Override
+    public GameController provideTimelineGameController() {
+        return provideGameController();
+    }
+
+    @Override
+    public RankingController provideRankingController() {
+        return (RankingController) getCache().get(RankingControllerBridge.class, new DependencyCache.Provider<RankingControllerBridge>() {
+            @Override @NotNull
+            public RankingControllerBridge get() {
+                return new RankingControllerBridge(coreProvider.getRankingController());
+            }
+        });
+    }
+
+    @Override
     public ProjectController provideProjectController() {
-        return (ProjectController) getCache().get(ProjectControllerImpl.class, new DependencyCache.Provider<ProjectControllerImpl>() {
-            @Override
-            @NotNull
-            public ProjectControllerImpl get() {
-                return new ProjectControllerImpl(AndroidDependencyInjector.this.application.getAssets(), AndroidDependencyInjector.this.provideSharedPreferences());
+        return (ProjectController) getCache().get(ProjectControllerBridge.class, new DependencyCache.Provider<ProjectControllerBridge>() {
+            @Override @NotNull
+            public ProjectControllerBridge get() {
+                return new ProjectControllerBridge(coreProvider.getProjectController());
             }
         });
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
+    @Override
+    public AssetController provideAssetController() {
+        return (AssetController) getCache().get(AssetControllerBridge.class, new DependencyCache.Provider<AssetControllerBridge>() {
+            @Override @NotNull
+            public AssetControllerBridge get() {
+                return new AssetControllerBridge(coreProvider.getAssetController());
+            }
+        });
+    }
+
+    // ---- Other providers ----
+
     public SharedPreferences provideSharedPreferences() {
         return this.application.getSharedPreferences(ZOWI_SHARED_PREFS_NAME, 0);
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public AssetController provideAssetController() {
-        return (AssetController) getCache().get(AssetControllerImpl.class, new DependencyCache.Provider<AssetControllerImpl>() {
-            @Override
-            @NotNull
-            public AssetControllerImpl get() {
-                return new AssetControllerImpl(AndroidDependencyInjector.this.application.getAssets());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public AchievementsController provideAchievementsController() {
-        return (AchievementsController) getCache().get(AchievementsControllerImpl.class, new DependencyCache.Provider<AchievementsControllerImpl>() {
-            @Override
-            @NotNull
-            public AchievementsControllerImpl get() {
-                return new AchievementsControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences(), AndroidDependencyInjector.this.application.getAssets());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public String provideFactoryFirmwarePath() {
         return this.application.getString(R.string.factory_firmware_asset_path);
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public int provideFactoryFirmwareVersion() {
         return com.bq.zowi.utils.ResourceResolver.getIntegerByResourceId("factory_firmware_version", this.application);
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public BTConnectionController provideBTConnectionController() {
-        return (BTConnectionController) getCache().get(BTConnectionControllerImpl.class, new DependencyCache.Provider<BTConnectionControllerImpl>() {
-            @Override
-            @NotNull
-            public BTConnectionControllerImpl get() {
-                return new BTConnectionControllerImpl(AndroidDependencyInjector.this.application.getApplicationContext(), BluetoothAdapter.getDefaultAdapter(), AndroidDependencyInjector.this.provideSessionController(), AndroidDependencyInjector.this.provideUiScheduler());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public BTAdapterController provideBTAdapterController() {
-        return (BTAdapterController) getCache().get(BTAdapterControllerImpl.class, new DependencyCache.Provider<BTAdapterControllerImpl>() {
-            @Override
-            @NotNull
-            public BTAdapterControllerImpl get() {
-                return new BTAdapterControllerImpl(AndroidDependencyInjector.this.application.getApplicationContext(), BluetoothAdapter.getDefaultAdapter());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    protected AppController provideAppController() {
-        return (AppController) getCache().get(AppControllerImpl.class, new DependencyCache.Provider<AppControllerImpl>() {
-            @Override
-            @NotNull
-            public AppControllerImpl get() {
-                return new AppControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public RankingController provideRankingController() {
-        return (RankingController) getCache().get(RankingControllerImpl.class, new DependencyCache.Provider<RankingControllerImpl>() {
-            @Override
-            @NotNull
-            public RankingControllerImpl get() {
-                return new RankingControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public GameController provideGameController() {
-        return (GameController) getCache().get(GameControllerImpl.class, new DependencyCache.Provider<GameControllerImpl>() {
-            @Override
-            @NotNull
-            public GameControllerImpl get() {
-                return new GameControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
-            }
-        });
-    }
-
-    @Override // com.bq.zowi.injector.DependencyInjector
-    public GameController provideTimelineGameController() {
-        return (GameController) getCache().get(TimelineGameControllerImpl.class, new DependencyCache.Provider<TimelineGameControllerImpl>() {
-            @Override
-            @NotNull
-            public TimelineGameControllerImpl get() {
-                return new TimelineGameControllerImpl(AndroidDependencyInjector.this.provideSharedPreferences());
-            }
-        });
-    }
+    // ---- Wireframe providers ----
 
     public ProjectWireframe provideProjectWireframe(FragmentActivity activity) {
         return new ProjectWireframeImpl(activity);
@@ -435,27 +412,25 @@ public class AndroidDependencyInjector extends DependencyInjector {
         return new CalibrationWireframeImpl(activity);
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public CustomErrorReporter provideErrorReporter() {
         return (CustomErrorReporter) getCache().get(BugsnagCustomErrorReporter.class, new DependencyCache.Provider<BugsnagCustomErrorReporter>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public BugsnagCustomErrorReporter get() {
-                return new BugsnagCustomErrorReporter(AndroidDependencyInjector.this.provideApplication(), AndroidDependencyInjector.this.provideApplication().getString(R.string.bugsnag_api_key), null);
+                return new BugsnagCustomErrorReporter(provideApplication(), provideApplication().getString(R.string.bugsnag_api_key), null);
             }
         });
     }
 
-    @Override // com.bq.zowi.injector.DependencyInjector
+    @Override
     public KitonNetworkController provideKitonNetworkController() {
         return (KitonNetworkController) getCache().get(KitonNetworkControllerImpl.class, new DependencyCache.Provider<KitonNetworkControllerImpl>() {
-            @Override
-            @NotNull
+            @Override @NotNull
             public KitonNetworkControllerImpl get() {
-                String kitonEndPoint = AndroidDependencyInjector.this.application.getString(R.string.kiton_production_endpoint);
+                String kitonEndPoint = application.getString(R.string.kiton_production_endpoint);
                 RestAdapter kitonRestAdapter = new RestAdapter.Builder().setEndpoint(kitonEndPoint).setLogLevel(RestAdapter.LogLevel.NONE).build();
                 KitonNetworkService kitonNetworkService = (KitonNetworkService) kitonRestAdapter.create(KitonNetworkService.class);
-                return new KitonNetworkControllerImpl(kitonNetworkService, AndroidDependencyInjector.this.provideSharedPreferences());
+                return new KitonNetworkControllerImpl(kitonNetworkService, provideSharedPreferences());
             }
         });
     }
