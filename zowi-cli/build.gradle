@@ -13,7 +13,7 @@ kotlin {
 }
 
 application {
-    mainClass = 'com.bq.zowi.cli.MainKt'
+    mainClass = 'com.bq.zowi.cli.ZowiCliKt'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
