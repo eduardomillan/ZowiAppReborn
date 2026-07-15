@@ -1,4 +1,39 @@
-# ZowiAppReborn Architecture - VIEW
+# ZowiAppReborn — Views: Architecture & Screen Actuation Logic
+
+## Table of Contents
+
+- [Overview](#overview)
+- [View Layer](#view-layer)
+  - [Package Structure](#package-structure)
+  - [Activity Hierarchy](#activity-hierarchy)
+  - [MVP View Contracts](#mvp-view-contracts)
+  - [Concrete Activities](#concrete-activities)
+  - [Custom UI Components](#custom-ui-components)
+  - [Adapters and ViewHolders](#adapters-and-viewholders)
+  - [XML Layouts](#xml-layouts)
+- [Navigation Structure](#navigation-structure)
+  - [Launcher Entry Point](#launcher-entry-point)
+  - [Navigation Tree](#navigation-tree)
+  - [Intent Flags](#intent-flags)
+  - [Navigation Routes (All Paths)](#navigation-routes-all-paths)
+  - [Project Variants](#project-variants)
+- [Screen Actuation Logic](#screen-actuation-logic)
+  - [Cross-Cutting: Connection-Dependent Enable/Disable](#cross-cutting-connection-dependent-enabledisable)
+  - [SplashViewActivity](#splashviewactivity)
+  - [WelcomeViewActivity](#welcomeviewactivity)
+  - [WizardViewActivity (Bluetooth pairing)](#wizardviewactivity-bluetooth-pairing)
+  - [HomeViewActivity](#homeviewactivity)
+  - [SettingsViewActivity](#settingsviewactivity)
+  - [CalibrationViewActivity](#calibrationviewactivity)
+  - [PadViewActivity (gamepad)](#padviewactivity-gamepad)
+  - [TimelineActivity](#timelineactivity)
+  - [MouthsEditorActivity](#mouthseditoractivity)
+  - [MouthsMinigameActivity](#mouthsminigameactivity)
+  - [ZowiSaysMinigameActivity](#zowisaysminigameactivity)
+  - [ZowiRunnerMinigameActivity](#zowirunnerminigameactivity)
+  - [ProjectViewActivity (Discover detail)](#projectviewactivity-discover-detail)
+  - [ProjectQuizViewActivity (Run Test)](#projectquizviewactivity-run-test)
+  - [AchievementsViewActivity](#achievementsviewactivity)
 
 ## Overview
 
@@ -358,3 +393,227 @@ SplashViewActivity
 | `08_project_bitbloq2` | BitBloq 2 |
 | `09_project_adivinawi` | Guess |
 | `10_project_gravity` | Gravity |
+
+---
+
+## Screen Actuation Logic
+
+This section documents, for every screen, **when controls are enabled/disabled, what each control
+does, where it navigates, and what can go wrong**. It is the behavioral complement to the
+navigation tree above. Source: View / Presenter / Wireframe triples under
+`app/src/main/java/com/bq/zowi/`.
+
+### Cross-Cutting: Connection-Dependent Enable/Disable
+
+All interactive screens extend `InteractiveBaseActivity`, whose `updateStatusBar()` enables or
+disables the `zowiDependantViews[]` array (alpha 0.5 + `setEnabled(false)`) based on a single status.
+Precedence (first match wins): demo mode (no active Zowi) → disabled; installing firmware → disabled;
+altered/custom firmware → **enabled** (and the Factory-Reset notification button appears); low
+battery (< 50%, `BATTERY_LEVEL_LOWER_THRESHOLD`) → enabled; connected → enabled; connecting/
+disconnected → disabled. Firmware restore / low-battery flows surface via shared MakerBox dialogs
+(`showInstallingFirmwareInfoDialog`, `showLowBatteryForInstallingFirmwareDialog`,
+`showInstallingFwSuccessDialog`/`ErrorDialog`, `showCorruptedZowiDialog`) driven by
+`InteractiveBasePresenterImpl.installFactoryFirmware()` → `SendAppToZowiInteractor(factoryFirmwarePath)`
+where `factoryFirmwarePath = ZOWI_BASE_v2.hex`.
+
+### SplashViewActivity
+
+| Control | Enable | Action |
+|---|---|---|
+| Continue (`splash_continue_button`) | always | cancels the 1.5 s timer `Runnable`, then `presenter.onContinueClicked()` |
+| Exit (`splash_exit_button`) | always | cancels the timer, then `finish()` (closes app) |
+
+- **Timer:** `Handler.postDelayed(runnable, 1500)` auto-navigates if the user does nothing; `onDestroy` removes callbacks (leak guard). `SplashPresenterImpl.initialize()` is a no-op.
+- **Navigation decision** (`onContinueClicked`): `isActiveSession = sessionController.loadActiveZowiDeviceAddress() != null || sessionController.hasDismissedWizard()`. `SplashWireframeImpl.dismissSplash(isActiveSession)` → `presentHome()` (`HomeViewActivity`) when active, else `presentWelcome()` (`WelcomeViewActivity`). Both `finish()` (no return to Splash).
+- **No EduBar**; version badge comes from `BaseActivity` (`Build <versionCode>`, title `… v<versionName>`).
+- **Errors:** none surfaced.
+
+### WelcomeViewActivity
+
+| Control | Enable | Action / Navigation |
+|---|---|---|
+| Start wizard (`welcome_start_wizard_button`) | always | `presenter.startWizard()` → `WelcomeWireframe.showWizard()` → `WizardViewActivity` (flags `NEW_TASK|CLEAR_TOP` + `finish`, back stack reset) |
+| Letter to parents | always | reveals scrollable `MakerBoxDialogScrollable` (informational) |
+
+- **Errors:** none.
+
+### WizardViewActivity (Bluetooth pairing)
+
+A `NonSwipeableViewPager` of 4 pages: **START → SEARCH → PAIR → CONNECTED**; page changes are driven only by the presenter.
+
+| Page | Control | Enable | Action |
+|---|---|---|---|
+| 0 | Find Zowis (`wizard_find_zowis_button`) | always | `findZowis()` |
+| 0 | Dismiss (`wizard_dismiss_button`) | always | `dismissWizard()` |
+| 1 | Retry | always | `findZowis()` |
+| 2 | Connect (`wizard_connect_to_zowi_button`) | always; **onClick disables itself** (re-enabled only on error) | `connectToZowi(address)` |
+| 3 | Name (`wizard_name_edit_text`) | live-validated by `TextWatcher` | letters only, max 10 (`NameValidator`) |
+| 3 | Set name (`wizard_set_name_button`) | always | `changeZowiName(name, address)` |
+
+- **Find:** `FindZowisInteractor` enables BT, starts discovery, and emits the **first** device whose name starts with `"Zowi"` or MAC OUI `B4:9D:0B:3` (`firstOrError()`) — single Zowi, no multi-device list. `onError` → `showNoZowisFound()` (retry + dismiss).
+- **Connect:** `ConnectToZowiInteractor.connectToZowiAndRetrieveData` opens the SPP socket (`SPP_UUID 00001101-…-00805f9b34fb`), retries 3× @1 s, then disables+re-enables BT once; zips name/appId/battery with a **3 s timeout** → `ConnectionSuccessData` may be `null`.
+- **Name:** empty → defaults to `"Zowi"`; invalid (non-letters or >10) → `showInvalidNameError()` (EduBar) and aborts; else `ChangeZowiNameInteractor` → `NameSetCommand` sent to the robot.
+- **Completion:** `wizardComplete(address)` saves `activeZowiDeviceAddress`; `dismissWizard()` saves `wizardDismissed=true`. Both → `presentWizardCompleteView()` → `HomeViewActivity` (back stack cleared).
+- **Permission gap:** no runtime permission request exists; relies on install-time normal `BLUETOOTH_SCAN`/`BLUETOOTH_CONNECT`. If revoked, `startDiscovery()`/`connect()` throw `SecurityException` that surfaces only as a generic error log (connect button just re-enables).
+- **Errors:** no Zowis (retry/dismiss); connection error (button re-enable + log only); invalid name (EduBar + toast); name-change failure (log only, silent); 3 s timeout (proceeds without name, silent); `data != null` but `zowiName == null` (dead-end, no navigation).
+
+### HomeViewActivity
+
+| Control | Enable | Action / Navigation |
+|---|---|---|
+| Settings / Achievements / Gamepad / Timeline / ZowiSays / MouthsMinigame | always | `presentXView()` → respective `Activity` (Home stays in back stack) |
+| **Mouths Editor tile** | **locked by `Achievement.Id.mouths_editor`** | if unlocked → `presentMouthsEditorView()`; if locked → `setClickable(false)`, click does nothing |
+| 10 Project buttons | always | `presentProject(id)` → `ProjectViewActivity` (with `PROJECT_ID_EXTRA`) |
+| ZowiRunner | (presenter/wireframe exist but **not wired in UI**) | `presentZowiRunnerMinigameView()` |
+
+- `manageConnection()` on resume subscribes to `achievementsController.getAchievementsList()` and toggles the Mouths-Editor tile.
+- **Time-based unlocks** (`onPostCreate`): 2nd usage → `crusaito`; ≥4 days of use → `fart` (surfaced via `showAchievementUnlock`).
+- **Errors:** none surfaced.
+
+### SettingsViewActivity
+
+`zowiDependantViews = [loadFactoryFirmware*, changeZowiName*, calibrateZowi*]` → **Rename, Restore firmware, and Calibrate are disabled when not connected**; **Forget Zowi, Forget playing history, Look for updates, and Hospital are always enabled**.
+
+| Control | Enable | Action / Use case | Errors |
+|---|---|---|---|
+| Home | always | `presentHome()` (flags + `finish`) | — |
+| Change Zowi name | **conn-gated** | dialog → `ChangeZowiNameInteractor` (`NameSetCommand`); empty→default, invalid→EduBar | `showNameChangeSuccess/Error` (EduBar) |
+| Look for updates | always | `openGooglePlayToCheckUpdates()` (`market://`, fallback `https://`) | `ActivityNotFoundException` → https fallback |
+| Forget playing history | always | dialog → `ForgetPlayingHistoryInteractor` (reset projects/logs/game progress/rankings/achievements) | `showForgetPlayingHistorySuccess/Error` |
+| Forget Zowi | always (even in demo) | dialog → `ForgetZowiInteractor` (factory name + `resetActiveZowi` + `stopConnection`) | `showForgetZowiSuccess/Error` |
+| Calibrate Zowi | **conn-gated** | if **altered** → firmware-restore flow; else `presentCalibrationView()` | altered → low-battery/restore dialogs |
+| Restore firmware / Load factory firmware | **conn-gated** | `manageLowBatteryForInstallingFirmware` → 50% battery check → restore-info dialog → `installFactoryFirmware(false)` → `SendAppToZowiInteractor(ZOWI_BASE_v2.hex)` | firmware updating/success/error dialogs |
+| Hospital | always | `openHospitalWeb()` | `ActivityNotFoundException` → http fallback |
+
+- **Notification bar** (base, on Settings too): Factory reset (only if `isAltered`), Connect (if disconnected), Launch wizard (if demo).
+
+### CalibrationViewActivity
+
+4-page pager **WARNING → LEGS → FEET → CHECK** (navigation done in the View). State: `trimLeftLegYL/RightLegYR/LeftFootRL/RightFootRR` (clamp `[-30, +30]`), `BASE_GRADE = 90`, 200 ms debounce (`MIN_TIME_BETWEEN_CALIBRATION_CHANGES`).
+
+| Control | Action | Wire |
+|---|---|---|
+| Warning cancel | `presentHome()` | → Home (+`finish`) |
+| Warning continue | send `CALIBRATE_TRIM 0 0 0 0` then `CALIBRATE_GRADES 90 90 90 90`, → LEGS page | `CalibrationCommand` |
+| Legs/Foot +/- | increment/decrement trim (clamped); debounced → `CALIBRATE_GRADES <trim+90>…` | `CalibrationCommand` |
+| Check "movement" | `CALIBRATE_TRIM <trims>` then `AnimationCommand(VICTORY)` (live preview) | — |
+| Check "confirm" | `CALIBRATE_TRIM <trims>` then `presentHome()` + `VICTORY` | finalizes, → Home |
+| Restart | reset trims/grades, → LEGS | — |
+
+- `CalibrationCommand` wire: `"C <lYL> <rYR> <lRL> <rRR>\r\n"` (trim) or `"G …"` (grades = trim+90).
+- **Every exit returns to Home** (no return to Settings). Entry only via Settings (which blocks altered Zowis into firmware restore first).
+
+### PadViewActivity (gamepad)
+
+`zowiDependantViews` = the **13 movement/action buttons** (disabled when not connected). Mouths/Animations openers are **not** gated.
+
+| Control | Enable | Action / Command |
+|---|---|---|
+| Movement arrows (up/down/left/right, turn L/R) | conn-gated (touch down/up) | `ForwardBackwardCommand(WALK,…)`, `LeftRightCommand(TURN,…)` |
+| Action buttons (bend, shakeleg, updown, jitter, swing, flapping, crusaito) | conn-gated; **achievement-locked** (`crusaito/flapping/shake_leg/jitter/swing` gated by unlock; locked→greyed, not clickable) | `LeftRightCommand(BEND/SHAKE_LEG/…)`, `StaticCommand(UPDOWN/JITTER/SWING/FLAPPING)` |
+| Speed cycle | always | slow 2000 / medium 1000 / fast 700 ms (`configuredDuration`) |
+| Mouths / Animations openers | always (not conn-gated) | open `GridCommand` selector → `MouthCommand` / `AnimationCommand` |
+| Home / Help | always | `presentHome()` (+`finish`, fixes back-stack); `showHelp()` |
+
+- **Incompatible-action blocking:** holding bend/shakeleg/crusaito blocks walk; flapping blocks moonwalker; turn blocks up/down & left/right (greyed `blocked_pad_*`); unblocked only when nothing conflicting is held.
+- **Flow control:** `isCommandSendingBlocked()` allows one command in flight; reset only on `"F"` ack. Release → `StopCommand` (not gated). Demo mode → launch-wizard button + dependant views disabled.
+- **First use:** help shown; `shake_leg` unlocked on first GAMEPAD play.
+- **Errors:** not connected → dependant buttons disabled; mouths/animations openers still clickable but `sendCommandToZowi` is a no-op/swallowed.
+
+### TimelineActivity
+
+`zowiDependantViews` = **Play button only** (Stop, add buttons, items not gated).
+
+| Control | Enable | Action |
+|---|---|---|
+| Add Movement / Animation / Mouth | always | `GridCommand` selector (movement/animation unlock-gated; mouth not) → `addTimelineCommandToTimeline(new TimelineCommand(cmd, 1))` |
+| Play (`activity_timeline_play_button`) | **conn-gated** | `TimelineCommandSubscriber`; waits `"A"` ack; expands by repetitions + appends `StopCommand`; plays sequentially; ≥15 commands → `anxious` achievement; **plays once, no loop** |
+| Stop | always | dispose subscriber, `StopCommand` |
+| Per-item spinners (repetitions/duration/direction) | per command type | mutate the `TimelineCommand` (duration only if `allowedDurations`, direction only if `allowedDirections`, repetitions only if `isRepeatable`) |
+| Drag reorder | always | long-press drag (`RecyclerViewDragDropManager`); not auto-saved |
+| Delete | always | trash button per row (`TimelineDataProvider.removeItem`) |
+
+- **Persistence:** `onPause` → `GameController.saveProgress(TIMELINE_GAME_ID, list)`; `onPostCreate` → `loadProgress` + resume.
+- **Errors:** Play disabled when not connected, but a single-item tap is not connection-gated (can wait for an ack that never arrives); load/save failures logged (`Grove`).
+
+### MouthsEditorActivity
+
+6×5 `MouthGridLayout` (30 `MouthGridItemView` cells), togglable on touch. **No `zowiDependantViews` → grid always touchable.**
+
+| Control | Action |
+|---|---|
+| LED grid | on finger lift → 30-bit `0/1` string → `LedCommand(binary)` (`"L 00<matrix>\r\n"`) → `sendCommandToZowi` |
+| Home / Help | `presentHome()` (+`finish`); `showHelp()` |
+
+- **Navigation:** Home and Help only. Does **not** navigate to the Mouths minigame — both are launched independently from Home.
+- **Errors:** not connected → `sendLedMouth` is a no-op/swallowed (no BT guard, no UI error).
+
+### MouthsMinigameActivity
+
+| Control | Enable | Action |
+|---|---|---|
+| Play (`minigame_play_button`) | hidden after press | level 1; random `MouthCommand` (4 types); send to Zowi; 10 s countdown (−1000 ms every 4th level) |
+| Mouth grid | touchable only while a round is active | draw → 30-bit compare to `mouthInGame.getLedMatrix()`; correct → `VICTORY`+`StopCommand` → next level |
+| Home / Help / Ranking | always | `presentHome()`; `showHelp()`; `getRanking(MOUTHS_GAME_ID)` |
+
+- **End:** countdown → `gameOver(score = level-1)`. `score ≥ 8` → `checkAchievementAndUnlockIt(mouths_editor)`; else `ANGRY`. Ranking if `score > 2` and top-10 (`MakerBoxDialogPointsEarnedEnableRanking` vs `MakerBoxDialogFailure`).
+- **Fully playable offline** (local binary compare; Zowi show is cosmetic).
+
+### ZowiSaysMinigameActivity
+
+| Control | Enable | Action |
+|---|---|---|
+| 4 action buttons (top/bottom left/right) | active only while `isPlaying` | append `Command` to user sequence; correct→lengthen, wrong/longer→`gameOver` |
+| Play / Help / Ranking / Home | always | `presentHome()`; `showHelp()` (first play only); `getRanking(ZOWI_SAYS_GAME_ID)` |
+
+- **Play:** `ForwardBackwardCommand(WALK,FWD)`, `LeftRightCommand(BEND,RIGHT)`, `StaticCommand(JUMP)`, `LeftRightCommand(MOONWALKER,RIGHT)` + `StopCommand`; Zowi plays via `"A"` ack (`blockUserControls` overlay), user repeats.
+- **End:** `gameOver(score)`; `score ≥ 12` → `checkAchievementAndUnlockIt(in_love)`; else `ANGRY`. Ranking if `score > 3` and top-10.
+- **Errors:** command-send errors logged (swallowed); ranking retrieval error logged.
+
+### ZowiRunnerMinigameActivity
+
+| Control | Enable | Action |
+|---|---|---|
+| Play FAB | on press enables Left/Right, hides FAB, starts 2 s timer | every 2 s with no input → `StopCommand` (auto-stop) |
+| Left / Right | disabled until Play | press → `duration = clamp(500 + |Δt|*1.6, 500, 1500)` → `ForwardRunnerCommand(WALK,FWD,duration)` |
+| Accelerometer (tilt) | threshold `y>5`→RIGHT, `y<-5`→LEFT | `LeftRightRunnerCommand(TURN,dir,duration)` |
+| Stop | on press | `StopCommand`, cancel timer |
+
+- **No `GAME_ID`, no ranking, no achievement.** Commands via `CommandSingleSubscriber` (errors swallowed).
+- **Navigation:** **no Home button wired** — returns via system Back only (possible UX gap).
+
+### ProjectViewActivity (Discover detail)
+
+| Control | Enable | Action |
+|---|---|---|
+| Run Test (`activity_project_run_test_button`) | **only if `!isQuizBlocked`**; when blocked shows `mm:ss` countdown (10 min) | `presentQuiz(projectId)` → `ProjectQuizViewActivity` |
+| Home | always | `presentHome()` (+`finish`) |
+| Install HEX | only if `projectHex != null` (conn-gated) | `manageLowBatteryForInstallingProjectFirmware` → 50% battery check → `SendAppToZowiInteractor(projectHex)` (progress dialog) |
+| Link | always | open `project.projectUrlResourceId` in browser |
+| Completed icon | display | `project_done_icon` / `project_not_done_icon` |
+
+- **Firmware per project** (`project_hex`): only **06 reprogram → `ZOWI_Alarm_v2.hex`** and **09 adivinawi → `ZOWI_Adivinawi_v2.hex`** flash a distinct firmware; the other 8 have `""` (note: `projectHex` is non-null even when empty → potential no-op/error path rather than re-flashing `ZOWI_BASE_v2`).
+- **Errors:** project load error (EduBar); HEX flash error has two variants (still-connected vs not-connected) with Retry; low-battery dialog → OK flashes, Cancel dismisses.
+
+### ProjectQuizViewActivity (Run Test)
+
+| Control | Enable | Action |
+|---|---|---|
+| Home / achievement-continue / success-continue | always | `presentHome()` |
+| Quiz answer rows | auto-run | correct → advance; last → `onQuizComplete`; wrong → `quizFailure` |
+| Failure "Continue" | always | `onBackPressed()` → back to `ProjectViewActivity` |
+
+- **Complete:** `setProjectCompleted` + `checkAchievementAndUnlockIt(Achievement.Id.valueOf(achievementId))` → success/achievement dialog.
+- **Failure:** `blockProjectQuiz` (blockade `600000 ms` = 10 min) → failure feedback; on return the Run Test button is blocked with `mm:ss` countdown.
+- **Errors:** quiz load error (EduBar); wrong-answer `true`/`false` string leaks fixed in 1.9.1.4 (now resolved by resource name at runtime).
+
+### AchievementsViewActivity
+
+| Control | Enable | Action |
+|---|---|---|
+| Home | always | `presentHome()` (+`finish`) |
+| Pager (3 pages) | always | MOVEMENTS / ANIMATIONS / GAMES `RecyclerView`s by `achievement.type` |
+| Easter-egg unlocker1/2/3 | touch combo (one-shot) | `unlocker1`→cond1; `unlocker2`→cond2 (needs cond1); `unlocker3`→ if both → `unlockAllAchievements()` + `AnimationCommand(VICTORY)` |
+
+- `loadAchievements()` splits the 17 seeded achievements (`assets/achievements/initial_list.json`) into the three lists; locked vs unlocked rendered via `AchievementRowViewHolder`.
+- **Errors:** list/unlock errors logged only (no dialog).
